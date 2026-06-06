@@ -62,8 +62,10 @@
 
 
 /* ===== PWA INSTALL BANNER ===== */
-#pwa-install-banner{position:relative;top:0;left:0;right:0;z-index:99998;background:linear-gradient(135deg,#1a0800,#2d1000);color:#fff;padding:10px 14px;display:none;align-items:center;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,.4);border-bottom:2px solid var(--orange)}
+##pwa-install-banner{position:fixed;top:0;left:0;right:0;z-index:99999;background:linear-gradient(135deg,#f26522,#c1001f);color:#fff;padding:10px 14px;display:none;align-items:center;gap:10px;box-shadow:0 4px 12px rgba(0,0,0,.3);border-bottom:none}
 #pwa-install-banner.show{display:flex!important}
+body.pwa-banner-visible #header{top:64px!important}
+body.pwa-banner-visible{padding-top:64px}
 .pwa-banner-icon{width:40px;height:40px;border-radius:10px;object-fit:cover;flex-shrink:0;border:2px solid rgba(232,80,10,.5)}
 .pwa-banner-icon-fallback{width:40px;height:40px;border-radius:10px;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .pwa-banner-text{flex:1;min-width:0}
@@ -695,7 +697,7 @@ body{padding-bottom:70px}
 .flash-bolt{color:#f26522!important}
 
 /* PRODUCT GRID — 3 columns */
-.product-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:8px!important;padding:0 2px!important}
+..product-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:10px!important;padding:0 4px!important}
 
 /* PRODUCT CARD — pixel-perfect match to screenshot */
 .pc{background:#fff;border-radius:12px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.06);border:none;transition:box-shadow .2s}
@@ -779,6 +781,9 @@ input:focus, textarea:focus, select:focus { border-color:#f26522 !important; box
 /* Footer stays dark brand footer */
 .site-footer { background:linear-gradient(135deg,#1a0800,#0f0a0a) !important; }
 
+
+.product-grid{grid-template-columns:repeat(2,1fr)!important;}
+@media(min-width:900px){.product-grid{grid-template-columns:repeat(4,1fr)!important;}}
 </style>
 </head>
 <body>
@@ -1613,7 +1618,7 @@ input:focus, textarea:focus, select:focus { border-color:#f26522 !important; box
 
     <div class="fp-section">
       <h3>Our Mission</h3>
-      <p>Our mission is to connect Nigerian buyers with quality sellers, delivering a seamless shopping experience powered by our own ZMONIE Fintech wallet. At ZMONIE, we are not just selling products — we are building a trusted e-commerce ecosystem.</p>
+      <p>Our mission is to connect Nigerian buyers with quality sellers, delivering a seamless shopping experience powered by seamless checkout and fast delivery. At ZMONIE, we are not just selling products — we are building a trusted e-commerce ecosystem.</p>
     </div>
 
     <div class="fp-section">
@@ -1644,7 +1649,7 @@ input:focus, textarea:focus, select:focus { border-color:#f26522 !important; box
 
     <div class="fp-section">
       <h3>Our Brand Promise</h3>
-      <p>When you shop with ZMONIE, you get more than products. You get a platform that cares about your time, your money, and your experience. Our ZMONIE Fintech wallet makes payments faster, and our cashback rewards keep giving back to you.</p>
+      <p>When you shop with ZMONIE, you get more than products. You get a platform that cares about your time, your money, and your experience. Our fast delivery and cashback rewards keep giving back to you.</p>
     </div>
 
     <div style="background:var(--gray-800);border-radius:var(--radius-xl);padding:20px 24px;text-align:center;color:#fff;margin-top:8px">
@@ -1994,7 +1999,7 @@ input:focus, textarea:focus, select:focus { border-color:#f26522 !important; box
   <div class="footer-inner">
     <div class="footer-logo-wrap">
       <img src="IMG-20260507-WA0041_1_.jpg" alt="ZMONIE" class="footer-logo" onclick="navigate('home')" onerror="this.style.display='none'">
-      <p class="footer-tagline">ZMONIE Market — Your trusted Nigerian shopping platform.<br>Shop smarter. Pay with ZMONIE Wallet.</p>
+      <p class="footer-tagline">ZMONIE Market — Your trusted Nigerian shopping platform.<br>Quality products. Fast delivery. Great prices.</p>
       <div class="footer-socials">
         <a href="https://wa.me/2348149825555" target="_blank" class="social-btn wa"><i class="fab fa-whatsapp"></i></a>
         <a href="#" class="social-btn ig"><i class="fab fa-instagram"></i></a>
@@ -4257,7 +4262,7 @@ function buildProductContext() {
 function getSystemContext() {
   return `You are ZMONIE Support Bot — friendly AI assistant for ZMONIE, a Nigerian online fashion store.
 Store: Nigeria | Address: No. 1 Ibijoke Street, Oregun, Ikeja, Lagos | WhatsApp: +234 814 982 5555 | Email: Zmoniemarket@gmail.com | Hours: Mon-Sat 8AM-8PM WAT
-Payment: 1) Cash on Delivery (Pay on Delivery) 2) ZMONIE Fintech Wallet Payment
+Payment: 1) Bank Transfer (Opay — Zmonie Service | 6559561420) 2) Cash on Delivery
 Delivery: Free above ₦150,000. ₦3,500 below. Lagos: 1-2 days. Abuja/PH: 2-3 days. Others: 3-5 days.
 Categories: Men's Fashion, Women's Fashion, Electronics, Baby Products, Home & Kitchen, Beauty, Sports, Phones, Toys, Groceries
 Current Products:\n${buildProductContext()}
@@ -4277,7 +4282,7 @@ function smartLocalReply(text) {
   }
   if (/price|cost|how much|fee/.test(t)) return "Prices are in ₦ on each product. Delivery: ₦3,500 (FREE above ₦150,000). Ask me any product name for its price!";
   if (/deliver|shipping|how long|when|days/.test(t)) return "🚚 Delivery:\n• Lagos: 1–2 days\n• Abuja/PH: 2–3 days\n• Others: 3–5 days\nFree delivery on orders ₦150,000+";
-  if (/pay|payment|transfer|bank|opay|wallet/.test(t)) return "💳 Payment options:\n1. Cash on Delivery (Pay on Delivery)\n2. ZMONIE Fintech Wallet (same email required)\nChoose at checkout!";
+  if (/pay|payment|transfer|bank|opay|wallet/.test(t)) return "💳 Payment options:\n1. Cash on Delivery (Pay on Delivery)\n2. Cash on Delivery (Pay on Delivery)\nChoose at checkout!";
   if (/track|where is|my order|status/.test(t)) return "📦 Track order: Menu → Track Order → enter Order ID or phone. You also get WhatsApp updates automatically!";
   if (/return|refund|exchange|wrong|damaged/.test(t)) return "😟 For returns/refunds, contact us within 24hrs of delivery via WhatsApp: +234 814 982 5555";
   if (/contact|whatsapp|call|reach/.test(t)) return "📞 Contact: WhatsApp +234 814 982 5555 | Email: Zmoniemarket@gmail.com\nMon-Sat 8AM-8PM";
@@ -5759,7 +5764,7 @@ function _showPWABanner() {
   const dismissed = localStorage.getItem('zmonie-pwa-dismissed');
   if(dismissed && Date.now() - Number(dismissed) < 24*60*60*1000) return;
   const banner = document.getElementById('pwa-install-banner');
-  if(banner) banner.classList.add('show');
+  if(banner) { banner.classList.add('show'); document.body.classList.add('pwa-banner-visible'); }
 }
 
 // Show banner immediately when page is ready
