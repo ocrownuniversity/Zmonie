@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="dark-mode-default">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZMONIE Market</title>
 <script>
-// Always black background unless user chose light
-if(localStorage.getItem('zmonie-theme') !== 'light') {
-  document.documentElement.style.background = '#0f0f0f';
-}
+// Light mode only - Jumia style
 </script>
 <meta name="description" content="ZMONIE Market — Your trusted online shopping destination in Nigeria. Quality products, fast delivery, great prices.">
 <meta name="theme-color" content="#DC3C0A">
@@ -27,35 +24,7 @@ if(localStorage.getItem('zmonie-theme') !== 'light') {
   --orange: #f26522;
   --orange-light: #ff8c42;
   --orange-dark: #d4511a;
-  --white: #1a1a1a;
-  --gray-50: #1a1a1a;
-  --gray-100: #242424;
-  --gray-200: #2e2e2e;
-  --gray-300: #3a3a3a;
-  --gray-400: #6b7280;
-  --gray-500: #9ca3af;
-  --gray-600: #b0b8c4;
-  --gray-700: #d1d5db;
-  --gray-800: #f0f0f0;
-  --gray-900: #f9fafb;
-  --green: #16a34a;
-  --red: #dc2626;
-  --yellow: #f59e0b;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
-  --shadow: 0 2px 8px rgba(0,0,0,.4);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.5);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,.6);
-  --radius: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --bg: #0f0f0f;
-  --surface: #1a1a1a;
-  --surface2: #242424;
-  --border: #2e2e2e;
-  --text: #f0f0f0;
-  --text-muted: #9ca3af;
-}
-body.light-mode {
+  --white: #ffffff;
   --bg: #f5f5f5;
   --surface: #ffffff;
   --surface2: #f9fafb;
@@ -72,35 +41,25 @@ body.light-mode {
   --gray-700: #374151;
   --gray-800: #1f2937;
   --gray-900: #111827;
-  --white: #ffffff;
+  --green: #3a7d2c;
+  --red: #c1001f;
+  --yellow: #f59e0b;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
   --shadow: 0 2px 8px rgba(0,0,0,.1);
   --shadow-md: 0 4px 16px rgba(0,0,0,.12);
   --shadow-lg: 0 8px 32px rgba(0,0,0,.15);
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --bg: #f5f5f5;
+  --surface: #ffffff;
+  --surface2: #f9fafb;
+  --border: #e5e7eb;
+  --text: #1f2937;
+  --text-muted: #6b7280;
 }
-/* dark-mode class = same as default root (kept for backwards compat) */
-body.dark-mode {
-  --bg: #0f0f0f;
-  --surface: #1a1a1a;
-  --surface2: #242424;
-  --border: #2e2e2e;
-  --text: #f0f0f0;
-  --text-muted: #9ca3af;
-  --gray-50: #1a1a1a;
-  --gray-100: #242424;
-  --gray-200: #2e2e2e;
-  --gray-300: #3a3a3a;
-  --gray-400: #6b7280;
-  --gray-500: #9ca3af;
-  --gray-600: #b0b8c4;
-  --gray-700: #d1d5db;
-  --gray-800: #f0f0f0;
-  --gray-900: #f9fafb;
-  --white: #1a1a1a;
-}
-/* Dark mode toggle button */
-#dark-mode-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:6px;border-radius:50%;transition:.2s;display:flex;align-items:center;justify-content:center;color:var(--gray-600)}
-#dark-mode-btn:hover{background:var(--gray-100)}
+/* Light mode is default (Jumia style) */
+
 
 /* ===== PWA INSTALL BANNER ===== */
 #pwa-install-banner{position:relative;top:0;left:0;right:0;z-index:99998;background:linear-gradient(135deg,#1a0800,#2d1000);color:#fff;padding:10px 14px;display:none;align-items:center;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,.4);border-bottom:2px solid var(--orange)}
@@ -116,77 +75,77 @@ body.dark-mode {
 .pwa-dismiss-btn:hover{color:#fff}
 
 /* ===== COMPREHENSIVE DARK MODE ===== */
-body.dark-mode,body.dark-mode .page,body.dark-mode #app{background:#0f0f0f;color:#f0f0f0}
-body.dark-mode header,body.dark-mode .header-search-row{background:#141414!important;border-bottom:1px solid #222}
-body.dark-mode .header-search-wrap{background:#1e1e1e!important;border:1px solid #2a2a2a!important}
-body.dark-mode .header-search{color:#f0f0f0!important}
-body.dark-mode .header-search::placeholder{color:#555!important}
-body.dark-mode .hamburger,body.dark-mode .hicon{color:#e0e0e0!important}
-body.dark-mode .sidebar{background:#141414!important;border-right:1px solid #222}
-body.dark-mode .sidebar-section{border-color:#222!important}
-body.dark-mode .sidebar-section-title{color:#888!important}
-body.dark-mode .sidebar-item{color:#d0d0d0!important}
-body.dark-mode .sidebar-item:hover{background:#1e1e1e!important}
-body.dark-mode .bottom-nav{background:#141414;border-top:1px solid #222;background:#141414!important;border-top:1px solid #222!important}
-body.dark-mode .bottom-nav-item{color:#666!important}
-body.dark-mode .bottom-nav-item.active,body.dark-mode .bottom-nav-item.active .bnav-icon,body.dark-mode .bottom-nav-item.active .bnav-label{color:var(--orange)!important}
-body.dark-mode .pc{background:#1a1a1a;border:1px solid #222;background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .pc-name{color:#f0f0f0!important}
-body.dark-mode .pc-body{background:#1a1a1a!important}
-body.dark-mode .pc-wish-btn{background:rgba(20,20,20,.95)!important;color:#555!important}
-body.dark-mode .pc-wish-btn.active{color:#e53e3e!important}
-body.dark-mode .home-section-title,.dark-mode .section-title{color:#f0f0f0!important}
-body.dark-mode .flash-ends-row{background:#1a1a1a!important;border-color:#222!important;color:#f0f0f0!important}
-body.dark-mode .flash-time{background:#111!important;color:var(--orange)!important}
-body.dark-mode .cart-item,body.dark-mode .cart-summary{background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .checkout-section{background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .checkout-title{color:#f0f0f0!important}
-body.dark-mode .form-input,body.dark-mode select,body.dark-mode textarea,body.dark-mode input[type="text"],body.dark-mode input[type="email"],body.dark-mode input[type="password"],body.dark-mode input[type="tel"],body.dark-mode input[type="number"],body.dark-mode input[type="date"]{background:#1e1e1e!important;border-color:#2a2a2a!important;color:#f0f0f0!important}
-body.dark-mode .form-label{color:#bbb!important}
-body.dark-mode .address-card{border-color:#2a2a2a!important;background:#1a1a1a!important}
-body.dark-mode .order-card{background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .search-filters{background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .filter-select{background:#1e1e1e!important;color:#f0f0f0!important;border-color:#2a2a2a!important}
-body.dark-mode .size-btn{background:#1e1e1e!important;border-color:#2a2a2a!important;color:#f0f0f0!important}
-body.dark-mode .size-btn.selected{background:var(--orange)!important;color:#fff!important}
-body.dark-mode .qty-btn{background:#222!important;color:#f0f0f0!important;border-color:#2a2a2a!important}
-body.dark-mode .detail-trust-row,body.dark-mode .detail-tabs-bar{background:#1a1a1a!important;border-color:#222!important}
-body.dark-mode .detail-tab-btn{color:#666!important}
-body.dark-mode .detail-tab-btn.active{color:var(--orange)!important;border-color:var(--orange)!important}
-body.dark-mode .admin-card{background:#1a1a1a;border:1px solid #222;background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .admin-card-title{color:#f0f0f0!important;border-color:#222!important}
-body.dark-mode .admin-tab{background:#1a1a1a!important;border-color:#222!important;color:#888!important}
-body.dark-mode .admin-tab.active{background:var(--orange)!important;color:#fff!important;border-color:var(--orange)!important}
-body.dark-mode .admin-table th{background:#1e1e1e!important;color:#888!important;border-color:#222!important}
-body.dark-mode .admin-table td{border-color:#222!important;color:#d0d0d0!important}
-body.dark-mode .admin-table tr:hover td{background:#1e1e1e!important}
-body.dark-mode .modal{background:#1a1a1a;border:1px solid #2a2a2a;background:#1a1a1a!important;border:1px solid #2a2a2a!important}
-body.dark-mode .modal-overlay{background:rgba(0,0,0,.85)!important}
-body.dark-mode .modal-header,body.dark-mode .modal-footer{border-color:#222!important;background:#141414!important}
-body.dark-mode .modal-title{color:#f0f0f0!important}
-body.dark-mode .modal-close{color:#666!important}
-body.dark-mode .chatbot-window{background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .chatbot-body{background:#0f0f0f!important}
-body.dark-mode .bot-bubble{background:#1e1e1e!important;color:#f0f0f0!important}
-body.dark-mode .chatbot-input{background:#1e1e1e!important;color:#f0f0f0!important;border-color:#2a2a2a!important}
-body.dark-mode footer,.dark-mode .site-footer{background:#0a0a0a!important;border-top:1px solid #222!important;color:#555!important}
-body.dark-mode .review-card{background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .profile-card,body.dark-mode .profile-section{background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .auth-card,body.dark-mode .login-card,body.dark-mode .register-card{background:#1a1a1a!important;border:1px solid #222!important}
-body.dark-mode .btn-secondary{background:#1e1e1e!important;color:#d0d0d0!important;border-color:#2a2a2a!important}
-body.dark-mode .summary-row{border-color:#222!important;color:#d0d0d0!important}
-body.dark-mode #page-home,body.dark-mode #page-search,body.dark-mode #page-cart,body.dark-mode #page-checkout,body.dark-mode #page-orders,body.dark-mode #page-track,body.dark-mode #page-wishlist,body.dark-mode #page-profile,body.dark-mode #page-login,body.dark-mode #page-register,body.dark-mode #page-product,body.dark-mode #page-admin,body.dark-mode #page-about,body.dark-mode #page-contact,body.dark-mode #page-faq,body.dark-mode #page-terms{background:#0f0f0f!important}
-body.dark-mode [style*="background:#fff"],body.dark-mode [style*="background: #fff"],body.dark-mode [style*="background:white"],body.dark-mode [style*="background:#f9fafb"],body.dark-mode [style*="background:#f5f5f5"]{background:#1a1a1a!important}
-body.dark-mode [style*="background:var(--gray-50)"],body.dark-mode [style*="background:var(--gray-100)"]{background:#1e1e1e!important}
-body.dark-mode [style*="color:#1f2937"],body.dark-mode [style*="color:var(--gray-800)"]{color:#f0f0f0!important}
-body.dark-mode [style*="color:var(--gray-500)"],body.dark-mode [style*="color:var(--gray-600)"]{color:#888!important}
-body.dark-mode .banner-card,body.dark-mode .admin-stat-card{background:#1a1a1a!important;border-color:#222!important}
-body.dark-mode .pc-sold-row .pc-bar-bg{background:#222!important}
-body.dark-mode .home-section{background:#0f0f0f!important}
-body.dark-mode .pwa-install-banner{background:linear-gradient(135deg,#1a0800,#2d1000)!important}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s}
-body.light-mode{background:#0f0f0f;color:#f0f0f0}
+body.light-mode{background:var(--bg);color:var(--text)}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;border:none;outline:none;font-family:inherit}
 input,select,textarea{font-family:inherit;outline:none}
@@ -207,11 +166,11 @@ img{max-width:100%;display:block}
 .absolute{position:absolute}
 
 /* ====== HEADER ====== */
-#header{background:#141414;position:sticky;top:0;z-index:1000;box-shadow:0 1px 4px rgba(0,0,0,.4);border-bottom:1px solid #222}
-body.light-mode #header{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);border-bottom:1px solid #f3f4f6}
+#header{background:#fff;position:sticky;top:0;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,.12);border-bottom:2px solid #f26522}
+
 .header-top{display:flex;align-items:center;gap:10px;padding:8px 16px;max-width:1400px;margin:0 auto}
 .header-logo{height:36px;width:auto;cursor:pointer;object-fit:contain}
-.header-search-row{background:#141414;padding:8px 16px 12px;max-width:1400px;margin:0 auto}.header-search-wrap{display:flex;align-items:center;background:#1e1e1e;border-radius:50px;padding:0 16px;gap:10px;width:100%;border:1px solid #2a2a2a}
+.header-search-row{background:var(--surface);padding:8px 16px 12px;max-width:1400px;margin:0 auto}.header-search-wrap{display:flex;align-items:center;background:var(--gray-100);border-radius:50px;padding:0 16px;gap:10px;width:100%;border:1px solid #2a2a2a}
 body.light-mode .header-search-row{background:#fff}.body.light-mode .header-search-wrap{background:var(--gray-100);border:none}
 .header-search{flex:1;padding:11px 4px;border:none;font-size:14px;color:var(--gray-800);background:transparent;outline:none}.header-search::placeholder{color:var(--gray-400)}
 .header-search-btn{background:transparent;color:var(--gray-400);border:none;padding:0;font-size:17px;cursor:pointer;transition:.2s;display:flex;align-items:center}
@@ -226,7 +185,7 @@ body.light-mode .header-search-row{background:#fff}.body.light-mode .header-sear
 /* ====== SIDEBAR ====== */
 #sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;opacity:0;pointer-events:none;transition:.3s}
 #sidebar-overlay.open{opacity:1;pointer-events:all}
-#sidebar{position:fixed;left:0;top:0;bottom:0;width:300px;background:#141414;z-index:2001;transform:translateX(-100%);transition:.3s;overflow-y:auto;display:flex;flex-direction:column}
+#sidebar{position:fixed;left:0;top:0;bottom:0;width:300px;background:var(--surface);z-index:2001;transform:translateX(-100%);transition:.3s;overflow-y:auto;display:flex;flex-direction:column}
 body.light-mode #sidebar{background:#fff}
 #sidebar.open{transform:translateX(0)}
 .sidebar-header{background:var(--orange);padding:20px 16px;display:flex;align-items:center;gap:12px}
@@ -244,7 +203,7 @@ body.light-mode #sidebar{background:#fff}
 /* ====== PAGES ====== */
 .page{display:none}
 .page.active{display:block}
-#page-home{background:#0f0f0f}
+#page-home{background:var(--bg)}
 body.light-mode #page-home{background:#f5f5f5}
 
 /* ====== HERO SLIDER ====== */
@@ -261,7 +220,7 @@ body.light-mode #page-home{background:#f5f5f5}
 /* ====== SKELETON ====== */
 .skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skel-card{background:#1a1a1a;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+.skel-card{background:#f0f0f0;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
 .skel-img{aspect-ratio:1;width:100%}
 .skel-line{height:12px;margin:10px;border-radius:4px}
 .skel-line.short{width:60%;margin-top:6px}
@@ -321,14 +280,14 @@ body.light-mode #page-home{background:#f5f5f5}
 
 /* ====== CART ====== */
 .cart-wrap{max-width:900px;margin:0 auto;padding:16px}
-.cart-item{background:#1a1a1a;border:1px solid #222;border-radius:var(--radius-lg);padding:14px;display:flex;gap:14px;margin-bottom:10px;box-shadow:var(--shadow-sm)}
+.cart-item{background:var(--surface);border:1px solid #222;border-radius:var(--radius-lg);padding:14px;display:flex;gap:14px;margin-bottom:10px;box-shadow:var(--shadow-sm)}
 .cart-item-img{width:80px;height:80px;border-radius:8px;object-fit:cover;flex-shrink:0}
 .cart-item-info{flex:1}
 .cart-item-name{font-size:14px;font-weight:700;margin-bottom:4px;color:var(--gray-800)}
 .cart-item-price{font-size:16px;font-weight:900;color:var(--orange)}
 .cart-item-actions{display:flex;align-items:center;gap:10px;margin-top:8px}
 .cart-remove{background:none;border:none;color:var(--red);font-size:13px;cursor:pointer;font-weight:600}
-.cart-summary{background:#1a1a1a;border:1px solid #222;border-radius:var(--radius-lg);padding:16px;box-shadow:var(--shadow-sm);margin-top:16px}
+.cart-summary{background:var(--surface);border:1px solid #222;border-radius:var(--radius-lg);padding:16px;box-shadow:var(--shadow-sm);margin-top:16px}
 .summary-row{display:flex;justify-content:space-between;margin-bottom:10px;font-size:14px;color:var(--gray-600)}
 .summary-row.total{font-size:18px;font-weight:900;color:var(--gray-800);border-top:2px solid var(--gray-200);padding-top:10px;margin-top:10px}
 .btn-checkout{width:100%;background:var(--orange);color:#fff;padding:14px;border-radius:8px;font-size:16px;font-weight:800;border:none;cursor:pointer;margin-top:12px;transition:.2s}
@@ -336,12 +295,12 @@ body.light-mode #page-home{background:#f5f5f5}
 
 /* ====== CHECKOUT ====== */
 .checkout-wrap{max-width:800px;margin:0 auto;padding:16px}
-.checkout-section{background:#1a1a1a;border:1px solid #222;border-radius:var(--radius-lg);padding:16px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+.checkout-section{background:var(--surface);border:1px solid #222;border-radius:var(--radius-lg);padding:16px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
 .checkout-title{font-size:16px;font-weight:800;color:var(--gray-800);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .checkout-title i{color:var(--orange)}
 .form-group{margin-bottom:12px}
 .form-label{font-size:13px;font-weight:700;color:var(--gray-600);margin-bottom:5px;display:block}
-.form-input{background:#1e1e1e;border-color:#2a2a2a;color:#f0f0f0;width:100%;padding:10px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:14px;transition:.2s;background:#fff}
+.form-input{background:var(--gray-100);border-color:#2a2a2a;color:var(--text);width:100%;padding:10px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:14px;transition:.2s;background:#fff}
 .form-input:focus{border-color:var(--orange)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .address-card{border:2px solid var(--gray-200);border-radius:8px;padding:12px;cursor:pointer;transition:.2s;margin-bottom:8px}
@@ -357,7 +316,7 @@ body.light-mode #page-home{background:#f5f5f5}
 
 /* ====== ORDERS ====== */
 .orders-wrap{max-width:900px;margin:0 auto;padding:16px}
-.order-card{background:#1a1a1a;border:1px solid #222;border-radius:var(--radius-lg);padding:16px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+.order-card{background:var(--surface);border:1px solid #222;border-radius:var(--radius-lg);padding:16px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
 .order-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .order-id{font-size:13px;font-weight:700;color:var(--gray-500)}
 .order-status{font-size:12px;font-weight:800;padding:4px 10px;border-radius:20px}
@@ -385,14 +344,14 @@ body.light-mode #page-home{background:#f5f5f5}
 
 /* ====== SEARCH RESULTS ====== */
 .search-wrap{max-width:1400px;margin:0 auto;padding:16px}
-.search-filters{background:#1a1a1a;border:1px solid #222;border-radius:var(--radius);padding:14px;margin-bottom:14px;box-shadow:var(--shadow-sm);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.search-filters{background:var(--surface);border:1px solid #222;border-radius:var(--radius);padding:14px;margin-bottom:14px;box-shadow:var(--shadow-sm);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .filter-group{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--gray-600)}
 .filter-select{border:2px solid var(--gray-200);border-radius:6px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--gray-700);cursor:pointer}
 .filter-select:focus{border-color:var(--orange)}
 
 /* ====== AUTH ====== */
 .auth-wrap{max-width:440px;margin:40px auto;padding:16px}
-.auth-card{background:#1a1a1a;border:1px solid #222;border-radius:var(--radius-xl);padding:32px;box-shadow:var(--shadow-md)}
+.auth-card{background:var(--surface);border:1px solid #222;border-radius:var(--radius-xl);padding:32px;box-shadow:var(--shadow-md)}
 .auth-logo{display:flex;justify-content:center;margin-bottom:24px}
 .auth-logo img{height:60px;object-fit:contain}
 .auth-title{font-size:22px;font-weight:900;color:var(--gray-800);text-align:center;margin-bottom:4px}
@@ -412,7 +371,7 @@ body.light-mode #page-home{background:#f5f5f5}
 .profile-avatar{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.2);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:36px}
 .profile-name{font-size:20px;font-weight:900}
 .profile-email{font-size:14px;opacity:.8;margin-top:4px}
-.profile-section{background:#1a1a1a;border:1px solid #222;border-radius:var(--radius-lg);padding:16px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+.profile-section{background:var(--surface);border:1px solid #222;border-radius:var(--radius-lg);padding:16px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
 .profile-section-title{font-size:15px;font-weight:800;color:var(--gray-800);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .profile-section-title i{color:var(--orange)}
 
@@ -780,9 +739,49 @@ body{padding-bottom:65px!important;background:#f2f2f2!important}
 .card-btn-cart:hover{background:#111;color:#fff}
 .card-btn-buy{flex:1;background:transparent;color:#111;border:1.5px solid #111;border-radius:5px;padding:5px 0;font-size:10px;font-weight:800;cursor:pointer;font-family:'Poppins',sans-serif;transition:.15s}
 .card-btn-buy:hover{background:#111;color:#fff}
+
+/* ===== JUMIA-STYLE OVERRIDES ===== */
+body { background:#f5f5f5 !important; color:#1f2937 !important; }
+#header { background:#fff !important; border-bottom:2px solid #f26522 !important; }
+.sidebar-overlay, #sidebar { background:#fff !important; color:#1f2937 !important; }
+.sidebar-item { color:#1f2937 !important; }
+.sidebar-item:hover { background:#fff5f0 !important; color:#f26522 !important; }
+.sidebar-item i { color:#f26522 !important; }
+.product-card { background:#fff !important; border:1px solid #e8e8e8 !important; color:#1f2937 !important; }
+.product-card:hover { box-shadow:0 4px 16px rgba(242,101,34,.18) !important; }
+.product-name { color:#1f2937 !important; }
+.product-price { color:#f26522 !important; }
+.checkout-section, .cart-page, .order-card, .address-card { background:#fff !important; color:#1f2937 !important; }
+.payment-option { background:#fff !important; border:2px solid #e5e7eb !important; color:#1f2937 !important; }
+.payment-option.selected { border-color:#f26522 !important; background:#fff8f5 !important; }
+.bank-info { background:#fff8f5 !important; border:1px solid rgba(242,101,34,.3) !important; color:#1f2937 !important; }
+input, textarea, select { background:#fff !important; color:#1f2937 !important; border:1px solid #d1d5db !important; }
+input:focus, textarea:focus, select:focus { border-color:#f26522 !important; box-shadow:0 0 0 3px rgba(242,101,34,.15) !important; }
+.stat-card { background:#fff !important; color:#1f2937 !important; }
+.admin-table th { background:#f5f5f5 !important; color:#374151 !important; }
+.admin-table td { color:#1f2937 !important; border-color:#e5e7eb !important; }
+.admin-tab { background:#fff !important; border:2px solid #e5e7eb !important; color:#374151 !important; }
+.admin-tab.active { background:#f26522 !important; color:#fff !important; border-color:#f26522 !important; }
+.modal-content, .sheet-content { background:#fff !important; color:#1f2937 !important; }
+.category-card { background:#fff !important; color:#1f2937 !important; }
+.search-bar input { background:#f5f5f5 !important; color:#1f2937 !important; }
+.order-status-badge { font-weight:700 !important; }
+.toast { color:#fff !important; }
+/* Hamburger and header icons */
+.hamburger, .hicon { color:#1f2937 !important; }
+.hamburger:hover, .hicon:hover { color:#f26522 !important; background:#fff5f0 !important; }
+/* Flash sale countdown - Jumia red */
+.flash-timer { background:#c1001f !important; }
+/* Section titles */
+.section-title { color:#1f2937 !important; border-left:4px solid #f26522 !important; padding-left:10px; }
+/* Page backgrounds */
+#page-home,#page-products,#page-cart,#page-checkout,#page-profile,#page-orders,#page-wishlist,#page-admin,#page-about,#page-contact,#page-faq,#page-terms,#page-track,#page-chat { background:#f5f5f5 !important; }
+/* Footer stays dark brand footer */
+.site-footer { background:linear-gradient(135deg,#1a0800,#0f0a0a) !important; }
+
 </style>
 </head>
-<body class="dark-mode">
+<body>
 <!-- PWA INSTALL BANNER -->
 <div id="pwa-install-banner">
   <img class="pwa-banner-icon" src="icon-192.png" alt="ZMONIE" style="border-radius:12px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -841,7 +840,7 @@ body{padding-bottom:65px!important;background:#f2f2f2!important}
       <span onclick="navigate('home')" style="font-family:'Poppins',sans-serif;font-weight:900;font-size:26px;color:#f26522;cursor:pointer;letter-spacing:-0.5px;line-height:1">ZMONIE</span>
     </div>
     <div class="header-icons" style="display:flex;align-items:center;gap:4px">
-      <button id="dark-mode-btn" onclick="toggleDarkMode()" title="Toggle dark/light mode">☀️</button>
+
       <button class="hicon" onclick="navigate('profile')" title="Account"><i class="fas fa-user-circle"></i><span class="badge hidden" id="wish-count">0</span></button>
       <button class="hicon" onclick="navigate('cart')" title="Cart" style="position:relative"><i class="fas fa-shopping-cart"></i><span class="badge hidden" id="cart-count">0</span></button>
     </div>
@@ -2475,7 +2474,7 @@ setLogos();
 // ===== AUTH =====
 onAuthStateChanged(auth, async (user) => {
   currentUser = user;
-  isAdmin = user && user.email === ADMIN_EMAIL;
+  isAdmin = user && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
   updateAuthUI();
   if (user) {
     await loadCart();
@@ -3693,25 +3692,8 @@ window.renderWishlist = async function() {
 };
 
 // ===== SEARCH =====
-window.toggleDarkMode = function() {
-  const isDark = document.body.classList.toggle('dark-mode');
-  document.getElementById('dark-mode-btn').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('zmonie-theme', isDark ? 'dark' : 'light');
-};
-// Dark is the default — only go light if user explicitly chose it
-(function(){
-  const saved = localStorage.getItem('zmonie-theme');
-  if(saved === 'light') {
-    document.body.classList.remove('dark-mode');
-    const btn = document.getElementById('dark-mode-btn');
-    if(btn) btn.textContent = '🌙';
-  } else {
-    // Ensure dark mode is on (it's already in the class, this just syncs the button)
-    document.body.classList.add('dark-mode');
-    const btn = document.getElementById('dark-mode-btn');
-    if(btn) btn.textContent = '☀️';
-  }
-})();
+// Dark mode removed - light only
+// Light mode only;
 window.handleSearchKey = function(e) {
   if(e.key==='Enter') doSearch();
 };
