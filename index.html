@@ -1223,11 +1223,11 @@ body{padding-bottom:65px!important;background:#f2f2f2!important}
         <i class="fas fa-hand-holding-usd" style="margin-left:auto;color:var(--green)"></i>
       </div>
       <div class="bank-info hidden" id="bank-info">
+        <p style="font-weight:800;margin-bottom:8px;color:var(--orange)"><i class="fas fa-university"></i> Transfer Details</p>
         <p><strong>Bank:</strong> Opay</p>
-
-        <p><strong>Account Number:</strong> <strong style="font-size:18px;color:var(--orange)">8149825555</strong></p>
-        <p><strong>Phone:</strong> +2348149825555</p>
-        <p style="margin-top:8px;color:var(--red);font-size:12px"><i class="fas fa-exclamation-triangle"></i> Please transfer exact amount and include your order ID as reference.</p>
+        <p><strong>Account Name:</strong> Zmonie Service</p>
+        <p><strong>Account Number:</strong> <strong style="font-size:22px;color:var(--orange);letter-spacing:3px">6559561420</strong></p>
+        <p style="margin-top:10px;color:var(--red);font-size:12px"><i class="fas fa-exclamation-triangle"></i> Transfer exact amount and send payment proof to WhatsApp: <a href="https://wa.me/2348149825555" target="_blank" style="color:var(--orange);font-weight:700">+234 814 982 5555</a></p>
       </div>
     </div>
     <div class="checkout-section">
@@ -1909,7 +1909,7 @@ body{padding-bottom:65px!important;background:#f2f2f2!important}
       <h3>2. Orders & Payment</h3>
       <ul>
         <li>All prices are in Nigerian Naira (&#8358;) and include applicable taxes.</li>
-        <li>We accept Cash on Delivery and ZMONIE Fintech Wallet. All prices are final.</li>
+        <li>For Bank Transfer orders, payment must be made to: Opay | Zmonie Service | 6559561420. Send proof of payment via WhatsApp after transfer.</li>
         <li>Orders not paid within 24 hours (Bank Transfer) may be cancelled automatically.</li>
         <li>We reserve the right to cancel orders due to pricing errors or stock issues.</li>
       </ul>
@@ -1954,7 +1954,7 @@ body{padding-bottom:65px!important;background:#f2f2f2!important}
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">What payment methods do you accept? <i class="fas fa-chevron-down"></i></div>
-      <div class="faq-a">We accept Cash on Delivery and ZMONIE Fintech Wallet Payment. ZMONIE Wallet lets you pay instantly from your ZMONIE account balance when your emails match. Cash on Delivery means you pay when your order arrives.</div>
+      <div class="faq-a">We accept Bank Transfer and Cash on Delivery. Bank Transfer: Opay | Zmonie Service | 6559561420. For bank transfer, send your payment proof to WhatsApp after payment.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">How do I track my order? <i class="fas fa-chevron-down"></i></div>
@@ -1973,8 +1973,8 @@ body{padding-bottom:65px!important;background:#f2f2f2!important}
       <div class="faq-a">Yes. We take your privacy seriously. Your data is stored securely using Google Firebase. We never sell your personal information to third parties. Read our Privacy Policy for details.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">How does ZMONIE Wallet payment work? <i class="fas fa-chevron-down"></i></div>
-      <div class="faq-a">ZMONIE Wallet payment is available at checkout if your shopping account email matches your ZMONIE Fintech account email. Your wallet balance is displayed and the order amount is deducted automatically. Need help? WhatsApp us: +234 814 982 5555.</div>
+      <div class="faq-q">I made a Bank Transfer — how do I confirm my payment? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">After transferring, send your payment receipt and Order ID to our WhatsApp: +234 814 982 5555. Our team will confirm your order within a few hours during business hours.</div>
     </div>
   </div>
 </div>
@@ -3107,20 +3107,11 @@ window.selectAddr = async function(el, id) {
 
 window.selectPayment = function(type) {
   selectedPayment = type;
+  document.getElementById('pay-bank').classList.toggle('selected', type==='bank');
   document.getElementById('pay-cod').classList.toggle('selected', type==='cod');
-  const zmonieEl = document.getElementById('pay-zmonie');
-  if(zmonieEl) zmonieEl.classList.toggle('selected', type==='zmonie');
-  const bankInfo = document.getElementById('bank-info');
-  if(bankInfo) bankInfo.classList.add('hidden');
-  // Show/hide ZMONIE wallet panel
-  const walletInfo = document.getElementById('zmonie-wallet-info');
-  if(walletInfo) {
-    walletInfo.style.display = type==='zmonie' ? 'block' : 'none';
-    if(type==='zmonie') checkZmonieWallet();
-  }
-  document.querySelectorAll('#pay-cod input, #pay-zmonie input').forEach(inp=>{
-    const parentId = inp.closest('.payment-option')?.id;
-    inp.checked = (parentId === 'pay-'+type);
+  document.getElementById('bank-info').classList.toggle('hidden', type!=='bank');
+  document.querySelectorAll('#pay-bank input, #pay-cod input').forEach(inp=>{
+    inp.checked = (inp.parentElement.id === 'pay-'+type);
   });
 };
 
@@ -3420,11 +3411,6 @@ window.placeOrder = async function() {
   }
   if(!selectedPayment) return showToast('Please select a payment method','error');
   if(!cart.length) return showToast('Your cart is empty','error');
-  // ZMONIE wallet validation
-  if(selectedPayment === 'zmonie') {
-    if(!window._zmonieUserId) return showToast('ZMONIE wallet not found. Please use Cash on Delivery.','error');
-    if(!window._zmonieBalanceSufficient) return showToast('Insufficient ZMONIE wallet balance. Please top up or use Cash on Delivery.','error');
-  }
 
   try {
     // Build address object depending on delivery type
@@ -3466,10 +3452,6 @@ window.placeOrder = async function() {
     lastOrderId = orderRef.id;
     // Award loyalty points (2% of order as points)
     awardLoyaltyPoints(orderId, grandTotal);
-    // Deduct from ZMONIE wallet if wallet payment was used
-    if(selectedPayment === 'zmonie') {
-      await deductZmonieWallet(orderId, grandTotal);
-    }
     // Increment coupon usage count
     if(appliedCoupon && appliedCoupon.firestoreId) {
       try { await updateDoc(doc(db,'coupons',appliedCoupon.firestoreId), { usageCount: (appliedCoupon.usageCount||0)+1 }); } catch(e) {}
@@ -3528,7 +3510,7 @@ function showReceipt(orderId, data) {
     <h3 style="font-size:16px;font-weight:900;margin-bottom:14px;color:var(--orange)">🧾 Order Receipt</h3>
     <div class="summary-row"><span>Order ID</span><span style="font-weight:800">${orderId}</span></div>
     <div class="summary-row"><span>Date</span><span>${new Date().toLocaleDateString()}</span></div>
-    <div class="summary-row"><span>Payment</span><span>${data.payment==='zmonie'?'ZMONIE Wallet':data.payment==='cod'?'Cash on Delivery':'Pay on Delivery'}</span></div>
+    <div class="summary-row"><span>Payment</span><span>${data.payment==='bank'?'Bank Transfer':data.payment==='cod'?'Cash on Delivery':'Pay on Delivery'}</span></div>
     <div class="summary-row"><span>${data.deliveryType==='pickup'?'Pickup Station':'Delivery to'}</span><span>${data.deliveryType==='pickup'?(data.pickupStation||data.address?.street||''):((data.address&&data.address.street)||'')+', '+((data.address&&data.address.city)||'')}</span></div>
     <hr style="border:none;border-top:1px solid var(--gray-200);margin:10px 0">
     ${data.items.map(x=>'<div class="summary-row"><span>'+x.name+' × '+x.qty+'</span><span>₦'+(x.price*x.qty).toLocaleString()+'</span></div>').join('')}
