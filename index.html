@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZMONIE Market</title>
+<title>ZMONIE - Shop Smart, Save More</title>
 <meta name="description" content="ZMONIE Market &#8212; Your trusted online shopping destination in Nigeria. Quality products, fast delivery, great prices.">
 <meta name="theme-color" content="#DC3C0A">
 <meta name="mobile-web-app-capable" content="yes">
@@ -74,7 +74,19 @@
     <button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     
     <div style="flex:1;display:flex;align-items:center">
-      <span onclick="navigate('home')" style="font-family:'Poppins',sans-serif;font-weight:900;font-size:26px;color:#f26522;cursor:pointer;letter-spacing:-0.5px;line-height:1">ZMONIE</span>
+      <div onclick="navigate('home')" style="display:flex;align-items:center;gap:0;cursor:pointer;user-select:none" title="ZMONIE - Home">
+  <!-- Z badge icon like Jumia star -->
+  <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-right:2px">
+    <!-- Orange shield/badge background -->
+    <path d="M19 2 L34 8 L34 20 Q34 30 19 36 Q4 30 4 20 L4 8 Z" fill="#f26522"/>
+    <!-- Inner highlight -->
+    <path d="M19 5 L31 10 L31 20 Q31 28 19 33 Q7 28 7 20 L7 10 Z" fill="#ff7a3c" opacity="0.4"/>
+    <!-- Bold Z letter -->
+    <text x="19" y="25" text-anchor="middle" font-family="'Poppins',Arial,sans-serif" font-weight="900" font-size="16" fill="#fff" letter-spacing="-0.5">Z</text>
+  </svg>
+  <!-- ZMONIE text - like Jumia: brand name in bold -->
+  <span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:24px;color:#333;letter-spacing:-0.5px;line-height:1">ZMONIE</span>
+</div>
     </div>
     <div class="header-icons" style="display:flex;align-items:center;gap:4px">
 
@@ -93,7 +105,14 @@
 
 <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
 <nav id="sidebar">
-  <div class="sidebar-header">
+  <div class="sidebar-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:4px">
+      <svg width="32" height="32" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 2 L34 8 L34 20 Q34 30 19 36 Q4 30 4 20 L4 8 Z" fill="rgba(255,255,255,0.9)"/>
+        <text x="19" y="25" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="16" fill="#f26522">Z</text>
+      </svg>
+      <span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:20px;color:#fff;letter-spacing:-0.5px">ZMONIE</span>
+    </div>
     <div class="sidebar-avatar"><i class="fas fa-user"></i></div>
     <div class="sidebar-user-info">
       <h3 id="sb-name">Guest</h3>
