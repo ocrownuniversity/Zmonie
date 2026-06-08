@@ -4805,15 +4805,16 @@ function _showPWABanner() {
   if(_isStandalone) return;
   try {
     const dismissed = localStorage.getItem('zmonie-pwa-dismissed');
-    if(dismissed === 'permanent') return;
-    if(dismissed && !isNaN(Number(dismissed)) && Date.now() - Number(dismissed) < 24*60*60*1000) return;
+    if(dismissed && !isNaN(Number(dismissed)) && Date.now() - Number(dismissed) < 3*24*60*60*1000) return;
+    if(dismissed === 'permanent') localStorage.removeItem('zmonie-pwa-dismissed');
   } catch(e) {}
   const banner = document.getElementById('pwa-install-banner');
   if(banner) { banner.classList.add('show'); document.body.classList.add('pwa-banner-visible'); }
 }
 
-// Show banner immediately when page is ready
-document.addEventListener('DOMContentLoaded', _showPWABanner);
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(_showPWABanner, 500);
+});
 
 // Capture Chrome install event
 window.addEventListener('beforeinstallprompt', e => {
@@ -4824,7 +4825,7 @@ window.addEventListener('beforeinstallprompt', e => {
 
 document.getElementById('pwa-install-btn').addEventListener('click', async () => {
   if(_pwaInstallEvent) {
-    // Chrome Android &#8212; native install prompt
+    // Chrome Android - native install prompt
     _pwaInstallEvent.prompt();
     const { outcome } = await _pwaInstallEvent.userChoice;
     if(outcome === 'accepted') {
@@ -4848,7 +4849,7 @@ window.dismissPWABanner = function() {
     banner.style.display = 'none';
     document.body.classList.remove('pwa-banner-visible');
   }
-  try { localStorage.setItem('zmonie-pwa-dismissed', 'permanent'); } catch(e) {}
+  try { localStorage.setItem('zmonie-pwa-dismissed', Date.now().toString()); } catch(e) {}
 };
 
 window.showIOSInstallGuide = function() {
