@@ -38,7 +38,7 @@
 
 <div id="pwa-install-banner">
   <img class="pwa-banner-icon" src="icon-192.png" alt="ZMONIE" style="border-radius:12px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-  <div class="pwa-banner-icon-fallback" style="display:none;background:#000">🛒</div>
+  <div class="pwa-banner-icon-fallback" style="display:none;background:#000">&#128722;</div>
   <div class="pwa-banner-text">
     <div class="pwa-banner-title">Install ZMONIE Market App</div>
     <div class="pwa-banner-sub" id="pwa-banner-sub">Free &#183; No app store needed</div>
@@ -204,11 +204,11 @@
 <!-- CATEGORY DEALS ROW like Jumia -->
 <div style="background:#fff;padding:10px 8px 6px;border-bottom:1px solid #f0f0f0;overflow-x:auto;display:flex;gap:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch">
   <div onclick="navigate('search')" style="display:inline-flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;min-width:58px;flex-shrink:0">
-    <div style="width:54px;height:54px;border-radius:8px;background:linear-gradient(135deg,#f68b1e,#ff9a5c);display:flex;align-items:center;justify-content:center;font-size:24px">🛒</div>
+    <div style="width:54px;height:54px;border-radius:8px;background:linear-gradient(135deg,#f68b1e,#ff9a5c);display:flex;align-items:center;justify-content:center;font-size:24px">&#128722;</div>
     <span style="font-size:9.5px;font-weight:800;color:#222;font-family:'Poppins',sans-serif;text-align:center;line-height:1.2;max-width:60px">Awoof Deals</span>
   </div>
   <div onclick="navigate('search')" style="display:inline-flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;min-width:58px;flex-shrink:0">
-    <div style="width:54px;height:54px;border-radius:8px;background:linear-gradient(135deg,#1a1a2e,#3a3a6e);display:flex;align-items:center;justify-content:center;font-size:24px">🛒</div>
+    <div style="width:54px;height:54px;border-radius:8px;background:linear-gradient(135deg,#1a1a2e,#3a3a6e);display:flex;align-items:center;justify-content:center;font-size:24px">&#128722;</div>
     <span style="font-size:9.5px;font-weight:800;color:#222;font-family:'Poppins',sans-serif;text-align:center;line-height:1.2;max-width:60px">Up to 80% Off</span>
   </div>
   <div onclick="filterByCategory('Baby Products');navigate('search')" style="display:inline-flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;min-width:58px;flex-shrink:0">
@@ -458,7 +458,7 @@
     
     <div id="also-bought-section" style="display:none;padding:16px">
       <div class="home-section-header" style="margin-bottom:12px">
-        <span class="home-section-title" style="font-size:16px">🛒 Customers Also Bought</span>
+        <span class="home-section-title" style="font-size:16px">&#128722; Customers Also Bought</span>
       </div>
       <div class="product-grid" id="also-bought-grid"></div>
     </div>
@@ -715,7 +715,7 @@
 
 <div id="page-success" class="page">
   <div style="max-width:600px;margin:40px auto;padding:16px;text-align:center">
-    <div style="font-size:72px;margin-bottom:16px">🎉</div>
+    <div style="font-size:72px;margin-bottom:16px">&#127881;</div>
     <h2 style="font-size:24px;font-weight:900;color:var(--green);margin-bottom:8px">Order Placed!</h2>
     <p style="color:var(--gray-500);margin-bottom:20px">Your order has been placed successfully. We'll send you updates.</p>
     <div id="receipt-wrap" class="admin-card" style="text-align:left;margin-bottom:20px"></div>
@@ -741,14 +741,15 @@
     </div>
     
     <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchAdminTab('products',this)">Products</button>
-      <button class="admin-tab" onclick="switchAdminTab('orders',this)">Orders</button>
+      <button class="admin-tab active superadmin-tab" onclick="switchAdminTab('products',this)" id="tab-btn-products">&#128230; Products</button>
+      <button class="admin-tab" onclick="switchAdminTab('orders',this)">&#128666; Orders</button>
       <button class="admin-tab" onclick="switchAdminTab('analytics',this)">&#128202; Analytics</button>
-      <button class="admin-tab" onclick="switchAdminTab('coupons',this)">&#127991;&#65039; Coupons</button>
-      <button class="admin-tab" onclick="switchAdminTab('users',this)">Users</button>
-      <button class="admin-tab" onclick="switchAdminTab('reviews',this)">Reviews</button>
-      <button class="admin-tab" onclick="switchAdminTab('banners',this)">&#128444;&#65039; Banners</button>
-      <button class="admin-tab" onclick="switchAdminTab('chats',this)">Chat Sessions</button>
+      <button class="admin-tab superadmin-tab" onclick="switchAdminTab('coupons',this)">&#127991; Coupons</button>
+      <button class="admin-tab" onclick="switchAdminTab('users',this)">&#128100; Users</button>
+      <button class="admin-tab" onclick="switchAdminTab('reviews',this)">&#11088; Reviews</button>
+      <button class="admin-tab superadmin-tab" onclick="switchAdminTab('banners',this)">&#128444; Banners</button>
+      <button class="admin-tab" onclick="switchAdminTab('chats',this)">&#128172; Chats</button>
+      <button class="admin-tab superadmin-tab" onclick="switchAdminTab('manageadmins',this)" id="tab-btn-manageadmins" style="background:#1e3a8a;color:#fff;border-color:#1e3a8a">&#128737; Manage Admins</button>
     </div>
     
     <div id="admin-coupons" class="admin-tab-content hidden">
@@ -868,6 +869,22 @@
       </div>
     </div>
     
+    <div id="admin-manageadmins" class="admin-tab-content hidden">
+      <div class="admin-card" style="border-top:4px solid #1e3a8a">
+        <div class="admin-card-title" style="color:#1e3a8a">
+          <span>&#128737; Sub-Admin Management</span>
+          <span style="background:#1e3a8a;color:#fff;font-size:11px;padding:3px 10px;border-radius:20px">SUPER ADMIN ONLY</span>
+        </div>
+        <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px">Sub-admins can view Orders, Analytics, Reviews, Chats and Users. They <strong>cannot</strong> add, edit or delete products, coupons or banners.</p>
+        <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+          <input id="new-admin-email" type="email" placeholder="Sub-admin email address" class="form-input" style="flex:1;min-width:200px">
+          <input id="new-admin-name" type="text" placeholder="Display name (optional)" class="form-input" style="flex:1;min-width:160px">
+          <button class="btn-primary" onclick="addSubAdmin()" style="background:#1e3a8a;border-color:#1e3a8a;flex-shrink:0"><i class="fas fa-user-plus"></i> Add Admin</button>
+        </div>
+        <div id="sub-admin-list"><p style="color:var(--gray-400);font-size:13px"><i class="fas fa-spinner fa-spin"></i> Loading...</p></div>
+      </div>
+    </div>
+
     <div id="admin-users" class="admin-tab-content hidden">
       <div class="admin-card">
         <div class="admin-card-title">
@@ -1086,7 +1103,7 @@
           <span style="font-weight:700">Other States</span><span style="color:var(--orange);font-weight:700">&#8358;3,000 &#8211; &#8358;6,000</span>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;padding:10px 14px;background:#d1fae5;font-size:13px">
-          <span style="font-weight:800;color:var(--green)">Orders above &#8358;150,000</span><span style="color:var(--green);font-weight:800">🎉 FREE Delivery</span>
+          <span style="font-weight:800;color:var(--green)">Orders above &#8358;150,000</span><span style="color:var(--green);font-weight:800">&#127881; FREE Delivery</span>
         </div>
       </div>
     </div>
@@ -1663,16 +1680,16 @@ const ADMIN_WHATSAPP = '2348149825555';
 
 // ===== WHATSAPP NOTIFICATIONS =====
 function notifyAdminWhatsApp(orderId, buyerName, buyerEmail, itemNames, subtotal, deliveryFee, payment, address, buyerPhone, couponDiscount, couponCode, loyaltyDiscount) {
-  const payLabel = payment === 'zmonie' ? 'ZMONIE Wallet ✅' : payment === 'cod' ? 'Cash on Delivery' : payment;
+  const payLabel = payment === 'zmonie' ? 'ZMONIE Wallet \u2705' : payment === 'cod' ? 'Cash on Delivery' : payment;
   const msg = encodeURIComponent(
-    '🛒 *New Order — ZMONIE Market!*\n' +
+    '\uD83D\uDED2 *New Order \u2014 ZMONIE Market!*\n' +
     '&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;\n' +
     '&#128230; *Order ID:* ' + orderId + '\n' +
     '&#128100; *Customer:* ' + buyerName + '\n' +
     '&#128231; *Email:* ' + buyerEmail + '\n' +
     (buyerPhone ? '&#128241; *Phone:* ' + buyerPhone + '\n' : '') +
     '&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;\n' +
-    '🛒 *Items:*\n' + itemNames + '\n' +
+    '\uD83D\uDED2 *Items:*\n' + itemNames + '\n' +
     '&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;\n' +
     '&#128176; *Subtotal:* \u20A6' + Number(subtotal).toLocaleString() + '\n' +
     (couponDiscount > 0 ? '&#127991;&#65039; *Coupon (' + (couponCode||'') + '):* -\u20A6' + Number(couponDiscount).toLocaleString() + '\n' : '') +
@@ -1696,15 +1713,15 @@ function notifyBuyerWhatsApp(buyerPhone, orderId, status, itemNames, buyerName, 
     confirmed: 'has been confirmed! We are preparing it',
     processing: 'is being processed and will ship soon',
     out_for_delivery: 'is out for delivery! Expect it today',
-    delivered: 'has been delivered! Thank you for shopping with ZMONIE Market 🎉'
+    delivered: 'has been delivered! Thank you for shopping with ZMONIE Market \uD83C\uDF89'
   }[status] || 'has been updated to: ' + status;
   const msg = encodeURIComponent(
-    'Hello ' + buyerName + '! 👋\n\n' +
-    '🛒 Your ZMONIE Market order *' + orderId + '* ' + statusMsg + '.\n\n' +
-    '🛒 Items: ' + itemNames + '\n' +
+    'Hello ' + buyerName + '! \uD83D\uDC4B\n\n' +
+    '\uD83D\uDED2 Your ZMONIE Market order *' + orderId + '* ' + statusMsg + '.\n\n' +
+    '\uD83D\uDED2 Items: ' + itemNames + '\n' +
     '&#128181; Total: \u20A6' + Number(total).toLocaleString() + '\n\n' +
     'Track your order in the ZMONIE Market app.\n' +
-    '— ZMONIE Market 🛒'
+    '\u2014 ZMONIE Market \uD83D\uDED2'
   );
   window.open('https://wa.me/' + internationalPhone + '?text=' + msg, '_blank');
 }
@@ -1725,6 +1742,9 @@ function getShippingFee(stateName, cartTotal) {
 // ===== STATE =====
 let currentUser = null;
 let isAdmin = false;
+let isSuperAdmin = false;
+let isSubAdmin = false;
+let subAdminList = [];
 let cart = [];
 let wishlist = [];
 let allProducts = [];
@@ -1742,7 +1762,7 @@ let unsubListeners = [];
 const LOGO_URL = '/mnt/user-data/uploads/IMG-20260507-WA0041_1_.jpg';
 // Use inline base64 as fallback for GitHub Pages (logo will be same folder)
 function setLogos() {
-  // SVG logo is now inline — no external file needed
+  // SVG logo is now inline \u2014 no external file needed
   // site-logo img is hidden by default, SVG shows always
 }
 setLogos();
@@ -1750,7 +1770,15 @@ setLogos();
 // ===== AUTH =====
 onAuthStateChanged(auth, async (user) => {
   currentUser = user;
-  isAdmin = user && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  isSuperAdmin = user && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  isSubAdmin = false;
+  if(user && !isSuperAdmin) {
+    try {
+      const snap = await getDoc(doc(db,'zmonie_admins', user.email.toLowerCase()));
+      isSubAdmin = snap.exists();
+    } catch(e) {}
+  }
+  isAdmin = isSuperAdmin || isSubAdmin;
   updateAuthUI();
   if (user) {
     await loadCart();
@@ -1843,7 +1871,7 @@ window.loginWithGoogle = async function() {
         });
       }
     } catch(e) {}
-    showToast('Signed in with Google! 🎉');
+    showToast('Signed in with Google! \uD83C\uDF89');
     navigate('home');
   } catch(e) {
     if (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request') {
@@ -2005,7 +2033,7 @@ window.openProduct = function(id) {
     stockEl.innerHTML = '<i class="fas fa-times-circle"></i> Out of Stock';
     stockEl.className = 'detail-stock out';
   } else if(p.stock <= 5) {
-    stockEl.innerHTML = '<i class="fas fa-fire" style="color:#ef4444"></i> Only '+p.stock+' left — Order now!';
+    stockEl.innerHTML = '<i class="fas fa-fire" style="color:#ef4444"></i> Only '+p.stock+' left \u2014 Order now!';
     stockEl.className = 'detail-stock'; stockEl.style.color='#ef4444';
   } else if(p.stock <= 15) {
     stockEl.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f59e0b"></i> Almost sold out! ('+p.stock+' left)';
@@ -2016,7 +2044,7 @@ window.openProduct = function(id) {
   }
   document.getElementById('detail-description').textContent = p.description||'No description available.';
   document.getElementById('qty-input').value = 1;
-  // Images — use new swipeable gallery
+  // Images \u2014 use new swipeable gallery
   const imgs = (p.images&&p.images.length) ? p.images : ['https://placehold.co/400x400/f3f4f6/9ca3af?text=No+Image'];
   initGallery(imgs);
   const thumbRow = document.getElementById('thumb-row');
@@ -2285,7 +2313,7 @@ async function loadCheckout() {
         const a = d.data();
         const subT = cart.reduce((s,x)=>s+(x.price*x.qty),0);
         const sFee = getShippingFee(a.state||'', subT);
-        const feeLabel = sFee === 0 ? '<span style="color:var(--green)">FREE 🎉</span>' : '\u20A6'+sFee.toLocaleString();
+        const feeLabel = sFee === 0 ? '<span style="color:var(--green)">FREE \uD83C\uDF89</span>' : '\u20A6'+sFee.toLocaleString();
         return "<div class=\"address-card"+(i===0?' selected':'')+"\" onclick=\"selectAddr(this,'"+(d.id)+"')\" data-addr-id=\""+(d.id)+"\">\n          <h4>"+(a.name)+" &mdash; "+(a.phone)+"</h4>\n          <p>"+(a.street)+", "+(a.city)+", "+(a.state)+"</p>\n          <span style=\"font-size:11px;color:var(--orange);font-weight:700;margin-top:4px;display:block\"><i class=\"fas fa-truck\"></i> Shipping to "+(a.state||'this address')+": "+(feeLabel)+"</span>\n        </div>";
       }).join('');
       if(snap.docs.length) {
@@ -2294,15 +2322,15 @@ async function loadCheckout() {
       }
     }
   } catch(e) { addrDiv.innerHTML = ''; }
-  // Render order summary — state-based shipping with free threshold
+  // Render order summary \u2014 state-based shipping with free threshold
   const sumDiv = document.getElementById('checkout-items-summary');
   const subtotal = cart.reduce((s,x)=>s+(x.price*x.qty),0);
   const deliveryFee = getShippingFee(window._checkoutSelectedState || '', subtotal);
   const grandTotal = subtotal + deliveryFee;
   const isFree = deliveryFee === 0;
   sumDiv.innerHTML = cart.map(x=>"<div class=\"summary-row\"><span>"+(x.name)+" &#215; "+(x.qty)+"</span><span>\u20A6"+((x.price*x.qty).toLocaleString())+"</span></div>").join('') +
-    "<div class=\"summary-row\"><span>Shipping Fee <span id=\"checkout-state-label\" style=\"font-size:11px;color:var(--gray-400)\">"+(window._checkoutSelectedState ? '('+window._checkoutSelectedState+')' : '')+"</span></span><span id=\"checkout-delivery-val\" style=\"color:"+(isFree?'var(--green)':'inherit')+";font-weight:"+(isFree?'800':'400')+"\">"+(isFree?'FREE 🎉':'\u20A6'+deliveryFee.toLocaleString())+"</span></div>" +
-    "<div id=\"checkout-delivery-note\" style=\"font-size:11px;color:var(--gray-400);margin-top:-6px;margin-bottom:4px\"><i class=\"fas fa-map-marker-alt\"></i> "+(isFree ? 'Free shipping &#8212; order above \u20A6150,000 ✅' : 'Based on delivery state &#183; Free above \u20A6150,000')+"</div>";
+    "<div class=\"summary-row\"><span>Shipping Fee <span id=\"checkout-state-label\" style=\"font-size:11px;color:var(--gray-400)\">"+(window._checkoutSelectedState ? '('+window._checkoutSelectedState+')' : '')+"</span></span><span id=\"checkout-delivery-val\" style=\"color:"+(isFree?'var(--green)':'inherit')+";font-weight:"+(isFree?'800':'400')+"\">"+(isFree?'FREE \uD83C\uDF89':'\u20A6'+deliveryFee.toLocaleString())+"</span></div>" +
+    "<div id=\"checkout-delivery-note\" style=\"font-size:11px;color:var(--gray-400);margin-top:-6px;margin-bottom:4px\"><i class=\"fas fa-map-marker-alt\"></i> "+(isFree ? 'Free shipping &#8212; order above \u20A6150,000 \u2705' : 'Based on delivery state &#183; Free above \u20A6150,000')+"</div>";
   document.getElementById('checkout-total').innerHTML = '\u20A6'+grandTotal.toLocaleString();
   window._checkoutDeliveryFee = deliveryFee;
   window._checkoutGrandTotal = grandTotal;
@@ -2419,7 +2447,7 @@ async function deductZmonieWallet(orderId, amount) {
         email: currentUser.email,
         type: 'debit',
         amount: amount,
-        description: 'ZMONIE Market Purchase — Order '+orderId,
+        description: 'ZMONIE Market Purchase \u2014 Order '+orderId,
         reference: orderId,
         balanceBefore: currentBalance,
         balanceAfter: newBalance,
@@ -2434,53 +2462,53 @@ async function deductZmonieWallet(orderId, amount) {
 // ===== PICKUP STATIONS DATA =====
 const PICKUP_STATIONS = {
   'Oyo': [
-    { id: 'oyo1', name: 'ZMONIE Pickup — Alakia', address: 'Alakia, Ibadan, Oyo State', area: 'Alakia, Ibadan', fee: 500 },
-    { id: 'oyo2', name: 'ZMONIE Pickup — Ojoo', address: 'Ojoo Market Area, Ibadan, Oyo State', area: 'Ojoo, Ibadan', fee: 500 },
-    { id: 'oyo3', name: 'ZMONIE Pickup — Challenge', address: 'Challenge Roundabout, Ibadan, Oyo State', area: 'Challenge, Ibadan', fee: 500 },
+    { id: 'oyo1', name: 'ZMONIE Pickup \u2014 Alakia', address: 'Alakia, Ibadan, Oyo State', area: 'Alakia, Ibadan', fee: 500 },
+    { id: 'oyo2', name: 'ZMONIE Pickup \u2014 Ojoo', address: 'Ojoo Market Area, Ibadan, Oyo State', area: 'Ojoo, Ibadan', fee: 500 },
+    { id: 'oyo3', name: 'ZMONIE Pickup \u2014 Challenge', address: 'Challenge Roundabout, Ibadan, Oyo State', area: 'Challenge, Ibadan', fee: 500 },
   ],
   'Lagos': [
-    { id: 'lag1', name: 'ZMONIE Pickup — Ikeja', address: 'Computer Village Area, Ikeja, Lagos', area: 'Ikeja', fee: 500 },
-    { id: 'lag2', name: 'ZMONIE Pickup — Surulere', address: 'Adeniran Ogunsanya, Surulere, Lagos', area: 'Surulere', fee: 500 },
-    { id: 'lag3', name: 'ZMONIE Pickup — Oshodi', address: 'Oshodi Market, Oshodi, Lagos', area: 'Oshodi', fee: 500 },
-    { id: 'lag4', name: 'ZMONIE Pickup — Lekki', address: 'Lekki Phase 1, Lekki, Lagos', area: 'Lekki', fee: 500 },
+    { id: 'lag1', name: 'ZMONIE Pickup \u2014 Ikeja', address: 'Computer Village Area, Ikeja, Lagos', area: 'Ikeja', fee: 500 },
+    { id: 'lag2', name: 'ZMONIE Pickup \u2014 Surulere', address: 'Adeniran Ogunsanya, Surulere, Lagos', area: 'Surulere', fee: 500 },
+    { id: 'lag3', name: 'ZMONIE Pickup \u2014 Oshodi', address: 'Oshodi Market, Oshodi, Lagos', area: 'Oshodi', fee: 500 },
+    { id: 'lag4', name: 'ZMONIE Pickup \u2014 Lekki', address: 'Lekki Phase 1, Lekki, Lagos', area: 'Lekki', fee: 500 },
   ],
   'Abuja': [
-    { id: 'abj1', name: 'ZMONIE Pickup — Wuse II', address: 'Wuse II, Abuja FCT', area: 'Wuse II', fee: 500 },
-    { id: 'abj2', name: 'ZMONIE Pickup — Garki', address: 'Area 11, Garki, Abuja FCT', area: 'Garki', fee: 500 },
-    { id: 'abj3', name: 'ZMONIE Pickup — Kubwa', address: 'Kubwa Main Market, Kubwa, Abuja FCT', area: 'Kubwa', fee: 500 },
+    { id: 'abj1', name: 'ZMONIE Pickup \u2014 Wuse II', address: 'Wuse II, Abuja FCT', area: 'Wuse II', fee: 500 },
+    { id: 'abj2', name: 'ZMONIE Pickup \u2014 Garki', address: 'Area 11, Garki, Abuja FCT', area: 'Garki', fee: 500 },
+    { id: 'abj3', name: 'ZMONIE Pickup \u2014 Kubwa', address: 'Kubwa Main Market, Kubwa, Abuja FCT', area: 'Kubwa', fee: 500 },
   ],
   'FCT': [
-    { id: 'fct1', name: 'ZMONIE Pickup — Wuse II', address: 'Wuse II, Abuja FCT', area: 'Wuse II', fee: 500 },
-    { id: 'fct2', name: 'ZMONIE Pickup — Garki', address: 'Area 11, Garki, Abuja FCT', area: 'Garki', fee: 500 },
+    { id: 'fct1', name: 'ZMONIE Pickup \u2014 Wuse II', address: 'Wuse II, Abuja FCT', area: 'Wuse II', fee: 500 },
+    { id: 'fct2', name: 'ZMONIE Pickup \u2014 Garki', address: 'Area 11, Garki, Abuja FCT', area: 'Garki', fee: 500 },
   ],
   'Rivers': [
-    { id: 'riv1', name: 'ZMONIE Pickup — Mile 1', address: 'Mile 1 Diobu, Port Harcourt, Rivers State', area: 'Mile 1, PH', fee: 500 },
-    { id: 'riv2', name: 'ZMONIE Pickup — Rumuola', address: 'Rumuola Road, Port Harcourt, Rivers State', area: 'Rumuola, PH', fee: 500 },
-    { id: 'riv3', name: 'ZMONIE Pickup — Trans-Amadi', address: 'Trans-Amadi Industrial Layout, Port Harcourt', area: 'Trans-Amadi, PH', fee: 500 },
+    { id: 'riv1', name: 'ZMONIE Pickup \u2014 Mile 1', address: 'Mile 1 Diobu, Port Harcourt, Rivers State', area: 'Mile 1, PH', fee: 500 },
+    { id: 'riv2', name: 'ZMONIE Pickup \u2014 Rumuola', address: 'Rumuola Road, Port Harcourt, Rivers State', area: 'Rumuola, PH', fee: 500 },
+    { id: 'riv3', name: 'ZMONIE Pickup \u2014 Trans-Amadi', address: 'Trans-Amadi Industrial Layout, Port Harcourt', area: 'Trans-Amadi, PH', fee: 500 },
   ],
   'Kano': [
-    { id: 'kan1', name: 'ZMONIE Pickup — Kano City', address: 'Sabon Gari Market Area, Kano', area: 'Sabon Gari, Kano', fee: 500 },
-    { id: 'kan2', name: 'ZMONIE Pickup — Bompai', address: 'Bompai Road, Nassarawa GRA, Kano', area: 'Bompai, Kano', fee: 500 },
+    { id: 'kan1', name: 'ZMONIE Pickup \u2014 Kano City', address: 'Sabon Gari Market Area, Kano', area: 'Sabon Gari, Kano', fee: 500 },
+    { id: 'kan2', name: 'ZMONIE Pickup \u2014 Bompai', address: 'Bompai Road, Nassarawa GRA, Kano', area: 'Bompai, Kano', fee: 500 },
   ],
   'Anambra': [
-    { id: 'ana1', name: 'ZMONIE Pickup — Onitsha', address: 'Onitsha Main Market Area, Onitsha, Anambra', area: 'Onitsha', fee: 500 },
-    { id: 'ana2', name: 'ZMONIE Pickup — Awka', address: 'Awka Town, Awka, Anambra State', area: 'Awka', fee: 500 },
+    { id: 'ana1', name: 'ZMONIE Pickup \u2014 Onitsha', address: 'Onitsha Main Market Area, Onitsha, Anambra', area: 'Onitsha', fee: 500 },
+    { id: 'ana2', name: 'ZMONIE Pickup \u2014 Awka', address: 'Awka Town, Awka, Anambra State', area: 'Awka', fee: 500 },
   ],
   'Enugu': [
-    { id: 'enu1', name: 'ZMONIE Pickup — Ogbete', address: 'Ogbete Main Market, Enugu', area: 'Ogbete, Enugu', fee: 500 },
-    { id: 'enu2', name: 'ZMONIE Pickup — Independence Layout', address: 'Independence Layout, Enugu', area: 'Independence Layout', fee: 500 },
+    { id: 'enu1', name: 'ZMONIE Pickup \u2014 Ogbete', address: 'Ogbete Main Market, Enugu', area: 'Ogbete, Enugu', fee: 500 },
+    { id: 'enu2', name: 'ZMONIE Pickup \u2014 Independence Layout', address: 'Independence Layout, Enugu', area: 'Independence Layout', fee: 500 },
   ],
   'Delta': [
-    { id: 'del1', name: 'ZMONIE Pickup — Warri', address: 'PTI Road, Effurun, Warri, Delta State', area: 'Warri', fee: 500 },
-    { id: 'del2', name: 'ZMONIE Pickup — Asaba', address: 'Cable Point, Asaba, Delta State', area: 'Asaba', fee: 500 },
+    { id: 'del1', name: 'ZMONIE Pickup \u2014 Warri', address: 'PTI Road, Effurun, Warri, Delta State', area: 'Warri', fee: 500 },
+    { id: 'del2', name: 'ZMONIE Pickup \u2014 Asaba', address: 'Cable Point, Asaba, Delta State', area: 'Asaba', fee: 500 },
   ],
   'Edo': [
-    { id: 'edo1', name: 'ZMONIE Pickup — Uselu', address: 'Uselu Market, Benin City, Edo State', area: 'Uselu, Benin City', fee: 500 },
-    { id: 'edo2', name: 'ZMONIE Pickup — Ring Road', address: 'Ring Road, Benin City, Edo State', area: 'Ring Road, Benin City', fee: 500 },
+    { id: 'edo1', name: 'ZMONIE Pickup \u2014 Uselu', address: 'Uselu Market, Benin City, Edo State', area: 'Uselu, Benin City', fee: 500 },
+    { id: 'edo2', name: 'ZMONIE Pickup \u2014 Ring Road', address: 'Ring Road, Benin City, Edo State', area: 'Ring Road, Benin City', fee: 500 },
   ],
   'Osun': [
-    { id: 'osu1', name: 'ZMONIE Pickup — Osogbo', address: 'Oja Oba Market Area, Osogbo, Osun State', area: 'Osogbo', fee: 400 },
-    { id: 'osu2', name: 'ZMONIE Pickup — Ile-Ife', address: 'Mayfair Area, Ile-Ife, Osun State', area: 'Ile-Ife', fee: 400 },
+    { id: 'osu1', name: 'ZMONIE Pickup \u2014 Osogbo', address: 'Oja Oba Market Area, Osogbo, Osun State', area: 'Osogbo', fee: 400 },
+    { id: 'osu2', name: 'ZMONIE Pickup \u2014 Ile-Ife', address: 'Mayfair Area, Ile-Ife, Osun State', area: 'Ile-Ife', fee: 400 },
   ],
   'Ekiti': [
     { id: 'eki1', name: 'ZMONIE Pickup &#8212; Ado-Ekiti', address: 'Fajuyi Road, Ado-Ekiti, Ekiti State', area: 'Ado-Ekiti', fee: 500 },
@@ -2720,7 +2748,7 @@ window.placeOrder = async function() {
     // Show receipt
     showReceipt(orderId, orderData);
     navigate('success');
-    showToast('Order placed successfully! 🎉');
+    showToast('Order placed successfully! \uD83C\uDF89');
   } catch(e) {
     showToast('Failed to place order: '+e.message,'error');
   }
@@ -2734,7 +2762,7 @@ function showReceipt(orderId, data) {
   const loyaltyDiscount = data.loyaltyDiscount || 0;
   const couponCode = data.couponCode || '';
   const savings = couponDiscount + loyaltyDiscount;
-  wrap.innerHTML = "\n    <h3 style=\"font-size:16px;font-weight:900;margin-bottom:14px;color:var(--orange)\">&#129534; Order Receipt</h3>\n    <div class=\"summary-row\"><span>Order ID</span><span style=\"font-weight:800\">"+(orderId)+"</span></div>\n    <div class=\"summary-row\"><span>Date</span><span>"+(new Date().toLocaleDateString())+"</span></div>\n    <div class=\"summary-row\"><span>Payment</span><span>"+(data.payment==='bank'?'Bank Transfer':data.payment==='cod'?'Cash on Delivery':'Pay on Delivery')+"</span></div>\n    <div class=\"summary-row\"><span>"+(data.deliveryType==='pickup'?'Pickup Station':'Delivery to')+"</span><span>"+(data.deliveryType==='pickup'?(data.pickupStation||data.address?.street||''):((data.address&&data.address.street)||'')+', '+((data.address&&data.address.city)||''))+"</span></div>\n    <hr style=\"border:none;border-top:1px solid var(--gray-200);margin:10px 0\">\n    "+(data.items.map(x=>'<div class="summary-row"><span>'+x.name+' &#215; '+x.qty+'</span><span>\u20A6'+(x.price*x.qty).toLocaleString()+'</span></div>').join(''))+"\n    <hr style=\"border:none;border-top:1px solid var(--gray-200);margin:10px 0\">\n    <div class=\"summary-row\"><span>Subtotal</span><span>\u20A6"+(subtotal.toLocaleString())+"</span></div>\n    <div class=\"summary-row\"><span style=\"color:"+(deliveryFee===0?'var(--green)':'inherit')+"\">Delivery Fee</span><span style=\"color:"+(deliveryFee===0?'var(--green)':'var(--gray-800)')+"\">"+(deliveryFee===0?'FREE ✅':'\u20A6'+deliveryFee.toLocaleString())+"</span></div>\n    "+(couponDiscount>0 ? '<div class="summary-row"><span style="color:var(--green)">&#127991;&#65039; Coupon ('+(couponCode||'DISCOUNT')+')</span><span style="color:var(--green);font-weight:800">-\u20A6'+couponDiscount.toLocaleString()+'</span></div>' : '')+"\n    "+(loyaltyDiscount>0 ? '<div class="summary-row"><span style="color:var(--green)">&#11088; Loyalty Points</span><span style="color:var(--green);font-weight:800">-\u20A6'+loyaltyDiscount.toLocaleString()+'</span></div>' : '')+"\n    "+(savings>0 ? '<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:6px 10px;margin:6px 0;font-size:12px;color:var(--green);font-weight:700;text-align:center">🎉 You saved \u20A6'+savings.toLocaleString()+' on this order!</div>' : '')+"\n    <div class=\"summary-row total\" style=\"border-top:2px solid var(--gray-200);padding-top:10px;margin-top:6px\"><span>Grand Total</span><span style=\"color:var(--orange)\">\u20A6"+((data.total||0).toLocaleString())+"</span></div>\n    "+(data.payment==='bank'?'<div style="margin-top:12px;background:var(--gray-50);padding:10px;border-radius:8px;font-size:12px"><p style="font-weight:700;color:var(--green);margin-bottom:4px">✅ Cash on Delivery</p><p>Please have the exact amount ready when our delivery agent arrives.</p><p style="color:var(--orange);font-weight:700;margin-top:6px">Order Reference: '+orderId+'</p></div>':'')+"\n  ";
+  wrap.innerHTML = "\n    <h3 style=\"font-size:16px;font-weight:900;margin-bottom:14px;color:var(--orange)\">&#129534; Order Receipt</h3>\n    <div class=\"summary-row\"><span>Order ID</span><span style=\"font-weight:800\">"+(orderId)+"</span></div>\n    <div class=\"summary-row\"><span>Date</span><span>"+(new Date().toLocaleDateString())+"</span></div>\n    <div class=\"summary-row\"><span>Payment</span><span>"+(data.payment==='bank'?'Bank Transfer':data.payment==='cod'?'Cash on Delivery':'Pay on Delivery')+"</span></div>\n    <div class=\"summary-row\"><span>"+(data.deliveryType==='pickup'?'Pickup Station':'Delivery to')+"</span><span>"+(data.deliveryType==='pickup'?(data.pickupStation||data.address?.street||''):((data.address&&data.address.street)||'')+', '+((data.address&&data.address.city)||''))+"</span></div>\n    <hr style=\"border:none;border-top:1px solid var(--gray-200);margin:10px 0\">\n    "+(data.items.map(x=>'<div class="summary-row"><span>'+x.name+' &#215; '+x.qty+'</span><span>\u20A6'+(x.price*x.qty).toLocaleString()+'</span></div>').join(''))+"\n    <hr style=\"border:none;border-top:1px solid var(--gray-200);margin:10px 0\">\n    <div class=\"summary-row\"><span>Subtotal</span><span>\u20A6"+(subtotal.toLocaleString())+"</span></div>\n    <div class=\"summary-row\"><span style=\"color:"+(deliveryFee===0?'var(--green)':'inherit')+"\">Delivery Fee</span><span style=\"color:"+(deliveryFee===0?'var(--green)':'var(--gray-800)')+"\">"+(deliveryFee===0?'FREE \u2705':'\u20A6'+deliveryFee.toLocaleString())+"</span></div>\n    "+(couponDiscount>0 ? '<div class="summary-row"><span style="color:var(--green)">&#127991;&#65039; Coupon ('+(couponCode||'DISCOUNT')+')</span><span style="color:var(--green);font-weight:800">-\u20A6'+couponDiscount.toLocaleString()+'</span></div>' : '')+"\n    "+(loyaltyDiscount>0 ? '<div class="summary-row"><span style="color:var(--green)">&#11088; Loyalty Points</span><span style="color:var(--green);font-weight:800">-\u20A6'+loyaltyDiscount.toLocaleString()+'</span></div>' : '')+"\n    "+(savings>0 ? '<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:6px 10px;margin:6px 0;font-size:12px;color:var(--green);font-weight:700;text-align:center">\uD83C\uDF89 You saved \u20A6'+savings.toLocaleString()+' on this order!</div>' : '')+"\n    <div class=\"summary-row total\" style=\"border-top:2px solid var(--gray-200);padding-top:10px;margin-top:6px\"><span>Grand Total</span><span style=\"color:var(--orange)\">\u20A6"+((data.total||0).toLocaleString())+"</span></div>\n    "+(data.payment==='bank'?'<div style="margin-top:12px;background:var(--gray-50);padding:10px;border-radius:8px;font-size:12px"><p style="font-weight:700;color:var(--green);margin-bottom:4px">\u2705 Cash on Delivery</p><p>Please have the exact amount ready when our delivery agent arrives.</p><p style="color:var(--orange);font-weight:700;margin-top:6px">Order Reference: '+orderId+'</p></div>':'')+"\n  ";
 }
 
 window.printReceipt = function() { window.print(); };
@@ -3119,7 +3147,7 @@ window.viewOrderDetails = async function(docId) {
     const statusColors = {pending:'#92400e',confirmed:'#1e40af',processing:'#6b21a8',out:'#0f766e',delivered:'#15803d',cancelled:'#991b1b'};
     const statusBg = {pending:'#fef3c7',confirmed:'#dbeafe',processing:'#f3e8ff',out:'#ccfbf1',delivered:'#dcfce7',cancelled:'#fee2e2'};
 
-    body.innerHTML = "\n      \n      <div style=\"padding:16px;border-bottom:1px solid var(--gray-100)\">\n        <div style=\"display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px\">\n          <div>\n            <div style=\"font-size:11px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:.5px\">Order ID</div>\n            <div style=\"font-size:15px;font-weight:900;color:var(--orange)\">"+(o.orderId||docId.slice(0,10))+"</div>\n          </div>\n          <span style=\"background:"+(statusBg[statusKey]||'#f3f4f6')+";color:"+(statusColors[statusKey]||'#374151')+";font-size:12px;font-weight:800;padding:5px 12px;border-radius:99px\">"+((o.status||'pending').replace(/_/g,' ').replace(/\b\w/g,l=>l.toUpperCase()))+"</span>\n        </div>\n        <div style=\"font-size:12px;color:var(--gray-400);margin-top:4px\">"+(o.createdAt ? new Date(o.createdAt.toDate()).toLocaleString('en-NG',{dateStyle:'medium',timeStyle:'short'}) : '')+"</div>\n      </div>\n\n      <div style=\"padding:16px;border-bottom:1px solid var(--gray-100)\">\n        <div style=\"font-size:12px;font-weight:800;text-transform:uppercase;color:var(--gray-500);letter-spacing:.5px;margin-bottom:10px\">🛒 Items Ordered</div>\n        "+(items.length ? items.map(item=>{
+    body.innerHTML = "\n      \n      <div style=\"padding:16px;border-bottom:1px solid var(--gray-100)\">\n        <div style=\"display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px\">\n          <div>\n            <div style=\"font-size:11px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:.5px\">Order ID</div>\n            <div style=\"font-size:15px;font-weight:900;color:var(--orange)\">"+(o.orderId||docId.slice(0,10))+"</div>\n          </div>\n          <span style=\"background:"+(statusBg[statusKey]||'#f3f4f6')+";color:"+(statusColors[statusKey]||'#374151')+";font-size:12px;font-weight:800;padding:5px 12px;border-radius:99px\">"+((o.status||'pending').replace(/_/g,' ').replace(/\b\w/g,l=>l.toUpperCase()))+"</span>\n        </div>\n        <div style=\"font-size:12px;color:var(--gray-400);margin-top:4px\">"+(o.createdAt ? new Date(o.createdAt.toDate()).toLocaleString('en-NG',{dateStyle:'medium',timeStyle:'short'}) : '')+"</div>\n      </div>\n\n      <div style=\"padding:16px;border-bottom:1px solid var(--gray-100)\">\n        <div style=\"font-size:12px;font-weight:800;text-transform:uppercase;color:var(--gray-500);letter-spacing:.5px;margin-bottom:10px\">\uD83D\uDED2 Items Ordered</div>\n        "+(items.length ? items.map(item=>{
           const imgHtml = item.image
             ? '<img src="'+item.image+'" style="width:52px;height:52px;object-fit:cover;border-radius:6px;flex-shrink:0" onerror="this.style.display=\'none\'">'
             : '<div style="width:52px;height:52px;background:var(--gray-200);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:18px"><i class="fas fa-box"></i></div>';
@@ -3242,8 +3270,9 @@ window.loadAdminChats = async function() {
 window.switchAdminTab = function(tab, btn) {
   document.querySelectorAll('.admin-tab-content').forEach(el=>el.classList.add('hidden'));
   document.querySelectorAll('.admin-tab').forEach(el=>el.classList.remove('active'));
-  document.getElementById('admin-'+tab).classList.remove('hidden');
-  btn.classList.add('active');
+  const tc = document.getElementById('admin-'+tab);
+  if(tc) tc.classList.remove('hidden');
+  if(btn) btn.classList.add('active');
   if(tab==='products') loadAdminProducts();
   else if(tab==='orders') loadAdminOrders();
   else if(tab==='users') loadAdminUsers();
@@ -3252,6 +3281,7 @@ window.switchAdminTab = function(tab, btn) {
   else if(tab==='banners') loadAdminBanners();
   else if(tab==='analytics') loadAnalytics();
   else if(tab==='coupons') loadAdminCoupons();
+  else if(tab==='manageadmins' && isSuperAdmin) loadSubAdminList();
 };
 
 window.loadAdminUsers = async function() {
@@ -3338,7 +3368,7 @@ function getSystemContext() {
 
 function smartLocalReply(text) {
   const t = text.toLowerCase();
-  if (/^(hi|hello|hey|good morning|good evening|sup)\b/.test(t)) return "Hello! 👋 Welcome to ZMONIE Market! I'm your support assistant. Ask me about products, prices, delivery, checkout, or orders!";
+  if (/^(hi|hello|hey|good morning|good evening|sup)\b/.test(t)) return "Hello! \uD83D\uDC4B Welcome to ZMONIE Market! I'm your support assistant. Ask me about products, prices, delivery, checkout, or orders!";
   const found = allProducts.filter(p => (p.name||'').toLowerCase().split(' ').some(w => w.length > 3 && t.includes(w)));
   if (found.length) {
     const p = found[0]; const price = Number(p.discountPrice) > 0 ? Number(p.discountPrice) : Number(p.price);
@@ -3355,7 +3385,7 @@ function smartLocalReply(text) {
   if (/contact|whatsapp|call|reach/.test(t)) return "&#128222; Contact: WhatsApp +234 814 982 5555 | Email: Zmoniemarket@gmail.com\nMon-Sat 8AM-8PM";
   if (/size|sizing|fit/.test(t)) return "&#128207; Sizes are shown on each product page. Not sure? Message us on WhatsApp: +234 814 982 5555";
   if (/discount|sale|promo|flash/.test(t)) return "&#128293; Check Flash Sales on the home page for deals! New offers added regularly &#128064;";
-  if (/categor|what.*sell|collection/.test(t)) return "🛒 We sell: Men's & Women's Fashion, Electronics, Phones, Baby Products, Home & Kitchen, Beauty, Sports, Groceries & Toys!";
+  if (/categor|what.*sell|collection/.test(t)) return "\uD83D\uDED2 We sell: Men's & Women's Fashion, Electronics, Phones, Baby Products, Home & Kitchen, Beauty, Sports, Groceries & Toys!";
   if (/account|login|sign in|register|password/.test(t)) return "&#128100; Tap the person icon &#8594; Sign In or Create Account. You can also sign in with Google. Need account help?";
   return null; // null = show human transfer option
 }
@@ -3468,7 +3498,7 @@ function startSupportListener() {
     if (data.humanJoined && !humanJoined) {
       humanJoined = true;
       setChatStatus('human');
-      addSystemMsg('✅ A customer care agent has joined the chat');
+      addSystemMsg('\u2705 A customer care agent has joined the chat');
     }
     // Show new admin messages in real-time
     const msgs = data.messages || [];
@@ -3602,7 +3632,7 @@ window.toggleChatbot = function() {
     if (dot) dot.style.display = 'none';
     if (!document.getElementById('chat-messages').innerHTML) {
       setChatStatus('ai');
-      addChatMsg("Hello! 👋 Welcome to *ZMONIE Support*! I'm your AI assistant.\n\nAsk me about products, prices, delivery, orders &#8212; or tap a quick option below!", 'bot');
+      addChatMsg("Hello! \uD83D\uDC4B Welcome to *ZMONIE Support*! I'm your AI assistant.\n\nAsk me about products, prices, delivery, orders &#8212; or tap a quick option below!", 'bot');
     }
   }
 };
@@ -3631,7 +3661,7 @@ window.loadAdminChats = async function() {
       const lastMsg = (c.messages||[]).slice(-1)[0];
       const unread = !c.adminRead && lastMsg?.role === 'user';
       const statusClass = c.status === 'waiting' ? 'badge-waiting' : c.status === 'solved' ? 'badge-solved' : c.status === 'human' ? 'badge-active' : 'badge-pending';
-      const statusLabel = c.status === 'waiting' ? '&#128308; Waiting' : c.status === 'solved' ? '✅ Solved' : c.status === 'human' ? '&#128994; Active' : '&#128993; Pending';
+      const statusLabel = c.status === 'waiting' ? '&#128308; Waiting' : c.status === 'solved' ? '\u2705 Solved' : c.status === 'human' ? '&#128994; Active' : '&#128993; Pending';
       return '<div class="support-chat-item'+(unread?' unread':'')+'" onclick="openSupportChat(\''+c.id+'\')">'+
         '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">'+
           '<div style="font-size:13px;font-weight:800">'+(c.userName||c.userEmail||'Guest')+'</div>'+
@@ -3667,7 +3697,7 @@ window.openSupportChat = async function(sessionId) {
         + '<div><div style="font-size:14px;font-weight:800">'+(chat.userName||'Guest')+'</div><div style="font-size:12px;color:var(--gray-500)">'+(chat.userEmail||'')+'</div></div>'
         + '<div style="display:flex;gap:6px;flex-wrap:wrap">'
           + '<button onclick="updateChatStatus(\''+sessionId+'\',\'active\')" style="font-size:11px;padding:5px 10px;background:#dcfce7;color:#16a34a;border:none;border-radius:6px;cursor:pointer;font-weight:700">&#128994; Active</button>'
-          + '<button onclick="updateChatStatus(\''+sessionId+'\',\'solved\')" style="font-size:11px;padding:5px 10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:6px;cursor:pointer;font-weight:700">✅ Solved</button>'
+          + '<button onclick="updateChatStatus(\''+sessionId+'\',\'solved\')" style="font-size:11px;padding:5px 10px;background:#f3f4f6;color:#6b7280;border:none;border-radius:6px;cursor:pointer;font-weight:700">\u2705 Solved</button>'
           + '<button onclick="joinAsHuman(\''+sessionId+'\')" style="font-size:11px;padding:5px 10px;background:var(--orange);color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700">&#128100; Join Chat</button>'
         + '</div>'
       + '</div>'
@@ -3706,7 +3736,7 @@ window.sendAdminReply = async function(sessionId) {
       humanJoined: true, mode: 'human', status: 'active'
     });
     if(input) input.value = '';
-    showToast('Reply sent ✅','success');
+    showToast('Reply sent \u2705','success');
     openSupportChat(sessionId);
   } catch(e) { showToast('Error: '+e.message,'error'); }
 };
@@ -3827,7 +3857,7 @@ window.saveBanner = async function() {
     // Use slotId as the Firestore document ID &#8212; always 1 doc per slot, no duplicates
     await setDoc(doc(db,'banners',slotId), data);
     closeModal('modal-banner');
-    showToast('Slide saved! ✅','success');
+    showToast('Slide saved! \u2705','success');
     await renderSlider();
     loadAdminBanners();
   } catch(e) { showToast('Error: '+e.message,'error'); }
@@ -3841,7 +3871,7 @@ window.resetBannerSlot = async function(slotId, firestoreId) {
     if(firestoreId && firestoreId !== slotId) {
       try { await deleteDoc(doc(db,'banners',firestoreId)); } catch(e){}
     }
-    showToast('Reset to default ✅','success');
+    showToast('Reset to default \u2705','success');
     await renderSlider();
     loadAdminBanners();
   } catch(e) { showToast('Error resetting slide','error'); }
@@ -3925,6 +3955,20 @@ function _showPage(page) {
 
 window.navigate = function(page) {
   if(page==='admin' && !isAdmin) { navigate('home'); return; }
+  // Hide/show superadmin-only tabs
+  if(page==='admin') {
+    document.querySelectorAll('.superadmin-tab').forEach(el => {
+      el.style.display = isSuperAdmin ? '' : 'none';
+    });
+    // If subadmin lands on admin, default to orders tab
+    if(!isSuperAdmin) {
+      setTimeout(() => {
+        const ordersBtn = document.querySelector('.admin-tab:not(.superadmin-tab)');
+        if(ordersBtn) ordersBtn.click();
+      }, 50);
+    }
+    if(isSuperAdmin) loadSubAdminList();
+  }
   _showPage(page);
   if(_navStack[_navStack.length-1] !== page) {
     _navStack.push(page);
@@ -3964,7 +4008,7 @@ window.sendContactMessage = function() {
   const msg = document.getElementById('contact-msg').value.trim();
   if(!name||!msg) return showToast('Please fill in your name and message','error');
   const wa = encodeURIComponent(
-    "Hello ZMONIE! 👋\n\nName: "+(name)+"\nContact: "+(email||'N/A')+"\n\nMessage:\n"+(msg)+""
+    "Hello ZMONIE! \uD83D\uDC4B\n\nName: "+(name)+"\nContact: "+(email||'N/A')+"\n\nMessage:\n"+(msg)+""
   );
   window.open("https://wa.me/2348149825555?text="+(wa)+"", '_blank');
   document.getElementById('contact-name').value='';
@@ -4294,7 +4338,7 @@ window.saveCoupon = async function() {
       await addDoc(collection(db,'coupons'), data);
     }
     closeModal('modal-coupon');
-    showToast('Coupon saved! ✅','success');
+    showToast('Coupon saved! \u2705','success');
     loadAdminCoupons();
   } catch(e) { showToast('Error saving coupon: '+e.message,'error'); }
 };
@@ -4461,8 +4505,8 @@ window.submitBulkOrder = function() {
   const product = document.getElementById('bulk-product-name').value;
   if(!name||!phone||!qty) return showToast('Please fill name, phone and quantity','error');
   const msg = encodeURIComponent(
-    '&#128230; *Bulk/Wholesale Request — ZMONIE Market!*\n\n'+
-    '🛒 *Product:* '+product+'\n'+
+    '&#128230; *Bulk/Wholesale Request \u2014 ZMONIE Market!*\n\n'+
+    '\uD83D\uDED2 *Product:* '+product+'\n'+
     '&#128100; *Name:* '+name+'\n'+
     '&#128241; *Phone:* '+phone+'\n'+
     '&#128290; *Quantity:* '+qty+'\n'+
@@ -4602,7 +4646,7 @@ window.exportOrdersCSV = async function() {
     const a = document.createElement('a');
     a.href=url; a.download='zmonie-orders-'+new Date().toISOString().slice(0,10)+'.csv';
     a.click(); URL.revokeObjectURL(url);
-    showToast('Orders exported to CSV ✅','success');
+    showToast('Orders exported to CSV \u2705','success');
   } catch(e) { showToast('Export failed: '+e.message,'error'); }
 };
 
@@ -4709,7 +4753,7 @@ window.loadAnalytics = async function() {
       lowEl.innerHTML = [...outStock.map(p=>'<div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fee2e2;border-radius:6px;margin-bottom:6px;font-size:13px"><span style="font-weight:700">'+p.name+'</span><span style="color:var(--red);font-weight:800">OUT OF STOCK</span></div>'),
         ...lowStock.map(p=>'<div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fef3c7;border-radius:6px;margin-bottom:6px;font-size:13px"><span style="font-weight:700">'+p.name+'</span><span style="color:#d97706;font-weight:800">'+p.stock+' left</span></div>')
       ].join('');
-    } else { lowEl.innerHTML='<p style="color:var(--green);font-size:13px">✅ All products have good stock</p>'; }
+    } else { lowEl.innerHTML='<p style="color:var(--green);font-size:13px">\u2705 All products have good stock</p>'; }
     // Top products
     const topProds = [...allProducts].sort((a,b)=>(b.soldCount||0)-(a.soldCount||0)).slice(0,5);
     document.getElementById('top-products-list').innerHTML = topProds.map((p,i)=>
@@ -4753,7 +4797,7 @@ window.sendDailySummaryWhatsApp = async function() {
     const msg = encodeURIComponent(
       '&#128202; *ZMONIE Market &#8212; Daily Summary*\n'+
       '&#128197; '+new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'\n\n'+
-      '🛒 *Today\'s Orders:* '+todayOrders.length+'\n'+
+      '\uD83D\uDED2 *Today\'s Orders:* '+todayOrders.length+'\n'+
       '&#128176; *Today\'s Revenue:* \u20A6'+todayRevenue.toLocaleString()+'\n'+
       '&#128230; *Total All-time Orders:* '+orders.length+'\n'+
       '&#128181; *Total Revenue:* \u20A6'+totalRevenue.toLocaleString()+'\n'+
@@ -4770,15 +4814,15 @@ function notifyCustomerStatusUpdate(order) {
   const phone = (order.phone || order.address.phone).replace(/[^0-9]/g,'');
   if(!phone) return;
   const statusMessages = {
-    confirmed: '✅ Your order '+order.orderId+' has been confirmed! We are preparing it for you.',
+    confirmed: '\u2705 Your order '+order.orderId+' has been confirmed! We are preparing it for you.',
     processing: '&#128260; Your order '+order.orderId+' is being processed and will be shipped soon.',
     out_for_delivery: '&#128666; Your order '+order.orderId+' is out for delivery! Expect it today.',
-    delivered: '🎉 Your order '+order.orderId+' has been delivered! Thank you for shopping with ZMONIE Market.',
+    delivered: '\uD83C\uDF89 Your order '+order.orderId+' has been delivered! Thank you for shopping with ZMONIE Market.',
     cancelled: '&#10060; Your order '+order.orderId+' has been cancelled. Contact us if you have questions.'
   };
   const msg = statusMessages[order.status];
   if(!msg) return;
-  const fullMsg = encodeURIComponent('Hello '+((order.address&&order.address.name)||'')+'!\n\n'+msg+'\n\n— ZMONIE Market 🛒');
+  const fullMsg = encodeURIComponent('Hello '+((order.address&&order.address.name)||'')+'!\n\n'+msg+'\n\n\u2014 ZMONIE Market \uD83D\uDED2');
   window.open('https://wa.me/'+phone+'?text='+fullMsg,'_blank');
 }
 
@@ -4831,7 +4875,7 @@ document.getElementById('pwa-install-btn').addEventListener('click', async () =>
     _pwaInstallEvent.prompt();
     const { outcome } = await _pwaInstallEvent.userChoice;
     if(outcome === 'accepted') {
-      showToast('ZMONIE Market installed! 🎉','success');
+      showToast('ZMONIE Market installed! \uD83C\uDF89','success');
       document.getElementById('pwa-install-banner').classList.remove('show');
     }
     _pwaInstallEvent = null;
@@ -4880,10 +4924,53 @@ if('serviceWorker' in navigator) {
   });
 }
 
+// ===== SUPER ADMIN - Manage Sub-Admins =====
+async function loadSubAdminList() {
+  const el = document.getElementById('sub-admin-list');
+  if(!el || !isSuperAdmin) return;
+  el.innerHTML = '<p style="color:var(--gray-400);font-size:13px"><i class="fas fa-spinner fa-spin"></i> Loading...</p>';
+  try {
+    const snap = await getDocs(collection(db,'zmonie_admins'));
+    if(snap.empty) { el.innerHTML = '<p style="color:var(--gray-400);font-size:13px">No sub-admins added yet.</p>'; return; }
+    let html = '<table class="admin-table"><thead><tr><th>Email</th><th>Name</th><th>Added</th><th>Action</th></tr></thead><tbody>';
+    snap.forEach(d => {
+      const a = d.data();
+      html += '<tr><td><b>'+d.id+'</b></td><td>'+(a.name||'-')+'</td><td>'+(a.addedAt ? new Date(a.addedAt).toLocaleDateString('en-NG') : '-')+'</td><td><button class="btn-danger" onclick="removeSubAdmin(\'' + d.id + '\')"><i class="fas fa-trash"></i> Remove</button></td></tr>';
+    });
+    html += '</tbody></table>';
+    el.innerHTML = html;
+  } catch(e) { el.innerHTML = '<p style="color:red;font-size:13px">Error: '+e.message+'</p>'; }
+}
+
+async function addSubAdmin() {
+  if(!isSuperAdmin) return;
+  const emailEl = document.getElementById('new-admin-email');
+  const nameEl = document.getElementById('new-admin-name');
+  const email = emailEl.value.trim().toLowerCase();
+  const name = nameEl.value.trim();
+  if(!email || !email.includes('@')) { showToast('Enter a valid email address','error'); return; }
+  if(email === ADMIN_EMAIL.toLowerCase()) { showToast('That is already the Super Admin email','error'); return; }
+  try {
+    await setDoc(doc(db,'zmonie_admins', email), { email, name: name||email.split('@')[0], addedAt: Date.now(), role: 'admin' });
+    showToast('Sub-admin added: '+email,'');
+    emailEl.value = ''; nameEl.value = '';
+    loadSubAdminList();
+  } catch(e) { showToast('Error: '+e.message,'error'); }
+}
+
+async function removeSubAdmin(email) {
+  if(!isSuperAdmin || !confirm('Remove '+email+' as sub-admin?')) return;
+  try {
+    await deleteDoc(doc(db,'zmonie_admins', email));
+    showToast('Removed: '+email,'');
+    loadSubAdminList();
+  } catch(e) { showToast('Error: '+e.message,'error'); }
+}
+
+
+
 init();
 
 </script>
-</body>
-</html></script>
 </body>
 </html>
