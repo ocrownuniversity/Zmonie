@@ -1818,6 +1818,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <button class="admin-tab" data-admin-tab="banners" data-role-tab="superadmin,manager,uploader" onclick="switchAdminTab('banners',this)">&#128444; Banners</button>
       <button class="admin-tab" data-admin-tab="chats" data-role-tab="superadmin,manager,subadmin" onclick="switchAdminTab('chats',this)">&#128172; Chats</button>
       <button class="admin-tab" data-admin-tab="manageadmins" data-role-tab="superadmin" onclick="switchAdminTab('manageadmins',this)" style="background:#1e3a8a;color:#fff;border-color:#1e3a8a">&#128737; Manage Admins</button>
+      <button class="admin-tab" data-admin-tab="bulkimport" data-role-tab="superadmin,manager,uploader" onclick="switchAdminTab('bulkimport',this)" style="background:#065f46;color:#fff;border-color:#065f46">&#128196; Bulk Import</button>
     </div>
     
     <div id="admin-coupons" class="admin-tab-content hidden">
@@ -1985,7 +1986,112 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       </div>
     </div>
 
-    <div id="admin-users" class="admin-tab-content hidden">
+    <div id="admin-bulkimport" class="admin-tab-content hidden">
+      <div class="admin-card" style="border-top:4px solid #065f46">
+        <div class="admin-card-title" style="color:#065f46;margin-bottom:4px">&#128196; Bulk Import Products</div>
+        <p style="font-size:12px;color:var(--gray-500);margin-bottom:14px">Upload a CSV or Excel file to import multiple products at once. Download the template to get started.</p>
+
+        <!-- Step 1: Download template + Upload -->
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center">
+          <button class="btn-primary" onclick="downloadCSVTemplate()" style="background:#065f46;border-color:#065f46;font-size:13px">
+            &#11015; Download CSV Template
+          </button>
+          <label style="display:inline-flex;align-items:center;gap:8px;background:#f0fdf4;border:2px dashed #86efac;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:13px;font-weight:700;color:#065f46">
+            &#128196; Choose CSV / Excel File
+            <input type="file" id="bulk-file-input" accept=".csv,.xlsx,.xls" style="display:none" onchange="handleBulkFile(this)">
+          </label>
+          <span id="bulk-filename" style="font-size:12px;color:var(--gray-500)">No file chosen</span>
+        </div>
+
+        <!-- CSV Format Guide -->
+        <div id="bulk-format-guide" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px">
+          <div style="font-weight:800;color:#065f46;margin-bottom:6px">&#128196; Required CSV Columns:</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;color:#374151">
+            <span><b>name*</b> - Product name</span>
+            <span><b>price*</b> - Selling price (numbers only)</span>
+            <span><b>category*</b> - Product category</span>
+            <span><b>stock*</b> - Quantity in stock</span>
+            <span><b>description</b> - Product description</span>
+            <span><b>discountPrice</b> - Original/slashed price</span>
+            <span><b>sku</b> - Unique SKU (for updates)</span>
+            <span><b>images</b> - Image URLs (comma-separated)</span>
+            <span><b>sizes</b> - Sizes (comma-separated)</span>
+            <span><b>colours</b> - Colours (comma-separated)</span>
+            <span><b>isFlash</b> - true/false for flash sale</span>
+            <span><b>status</b> - active/inactive</span>
+          </div>
+          <div style="margin-top:6px;color:#6b7280">* = Required fields</div>
+        </div>
+
+        <!-- Progress bar -->
+        <div id="bulk-progress-wrap" style="display:none;margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:4px">
+            <span id="bulk-progress-label">Processing...</span>
+            <span id="bulk-progress-pct">0%</span>
+          </div>
+          <div style="background:#e5e7eb;border-radius:20px;height:10px;overflow:hidden">
+            <div id="bulk-progress-bar" style="background:#065f46;height:100%;width:0%;transition:width 0.3s;border-radius:20px"></div>
+          </div>
+        </div>
+
+        <!-- Preview Table -->
+        <div id="bulk-preview-wrap" style="display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+            <div>
+              <span style="font-size:14px;font-weight:800;color:#111">Preview</span>
+              <span id="bulk-preview-counts" style="font-size:12px;color:var(--gray-500);margin-left:8px"></span>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button onclick="importAllValid()" id="bulk-import-btn" class="btn-primary" style="background:#065f46;border-color:#065f46;font-size:13px">
+                &#9989; Import Valid Products
+              </button>
+              <button onclick="clearBulkImport()" class="btn-secondary" style="font-size:13px">&#10005; Clear</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+            <table class="admin-table" id="bulk-preview-table">
+              <thead>
+                <tr>
+                  <th style="min-width:30px">#</th>
+                  <th style="min-width:140px">Name</th>
+                  <th style="min-width:80px">Category</th>
+                  <th style="min-width:70px">Price</th>
+                  <th style="min-width:50px">Stock</th>
+                  <th style="min-width:80px">SKU</th>
+                  <th style="min-width:60px">Status</th>
+                  <th style="min-width:100px">Errors</th>
+                </tr>
+              </thead>
+              <tbody id="bulk-preview-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Import Report -->
+        <div id="bulk-report-wrap" style="display:none;margin-top:16px">
+          <div style="font-size:14px;font-weight:800;color:#111;margin-bottom:10px">&#128202; Import Report</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+            <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px;text-align:center">
+              <div id="report-success" style="font-size:24px;font-weight:900;color:#15803d">0</div>
+              <div style="font-size:11px;color:#166534;font-weight:700">IMPORTED</div>
+            </div>
+            <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px;text-align:center">
+              <div id="report-failed" style="font-size:24px;font-weight:900;color:#dc2626">0</div>
+              <div style="font-size:11px;color:#991b1b;font-weight:700">FAILED</div>
+            </div>
+            <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:12px;text-align:center">
+              <div id="report-updated" style="font-size:24px;font-weight:900;color:#1d4ed8">0</div>
+              <div style="font-size:11px;color:#1e40af;font-weight:700">UPDATED</div>
+            </div>
+          </div>
+          <div id="bulk-report-details" style="font-size:12px;max-height:200px;overflow-y:auto;background:#f8fafc;border-radius:8px;padding:10px"></div>
+          <button onclick="clearBulkImport()" class="btn-secondary" style="margin-top:10px;font-size:13px">&#10005; Close Report</button>
+        </div>
+
+      </div>
+    </div>
+
+        <div id="admin-users" class="admin-tab-content hidden">
       <div class="admin-card">
         <div class="admin-card-title">
           <span>Registered Users</span>
@@ -4401,7 +4507,7 @@ function applyAdminRoleTabs() {
 function canAccessTab(tab) {
   if(isSuperAdmin) return true;
   if(isManager) return tab !== 'manageadmins';
-  if(isUploader) return tab === 'products' || tab === 'banners';
+  if(isUploader) return tab === 'products' || tab === 'banners' || tab === 'bulkimport';
   if(isSubAdmin) return ['orders','analytics','users','reviews','chats'].includes(tab);
   return false;
 }
@@ -4422,6 +4528,7 @@ window.switchAdminTab = function(tab, btn) {
   else if(tab==='analytics') loadAnalytics();
   else if(tab==='coupons') loadAdminCoupons();
   else if(tab==='manageadmins' && isSuperAdmin) loadSubAdminList();
+  else if(tab==='bulkimport') initBulkImport();
 };
 
 window.loadAdminUsers = async function() {
@@ -6138,6 +6245,244 @@ window.changeAdminRole = async function changeAdminRole(email, newRole) {
   } catch(e) { showToast('Error: '+e.message,'error'); }
 }
 
+
+// ===== BULK IMPORT SYSTEM =====
+var _bulkRows = [];
+var _bulkImporting = false;
+
+function initBulkImport() {
+  if(!isAdmin) return;
+  // SheetJS CDN load if not present
+  if(!window.XLSX) {
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    document.head.appendChild(s);
+  }
+}
+
+window.downloadCSVTemplate = function() {
+  var header = 'name,category,price,discountPrice,stock,description,sku,images,sizes,colours,isFlash,status';
+  var sample = 'Wireless Earbuds,Electronics,15000,20000,50,High quality earbuds with noise cancellation,SKU-001,https://example.com/img.jpg,Small|Medium|Large,Black|White,false,active';
+  var csv = header + '\n' + sample + '\n';
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'zmonie_products_template.csv';
+  a.click();
+  showToast('Template downloaded!');
+};
+
+window.handleBulkFile = function(input) {
+  var file = input.files[0];
+  if(!file) return;
+  document.getElementById('bulk-filename').textContent = file.name;
+  var ext = file.name.split('.').pop().toLowerCase();
+  if(ext === 'csv') {
+    var reader = new FileReader();
+    reader.onload = function(e) { parseBulkCSV(e.target.result); };
+    reader.readAsText(file);
+  } else if(ext === 'xlsx' || ext === 'xls') {
+    if(!window.XLSX) {
+      showToast('Loading Excel parser, please try again in 2 seconds...', 'info');
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+      s.onload = function() { readExcelFile(file); };
+      document.head.appendChild(s);
+    } else { readExcelFile(file); }
+  } else {
+    showToast('Please upload a CSV or Excel file', 'error');
+  }
+};
+
+function readExcelFile(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var wb = XLSX.read(new Uint8Array(e.target.result), {type:'array'});
+      var ws = wb.Sheets[wb.SheetNames[0]];
+      var csv = XLSX.utils.sheet_to_csv(ws);
+      parseBulkCSV(csv);
+    } catch(err) { showToast('Failed to read Excel file: ' + err.message, 'error'); }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function parseBulkCSV(csvText) {
+  var lines = csvText.trim().split('\n').filter(function(l){return l.trim();});
+  if(lines.length < 2) { showToast('File is empty or missing data rows', 'error'); return; }
+
+  // Parse header
+  var headers = parseCSVLine(lines[0]).map(function(h){return h.trim().toLowerCase();});
+  var required = ['name','price','category','stock'];
+  var missing = required.filter(function(r){return headers.indexOf(r) === -1;});
+  if(missing.length) {
+    showToast('Missing required columns: ' + missing.join(', '), 'error');
+    return;
+  }
+
+  _bulkRows = [];
+  for(var i = 1; i < lines.length; i++) {
+    if(!lines[i].trim()) continue;
+    var vals = parseCSVLine(lines[i]);
+    var row = {};
+    headers.forEach(function(h, idx){ row[h] = (vals[idx]||'').trim(); });
+    var errors = validateBulkRow(row, i);
+    _bulkRows.push({ row: row, errors: errors, status: errors.length ? 'error' : 'valid', lineNum: i+1 });
+  }
+
+  renderBulkPreview();
+}
+
+function parseCSVLine(line) {
+  var result = [], cur = '', inQ = false;
+  for(var i = 0; i < line.length; i++) {
+    var c = line[i];
+    if(c === '"') { inQ = !inQ; }
+    else if(c === ',' && !inQ) { result.push(cur); cur = ''; }
+    else { cur += c; }
+  }
+  result.push(cur);
+  return result;
+}
+
+function validateBulkRow(row, idx) {
+  var errs = [];
+  if(!row.name || row.name.length < 2) errs.push('Name required');
+  if(!row.price || isNaN(Number(row.price)) || Number(row.price) <= 0) errs.push('Invalid price');
+  if(!row.category || row.category.length < 2) errs.push('Category required');
+  if(row.stock === '' || isNaN(Number(row.stock)) || Number(row.stock) < 0) errs.push('Invalid stock');
+  if(row.discountprice && row.discountprice !== '' && isNaN(Number(row.discountprice))) errs.push('Invalid discount price');
+  if(row.status && row.status !== '' && ['active','inactive'].indexOf(row.status.toLowerCase()) === -1) errs.push('Status must be active or inactive');
+  if(row.isflash && row.isflash !== '' && ['true','false','0','1'].indexOf(row.isflash.toLowerCase()) === -1) errs.push('isFlash must be true or false');
+  return errs;
+}
+
+function renderBulkPreview() {
+  var valid = _bulkRows.filter(function(r){return r.errors.length===0;}).length;
+  var invalid = _bulkRows.filter(function(r){return r.errors.length>0;}).length;
+  document.getElementById('bulk-preview-counts').textContent =
+    valid + ' valid, ' + invalid + ' with errors (total: ' + _bulkRows.length + ')';
+
+  var html = '';
+  _bulkRows.forEach(function(item, i) {
+    var r = item.row;
+    var isValid = item.errors.length === 0;
+    var bg = isValid ? '' : 'background:#fff5f5';
+    var statusBadge = item.status === 'valid'
+      ? '<span style="color:#15803d;font-weight:800;font-size:11px">\u2713 Valid</span>'
+      : '<span style="color:#dc2626;font-weight:800;font-size:11px">\u2717 Error</span>';
+    html += '<tr style="' + bg + '">'
+      + '<td style="font-size:11px">' + item.lineNum + '</td>'
+      + '<td style="font-size:12px;font-weight:600">' + esc(r.name||'') + '</td>'
+      + '<td style="font-size:11px">' + esc(r.category||'') + '</td>'
+      + '<td style="font-size:12px;font-weight:700">\u20A6' + esc(r.price||'') + '</td>'
+      + '<td style="font-size:11px">' + esc(r.stock||'0') + '</td>'
+      + '<td style="font-size:11px;color:#6b7280">' + esc(r.sku||'-') + '</td>'
+      + '<td>' + statusBadge + '</td>'
+      + '<td style="font-size:11px;color:#dc2626">' + item.errors.join('; ') + '</td>'
+      + '</tr>';
+  });
+
+  document.getElementById('bulk-preview-body').innerHTML = html;
+  document.getElementById('bulk-preview-wrap').style.display = '';
+  document.getElementById('bulk-report-wrap').style.display = 'none';
+  document.getElementById('bulk-import-btn').disabled = valid === 0;
+  document.getElementById('bulk-import-btn').style.opacity = valid === 0 ? '0.5' : '1';
+}
+
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+window.importAllValid = async function() {
+  if(_bulkImporting) return;
+  var valid = _bulkRows.filter(function(r){return r.errors.length===0;});
+  if(!valid.length) { showToast('No valid rows to import','error'); return; }
+  if(!confirm('Import ' + valid.length + ' product(s) to Firestore?')) return;
+
+  _bulkImporting = true;
+  document.getElementById('bulk-import-btn').disabled = true;
+  document.getElementById('bulk-progress-wrap').style.display = '';
+
+  var successCount = 0, failCount = 0, updateCount = 0;
+  var reportLines = [];
+
+  for(var i = 0; i < valid.length; i++) {
+    var pct = Math.round(((i+1)/valid.length)*100);
+    document.getElementById('bulk-progress-bar').style.width = pct + '%';
+    document.getElementById('bulk-progress-pct').textContent = pct + '%';
+    document.getElementById('bulk-progress-label').textContent = 'Importing ' + (i+1) + ' of ' + valid.length + '...';
+
+    var r = valid[i].row;
+    try {
+      var images = r.images ? r.images.split('|').map(function(u){return u.trim();}).filter(Boolean) : [];
+      var sizes  = r.sizes  ? r.sizes.split('|').map(function(s){return s.trim();}).filter(Boolean) : [];
+      var colours= r.colours? r.colours.split('|').map(function(c){return c.trim();}).filter(Boolean) : [];
+      var data = {
+        name:          r.name,
+        category:      r.category,
+        price:         Number(r.price),
+        discountPrice: r.discountprice ? Number(r.discountprice) : 0,
+        stock:         Number(r.stock),
+        description:   r.description || '',
+        sku:           r.sku || '',
+        images:        images,
+        sizes:         sizes,
+        colours:       colours,
+        isFlash:       r.isflash === 'true' || r.isflash === '1',
+        status:        r.status || 'active',
+        rating:        0,
+        reviewCount:   0,
+        updatedAt:     serverTimestamp()
+      };
+
+      // Check if SKU exists - update if so
+      var updated = false;
+      if(r.sku) {
+        var q2 = query(collection(db,'products'), where('sku','==',r.sku), limit(1));
+        var snap = await getDocs(q2);
+        if(!snap.empty) {
+          await updateDoc(doc(db,'products',snap.docs[0].id), data);
+          updateCount++;
+          updated = true;
+          reportLines.push('<span style="color:#1d4ed8">\u21BB Updated: ' + esc(r.name) + ' (SKU: ' + esc(r.sku) + ')</span>');
+        }
+      }
+      if(!updated) {
+        data.createdAt = serverTimestamp();
+        await addDoc(collection(db,'products'), data);
+        successCount++;
+        reportLines.push('<span style="color:#15803d">\u2713 Imported: ' + esc(r.name) + '</span>');
+      }
+    } catch(err) {
+      failCount++;
+      reportLines.push('<span style="color:#dc2626">\u2717 Failed: ' + esc(r.name) + ' - ' + err.message + '</span>');
+    }
+  }
+
+  // Show report
+  document.getElementById('bulk-progress-wrap').style.display = 'none';
+  document.getElementById('bulk-preview-wrap').style.display = 'none';
+  document.getElementById('report-success').textContent  = successCount;
+  document.getElementById('report-failed').textContent   = failCount;
+  document.getElementById('report-updated').textContent  = updateCount;
+  document.getElementById('bulk-report-details').innerHTML = reportLines.join('<br>');
+  document.getElementById('bulk-report-wrap').style.display = '';
+
+  _bulkImporting = false;
+  await loadProducts();
+  loadAdminProducts();
+  showToast('Import complete: ' + successCount + ' added, ' + updateCount + ' updated, ' + failCount + ' failed');
+};
+
+window.clearBulkImport = function() {
+  _bulkRows = [];
+  document.getElementById('bulk-file-input').value = '';
+  document.getElementById('bulk-filename').textContent = 'No file chosen';
+  document.getElementById('bulk-preview-wrap').style.display = 'none';
+  document.getElementById('bulk-report-wrap').style.display = 'none';
+  document.getElementById('bulk-progress-wrap').style.display = 'none';
+};
 
 
 init();
