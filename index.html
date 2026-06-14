@@ -5557,6 +5557,8 @@ window.showToast = function(message, type='success') {
 
 // ===== INIT =====
 async function init() {
+  // Capture the original hash BEFORE history manipulation overwrites it
+  const _originalHash = location.hash.replace('#','');
   renderSlider(); // loads banners from Firestore (or defaults) and inits slider
   startCountdown();
   renderSkeletons('flash-grid',4);
@@ -5570,9 +5572,9 @@ async function init() {
   // Seed nav stack with home
   _navStack.push('home');
   // Then navigate to hash page if present
-  const hash = location.hash.replace('#','');
+  const hash = _originalHash;
   if(hash.startsWith('reset/')) {
-    checkResetLink();
+    checkResetLink(hash);
   } else if(hash && hash !== 'home' && hash !== '__guard__' && document.getElementById('page-'+hash)) navigate(hash);
 }
 
@@ -7055,10 +7057,11 @@ window.exportResetRequestsCSV = function() {
 };
 
 // ===== USER: Handle reset link click (#reset/{requestId}/{token}) =====
-async function checkResetLink() {
-  const hash = window.location.hash;
-  if(!hash.startsWith('#reset/')) return;
-  const parts = hash.substring(7).split('/');
+async function checkResetLink(hashOverride) {
+  // hashOverride is passed from init() (without '#'); hashchange events use window.location.hash (with '#')
+  let hash = hashOverride !== undefined ? hashOverride : window.location.hash.replace('#','');
+  if(!hash.startsWith('reset/')) return;
+  const parts = hash.substring(6).split('/');
   if(parts.length !== 2) return;
   const [requestId, token] = parts;
 
@@ -7140,7 +7143,7 @@ window.submitNewPassword = async function() {
   }
 };
 
-window.addEventListener('hashchange', checkResetLink);
+window.addEventListener('hashchange', () => checkResetLink());
 
 // ===== PAYSTACK SETTINGS & CHECKOUT =====
 var _paystackConfig = null;
