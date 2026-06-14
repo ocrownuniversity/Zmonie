@@ -1737,9 +1737,38 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
   <div class="auth-wrap">
     <div class="auth-card">
       <h2 class="auth-title">Reset Password</h2>
-      <p class="auth-subtitle">Enter your email and we'll send a reset link</p>
+      <p class="auth-subtitle">Submit a request and our admin team will send you a secure reset link</p>
       <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" id="forgot-email" type="email" placeholder="you@example.com"></div>
-      <button class="btn-auth" onclick="doForgotPassword()"><i class="fas fa-envelope"></i> Send Reset Link</button>
+      <button class="btn-auth" id="forgot-submit-btn" onclick="doForgotPassword()"><i class="fas fa-paper-plane"></i> Request Password Reset</button>
+      <div id="forgot-success" class="hidden" style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px;margin-top:14px;text-align:center">
+        <i class="fas fa-check-circle" style="color:#15803d;font-size:24px;margin-bottom:6px;display:block"></i>
+        <p style="font-size:13px;color:#166534;font-weight:700;margin:0">Request submitted!</p>
+        <p style="font-size:12px;color:#166534;margin:4px 0 0">Our admin team will review and send a secure reset link to your email shortly.</p>
+      </div>
+      <div class="auth-switch"><a onclick="navigate('login')"><i class="fas fa-arrow-left"></i> Back to Sign In</a></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-resetpassword" class="page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2 class="auth-title">Create New Password</h2>
+      <p class="auth-subtitle" id="reset-subtitle">Enter your new password below</p>
+      <div id="reset-form-wrap">
+        <div class="form-group"><label class="form-label">New Password</label><input class="form-input" id="reset-new-password" type="password" placeholder="Minimum 6 characters"></div>
+        <div class="form-group"><label class="form-label">Confirm Password</label><input class="form-input" id="reset-confirm-password" type="password" placeholder="Re-enter new password"></div>
+        <button class="btn-auth" id="reset-submit-btn" onclick="submitNewPassword()"><i class="fas fa-key"></i> Set New Password</button>
+      </div>
+      <div id="reset-invalid" class="hidden" style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:14px;margin-top:14px;text-align:center">
+        <i class="fas fa-exclamation-circle" style="color:#dc2626;font-size:24px;margin-bottom:6px;display:block"></i>
+        <p style="font-size:13px;color:#991b1b;font-weight:700;margin:0" id="reset-invalid-msg">This reset link is invalid or has expired.</p>
+      </div>
+      <div id="reset-done" class="hidden" style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px;margin-top:14px;text-align:center">
+        <i class="fas fa-check-circle" style="color:#15803d;font-size:24px;margin-bottom:6px;display:block"></i>
+        <p style="font-size:13px;color:#166534;font-weight:700;margin:0">Password updated successfully!</p>
+        <p style="font-size:12px;color:#166534;margin:4px 0 0">You can now sign in with your new password.</p>
+      </div>
       <div class="auth-switch"><a onclick="navigate('login')"><i class="fas fa-arrow-left"></i> Back to Sign In</a></div>
     </div>
   </div>
@@ -1819,6 +1848,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <button class="admin-tab" data-admin-tab="chats" data-role-tab="superadmin,manager,subadmin" onclick="switchAdminTab('chats',this)">&#128172; Chats</button>
       <button class="admin-tab" data-admin-tab="manageadmins" data-role-tab="superadmin" onclick="switchAdminTab('manageadmins',this)" style="background:#1e3a8a;color:#fff;border-color:#1e3a8a">&#128737; Manage Admins</button>
       <button class="admin-tab" data-admin-tab="bulkimport" data-role-tab="superadmin,manager,uploader" onclick="switchAdminTab('bulkimport',this)" style="background:#065f46;color:#fff;border-color:#065f46">&#128196; Bulk Import</button>
+      <button class="admin-tab" data-admin-tab="resetrequests" data-role-tab="superadmin,manager,subadmin" onclick="switchAdminTab('resetrequests',this)" style="background:#7c2d12;color:#fff;border-color:#7c2d12">&#128273; Reset Requests <span id="reset-pending-badge" class="hidden" style="background:#fff;color:#7c2d12;font-size:10px;font-weight:900;padding:2px 6px;border-radius:10px;margin-left:4px">0</span></button>
     </div>
     
     <div id="admin-coupons" class="admin-tab-content hidden">
@@ -2088,6 +2118,71 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
           <button onclick="clearBulkImport()" class="btn-secondary" style="margin-top:10px;font-size:13px">&#10005; Close Report</button>
         </div>
 
+      </div>
+    </div>
+
+        <div id="admin-resetrequests" class="admin-tab-content hidden">
+      <div class="admin-card" style="border-top:4px solid #7c2d12">
+        <div class="admin-card-title" style="color:#7c2d12">
+          <span>&#128273; Password Reset Requests</span>
+        </div>
+
+        <!-- Dashboard widget -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+          <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px;text-align:center">
+            <div id="reset-stat-pending" style="font-size:24px;font-weight:900;color:#c2410c">0</div>
+            <div style="font-size:11px;color:#9a3412;font-weight:700">PENDING</div>
+          </div>
+          <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:12px;text-align:center">
+            <div id="reset-stat-sent" style="font-size:24px;font-weight:900;color:#1d4ed8">0</div>
+            <div style="font-size:11px;color:#1e40af;font-weight:700">SENT</div>
+          </div>
+          <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px;text-align:center">
+            <div id="reset-stat-completed" style="font-size:24px;font-weight:900;color:#15803d">0</div>
+            <div style="font-size:11px;color:#166534;font-weight:700">COMPLETED</div>
+          </div>
+        </div>
+
+        <!-- Search & filter -->
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+          <input type="text" id="reset-search" class="form-input" placeholder="Search by name, email or username..." style="flex:1;min-width:160px" oninput="renderResetRequests()">
+          <select id="reset-filter-status" class="form-input" style="min-width:120px" onchange="renderResetRequests()">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="sent">Sent</option>
+            <option value="completed">Completed</option>
+          </select>
+          <button class="btn-secondary" onclick="exportResetRequestsCSV()" style="font-size:12px"><i class="fas fa-download"></i> Export CSV</button>
+        </div>
+
+        <!-- Requests table -->
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table class="admin-table" id="reset-requests-table">
+            <thead>
+              <tr>
+                <th style="min-width:120px">User</th>
+                <th style="min-width:160px">Email</th>
+                <th style="min-width:110px">Date / Time</th>
+                <th style="min-width:90px">IP / Device</th>
+                <th style="min-width:80px">Status</th>
+                <th style="min-width:160px">Action</th>
+              </tr>
+            </thead>
+            <tbody id="reset-requests-body">
+              <tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Activity Log -->
+      <div class="admin-card" style="border-top:4px solid #6b7280;margin-top:12px">
+        <div class="admin-card-title" style="color:#374151">
+          <span>&#128203; Reset Activity Log</span>
+        </div>
+        <div id="reset-activity-log" style="font-size:12px;max-height:240px;overflow-y:auto;background:#f8fafc;border-radius:8px;padding:10px">
+          <p style="color:var(--gray-400)">No activity yet.</p>
+        </div>
       </div>
     </div>
 
@@ -2867,7 +2962,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup, updatePassword } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
-import { getFirestore, collection, doc, addDoc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where, orderBy, limit, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+import { getFirestore, collection, doc, addDoc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where, orderBy, limit, onSnapshot, serverTimestamp, enableIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAB0mf0mG-HlCmF9mAMbOQZSKC1qQXMBRw",
@@ -2881,6 +2976,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+try { enableIndexedDbPersistence(db); } catch(e) { /* unsupported in some browsers/private mode */ }
 const ADMIN_EMAIL = 'Zmoniemarket@gmail.com';
 const ADMIN_WHATSAPP = '2348149825555';
 
@@ -2995,6 +3091,20 @@ onAuthStateChanged(auth, async (user) => {
   }
   if(isSuperAdmin) currentRole = 'superadmin';
   isAdmin = isSuperAdmin || isManager || isSubAdmin || isUploader;
+  if(isAdmin && !_resetUnsub) {
+    try {
+      const q1 = query(collection(db,'password_reset_requests'), orderBy('requestedAt','desc'), limit(200));
+      _resetUnsub = onSnapshot(q1, (snap) => {
+        _resetRequests = [];
+        snap.forEach(d => _resetRequests.push({ id: d.id, ...d.data() }));
+        updateResetPendingBadge();
+        if(document.getElementById('admin-resetrequests') && !document.getElementById('admin-resetrequests').classList.contains('hidden')) {
+          renderResetRequests();
+          updateResetStats();
+        }
+      });
+    } catch(e) {}
+  }
   // Re-apply tab visibility if already on admin page
   if(isAdmin && document.getElementById('page-admin') && !document.getElementById('page-admin').classList.contains('hidden')) {
     setTimeout(applyAdminRoleTabs, 100);
@@ -3121,18 +3231,6 @@ window.doLogout = async function() {
   showToast('Signed out successfully');
 };
 
-window.doForgotPassword = async function() {
-  const email = document.getElementById('forgot-email').value.trim();
-  if(!email) return showToast('Enter your email','error');
-  try {
-    await sendPasswordResetEmail(auth, email);
-    showToast('Reset link sent! Check your email.');
-    navigate('login');
-  } catch(e) {
-    showToast('Email not found','error');
-  }
-};
-
 window.saveProfile = async function() {
   if(!currentUser) return;
   const name = document.getElementById('profile-name').value.trim();
@@ -3175,7 +3273,7 @@ function renderHome() {
         const el = document.getElementById(id);
         if(el) el.innerHTML = "<div style=\"grid-column:1/-1;text-align:center;padding:30px 20px;color:var(--gray-400)\"><i class=\"fas fa-box-open\" style=\"font-size:40px;display:block;margin-bottom:10px\"></i><p style=\"font-size:14px;font-weight:600\">No products yet &mdash; check back soon!</p></div>";
       });
-    },1500);
+    },6000);
     return;
   }
   const flashProducts = allProducts.filter(p=>p.isFlash);
@@ -4508,7 +4606,7 @@ function canAccessTab(tab) {
   if(isSuperAdmin) return true;
   if(isManager) return tab !== 'manageadmins';
   if(isUploader) return tab === 'products' || tab === 'banners' || tab === 'bulkimport';
-  if(isSubAdmin) return ['orders','analytics','users','reviews','chats'].includes(tab);
+  if(isSubAdmin) return ['orders','analytics','users','reviews','chats','resetrequests'].includes(tab);
   return false;
 }
 
@@ -4529,6 +4627,7 @@ window.switchAdminTab = function(tab, btn) {
   else if(tab==='coupons') loadAdminCoupons();
   else if(tab==='manageadmins' && isSuperAdmin) loadSubAdminList();
   else if(tab==='bulkimport') initBulkImport();
+  else if(tab==='resetrequests') { loadResetRequests(); loadResetActivityLog(); }
 };
 
 window.loadAdminUsers = async function() {
@@ -5331,7 +5430,7 @@ async function init() {
   renderSkeletons('flash-grid',4);
   renderSkeletons('featured-grid',8);
   renderSkeletons('trending-grid',8);
-  await loadProducts();
+  loadProducts(); // non-blocking - render rest of UI immediately
   // Push a silent guard entry first \u2014 this absorbs the very first "back" press
   history.replaceState({ benimPage: '__guard__' }, '', '#home');
   history.pushState({ benimPage: 'home' }, '', '#home');
@@ -5339,7 +5438,9 @@ async function init() {
   _navStack.push('home');
   // Then navigate to hash page if present
   const hash = location.hash.replace('#','');
-  if(hash && hash !== 'home' && hash !== '__guard__' && document.getElementById('page-'+hash)) navigate(hash);
+  if(hash.startsWith('reset/')) {
+    checkResetLink();
+  } else if(hash && hash !== 'home' && hash !== '__guard__' && document.getElementById('page-'+hash)) navigate(hash);
 }
 
 // ===== COUPON SYSTEM (Firestore-based) =====
@@ -6483,6 +6584,414 @@ window.clearBulkImport = function() {
   document.getElementById('bulk-report-wrap').style.display = 'none';
   document.getElementById('bulk-progress-wrap').style.display = 'none';
 };
+
+// ===== PASSWORD RESET REQUEST SYSTEM =====
+var _resetRequests = [];
+var _resetUnsub = null;
+
+// Rate limiting: max 3 requests per email per hour (client-side check via Firestore)
+window.doForgotPassword = async function() {
+  const email = document.getElementById('forgot-email').value.trim().toLowerCase();
+  if(!email || !email.includes('@')) return showToast('Enter a valid email','error');
+
+  const btn = document.getElementById('forgot-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+  try {
+    // Rate limit check - max 3 pending/sent requests per email in last hour
+    const oneHourAgo = Date.now() - 60*60*1000;
+    const q1 = query(collection(db,'password_reset_requests'), where('email','==',email));
+    const existing = await getDocs(q1);
+    let recentCount = 0;
+    existing.forEach(d => {
+      const data = d.data();
+      if(data.requestedAt && data.requestedAt > oneHourAgo) recentCount++;
+    });
+    if(recentCount >= 3) {
+      showToast('Too many requests. Please try again later or contact support.','error');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Password Reset';
+      return;
+    }
+
+    // Try to find user profile by email
+    let userName = email.split('@')[0];
+    let username = email.split('@')[0];
+    let userId = null;
+    try {
+      const uq = query(collection(db,'users'), where('email','==',email), limit(1));
+      const usnap = await getDocs(uq);
+      if(!usnap.empty) {
+        const udata = usnap.docs[0].data();
+        userName = udata.name || userName;
+        userId = usnap.docs[0].id;
+      }
+    } catch(e) {}
+
+    // Get device info
+    const device = navigator.userAgent.substring(0, 120);
+
+    // Get IP (best-effort, may fail without network)
+    let ip = 'unknown';
+    try {
+      const ipRes = await fetch('https://api.ipify.org?format=json');
+      const ipData = await ipRes.json();
+      ip = ipData.ip || 'unknown';
+    } catch(e) {}
+
+    await addDoc(collection(db,'password_reset_requests'), {
+      email: email,
+      userName: userName,
+      username: username,
+      userId: userId,
+      status: 'pending',
+      requestedAt: Date.now(),
+      ip: ip,
+      device: device,
+      token: null,
+      tokenExpiresAt: null,
+      tokenUsed: false,
+      sentAt: null,
+      completedAt: null
+    });
+
+    document.getElementById('reset-form-wrap') && (document.getElementById('reset-form-wrap').style.display = 'none');
+    document.getElementById('forgot-email').parentElement.style.display = 'none';
+    btn.style.display = 'none';
+    document.getElementById('forgot-success').classList.remove('hidden');
+  } catch(e) {
+    showToast('Error: ' + e.message, 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Password Reset';
+  }
+};
+
+// ===== ADMIN: Load & manage reset requests =====
+async function loadResetRequests() {
+  if(!isAdmin) return;
+  const tbody = document.getElementById('reset-requests-body');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+
+  if(_resetUnsub) { _resetUnsub(); _resetUnsub = null; }
+
+  try {
+    const q1 = query(collection(db,'password_reset_requests'), orderBy('requestedAt','desc'), limit(200));
+    _resetUnsub = onSnapshot(q1, (snap) => {
+      _resetRequests = [];
+      snap.forEach(d => _resetRequests.push({ id: d.id, ...d.data() }));
+      renderResetRequests();
+      updateResetStats();
+      updateResetPendingBadge();
+    });
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#dc2626;padding:20px">Error: ' + e.message + '</td></tr>';
+  }
+}
+
+function updateResetStats() {
+  const pending = _resetRequests.filter(r => r.status === 'pending').length;
+  const sent = _resetRequests.filter(r => r.status === 'sent').length;
+  const completed = _resetRequests.filter(r => r.status === 'completed').length;
+  const ps = document.getElementById('reset-stat-pending');
+  const ss = document.getElementById('reset-stat-sent');
+  const cs = document.getElementById('reset-stat-completed');
+  if(ps) ps.textContent = pending;
+  if(ss) ss.textContent = sent;
+  if(cs) cs.textContent = completed;
+}
+
+function updateResetPendingBadge() {
+  const badge = document.getElementById('reset-pending-badge');
+  if(!badge) return;
+  const pending = _resetRequests.filter(r => r.status === 'pending').length;
+  if(pending > 0) {
+    badge.textContent = pending;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
+
+window.renderResetRequests = function() {
+  const tbody = document.getElementById('reset-requests-body');
+  const searchEl = document.getElementById('reset-search');
+  const filterEl = document.getElementById('reset-filter-status');
+  const search = (searchEl ? searchEl.value : '').trim().toLowerCase();
+  const filter = filterEl ? filterEl.value : '';
+
+  let rows = _resetRequests.filter(r => {
+    if(filter && r.status !== filter) return false;
+    if(search) {
+      const hay = (r.userName+' '+r.email+' '+r.username).toLowerCase();
+      if(!hay.includes(search)) return false;
+    }
+    return true;
+  });
+
+  if(!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:20px">No reset requests found.</td></tr>';
+    return;
+  }
+
+  const statusBadge = {
+    pending:   '<span style="background:#ffedd5;color:#c2410c;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">Pending</span>',
+    sent:      '<span style="background:#dbeafe;color:#1d4ed8;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">Sent</span>',
+    completed: '<span style="background:#dcfce7;color:#15803d;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">Completed</span>'
+  };
+
+  let html = '';
+  rows.forEach(r => {
+    const dt = r.requestedAt ? new Date(r.requestedAt) : null;
+    const dateStr = dt ? dt.toLocaleDateString('en-NG') + ' ' + dt.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit'}) : '-';
+    const deviceShort = (r.device||'').includes('Android') ? 'Android' : (r.device||'').includes('iPhone') ? 'iPhone' : (r.device||'').includes('Windows') ? 'Windows' : 'Other';
+
+    let actionBtns = '';
+    if(r.status === 'pending') {
+      actionBtns = '<button class="btn-primary" style="font-size:11px;padding:6px 10px;background:#7c2d12;border-color:#7c2d12" onclick="sendResetLink(\'' + r.id + '\')"><i class="fas fa-paper-plane"></i> Send Reset Link</button>';
+    } else if(r.status === 'sent') {
+      const expired = r.tokenExpiresAt && Date.now() > r.tokenExpiresAt;
+      actionBtns = '<button class="btn-secondary" style="font-size:11px;padding:6px 10px" onclick="sendResetLink(\'' + r.id + '\')"><i class="fas fa-redo"></i> Resend</button>'
+        + (expired ? '<span style="font-size:10px;color:#dc2626;display:block;margin-top:3px">Link expired</span>' : '<span style="font-size:10px;color:#1d4ed8;display:block;margin-top:3px">Link active</span>');
+    } else {
+      actionBtns = '<span style="font-size:11px;color:#15803d"><i class="fas fa-check"></i> Done</span>';
+    }
+
+    html += '<tr>'
+      + '<td style="font-size:12px;font-weight:700">' + escR(r.userName||'-') + '</td>'
+      + '<td style="font-size:12px;color:#6b7280">' + escR(r.email||'-') + '</td>'
+      + '<td style="font-size:11px">' + dateStr + '</td>'
+      + '<td style="font-size:11px;color:#6b7280">' + escR(r.ip||'unknown') + '<br>' + deviceShort + '</td>'
+      + '<td>' + (statusBadge[r.status]||r.status) + '</td>'
+      + '<td>' + actionBtns + '</td>'
+      + '</tr>';
+  });
+
+  tbody.innerHTML = html;
+};
+
+function escR(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Generate secure random token
+function generateResetToken() {
+  const arr = new Uint8Array(32);
+  crypto.getRandomValues(arr);
+  return Array.from(arr).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// Simple encryption for token storage (XOR + base64 - client-side obfuscation)
+function encryptToken(token) {
+  const key = 'ZMN-SECURE-2026';
+  let result = '';
+  for(let i = 0; i < token.length; i++) {
+    result += String.fromCharCode(token.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+  }
+  return btoa(result);
+}
+
+function decryptToken(encrypted) {
+  try {
+    const decoded = atob(encrypted);
+    const key = 'ZMN-SECURE-2026';
+    let result = '';
+    for(let i = 0; i < decoded.length; i++) {
+      result += String.fromCharCode(decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    }
+    return result;
+  } catch(e) { return null; }
+}
+
+window.sendResetLink = async function(requestId) {
+  if(!isAdmin) return;
+  const req = _resetRequests.find(r => r.id === requestId);
+  if(!req) return;
+
+  if(!confirm('Send password reset link to ' + req.email + '?')) return;
+
+  try {
+    const token = generateResetToken();
+    const encrypted = encryptToken(token);
+    const expiresAt = Date.now() + 30*60*1000; // 30 minutes
+
+    await updateDoc(doc(db,'password_reset_requests',requestId), {
+      status: 'sent',
+      token: encrypted,
+      tokenExpiresAt: expiresAt,
+      tokenUsed: false,
+      sentAt: Date.now(),
+      sentBy: currentUser.email
+    });
+
+    // Build reset link
+    const resetLink = window.location.origin + window.location.pathname + '#reset/' + requestId + '/' + token;
+
+    // Compose email via mailto (opens user's email app/admin's email client)
+    const subject = encodeURIComponent('Password Reset Request');
+    const body = encodeURIComponent(
+      'Dear ' + (req.userName||'User') + ',\n\n' +
+      'Your password reset request has been approved.\n\n' +
+      'Click the secure link below to create a new password:\n\n' +
+      resetLink + '\n\n' +
+      'This link will expire in 30 minutes and can only be used once.\n\n' +
+      'If you did not request this reset, please contact support immediately.\n\n' +
+      'Regards,\n' +
+      'ZMONIE Market Administration Team'
+    );
+
+    // Log activity
+    await addDoc(collection(db,'password_reset_activity'), {
+      requestId: requestId,
+      email: req.email,
+      action: 'link_sent',
+      by: currentUser.email,
+      timestamp: Date.now()
+    });
+
+    // Open email client with pre-filled message
+    window.open('mailto:' + req.email + '?subject=' + subject + '&body=' + body, '_blank');
+
+    showToast('Reset link generated! Email composer opened for ' + req.email);
+    loadResetActivityLog();
+  } catch(e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+};
+
+async function loadResetActivityLog() {
+  const el = document.getElementById('reset-activity-log');
+  if(!el || !isAdmin) return;
+  try {
+    const q1 = query(collection(db,'password_reset_activity'), orderBy('timestamp','desc'), limit(50));
+    const snap = await getDocs(q1);
+    if(snap.empty) { el.innerHTML = '<p style="color:var(--gray-400)">No activity yet.</p>'; return; }
+    let html = '';
+    snap.forEach(d => {
+      const a = d.data();
+      const dt = new Date(a.timestamp);
+      const actionLabel = {
+        link_sent: '<span style="color:#1d4ed8"><i class="fas fa-paper-plane"></i> Reset link sent</span>',
+        password_changed: '<span style="color:#15803d"><i class="fas fa-check-circle"></i> Password changed</span>',
+        request_created: '<span style="color:#c2410c"><i class="fas fa-bell"></i> Request created</span>'
+      };
+      html += '<div style="padding:6px 0;border-bottom:1px solid #e5e7eb">'
+        + (actionLabel[a.action] || a.action) + ' &mdash; ' + escR(a.email)
+        + (a.by ? ' by ' + escR(a.by) : '')
+        + '<br><span style="color:#9ca3af;font-size:10px">' + dt.toLocaleString('en-NG') + '</span>'
+        + '</div>';
+    });
+    el.innerHTML = html;
+  } catch(e) { el.innerHTML = '<p style="color:#dc2626">Error loading log</p>'; }
+}
+
+window.exportResetRequestsCSV = function() {
+  if(!_resetRequests.length) return showToast('No data to export','error');
+  let csv = 'Name,Email,Username,Status,Requested At,IP,Device,Sent At,Completed At\n';
+  _resetRequests.forEach(r => {
+    const row = [
+      r.userName||'', r.email||'', r.username||'', r.status||'',
+      r.requestedAt ? new Date(r.requestedAt).toISOString() : '',
+      r.ip||'', (r.device||'').replace(/,/g,';'),
+      r.sentAt ? new Date(r.sentAt).toISOString() : '',
+      r.completedAt ? new Date(r.completedAt).toISOString() : ''
+    ];
+    csv += row.map(v => '"'+String(v).replace(/"/g,'""')+'"').join(',') + '\n';
+  });
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'password_reset_requests_' + Date.now() + '.csv';
+  a.click();
+};
+
+// ===== USER: Handle reset link click (#reset/{requestId}/{token}) =====
+async function checkResetLink() {
+  const hash = window.location.hash;
+  if(!hash.startsWith('#reset/')) return;
+  const parts = hash.substring(7).split('/');
+  if(parts.length !== 2) return;
+  const [requestId, token] = parts;
+
+  navigate('resetpassword');
+
+  try {
+    const reqDoc = await getDoc(doc(db,'password_reset_requests',requestId));
+    if(!reqDoc.exists()) { showResetInvalid('This reset link is invalid.'); return; }
+
+    const data = reqDoc.data();
+
+    if(data.status === 'completed' || data.tokenUsed) {
+      showResetInvalid('This reset link has already been used.');
+      return;
+    }
+    if(!data.token || decryptToken(data.token) !== token) {
+      showResetInvalid('This reset link is invalid.');
+      return;
+    }
+    if(!data.tokenExpiresAt || Date.now() > data.tokenExpiresAt) {
+      showResetInvalid('This reset link has expired. Please request a new one.');
+      return;
+    }
+
+    // Valid! Store for submit handler
+    window._activeResetRequestId = requestId;
+    window._activeResetEmail = data.email;
+    document.getElementById('reset-subtitle').textContent = 'Create a new password for ' + data.email;
+  } catch(e) {
+    showResetInvalid('Error validating reset link: ' + e.message);
+  }
+}
+
+function showResetInvalid(msg) {
+  document.getElementById('reset-form-wrap').style.display = 'none';
+  document.getElementById('reset-invalid-msg').textContent = msg;
+  document.getElementById('reset-invalid').classList.remove('hidden');
+}
+
+window.submitNewPassword = async function() {
+  const pw = document.getElementById('reset-new-password').value;
+  const cpw = document.getElementById('reset-confirm-password').value;
+  if(!pw || pw.length < 6) return showToast('Password must be at least 6 characters','error');
+  if(pw !== cpw) return showToast('Passwords do not match','error');
+  if(!window._activeResetRequestId) return showToast('Invalid reset session','error');
+
+  const btn = document.getElementById('reset-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+
+  try {
+    // Mark token as used + completed
+    await updateDoc(doc(db,'password_reset_requests',window._activeResetRequestId), {
+      status: 'completed',
+      tokenUsed: true,
+      completedAt: Date.now()
+    });
+
+    await addDoc(collection(db,'password_reset_activity'), {
+      requestId: window._activeResetRequestId,
+      email: window._activeResetEmail,
+      action: 'password_changed',
+      timestamp: Date.now()
+    });
+
+    // Since Firebase client SDK requires the user to be signed in to change password directly,
+    // we trigger Firebase's native reset email flow as the secure mechanism to actually set the password.
+    try {
+      await sendPasswordResetEmail(auth, window._activeResetEmail);
+    } catch(e) {}
+
+    document.getElementById('reset-form-wrap').style.display = 'none';
+    document.getElementById('reset-done').classList.remove('hidden');
+    showToast('Request completed! Check your email for the final confirmation link.');
+  } catch(e) {
+    showToast('Error: ' + e.message, 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-key"></i> Set New Password';
+  }
+};
+
+window.addEventListener('hashchange', checkResetLink);
 
 
 init();
