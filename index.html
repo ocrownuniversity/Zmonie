@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZMONIE - Shop Smart, Save More</title>
 <meta name="description" content="ZMONIE Market &#8212; Your trusted online shopping destination in Nigeria. Quality products, fast delivery, great prices.">
@@ -258,16 +257,12 @@ width:48px;height:48px;border-radius:8px;border:2px solid var(--gray-200);backgr
 color:var(--red);border-color:var(--red)}
 .detail-tabs{
 margin-top:24px}
-.tab-btns{
-display:flex;border-bottom:2px solid var(--gray-200);gap:0}
-.tab-btn{
-padding:10px 18px;font-size:14px;font-weight:700;color:var(--gray-500);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:.2s}
-.tab-btn.active{
-color:var(--orange);border-bottom-color:var(--orange)}
+.detail-section-header{
+font-size:16px;font-weight:800;color:var(--gray-800);padding:14px 0 10px;border-bottom:2px solid var(--orange);margin-bottom:4px;margin-top:20px}
+.detail-section-header:first-child{
+margin-top:0}
 .tab-content{
-padding:16px 0;display:none}
-.tab-content.active{
-display:block}
+padding:16px 0;display:block}
 .tab-content p{
 font-size:14px;color:var(--gray-600);line-height:1.7}
 .cart-wrap{
@@ -1490,14 +1485,11 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
     </div>
 
     <div class="detail-tabs">
-      <div class="tab-btns">
-        <button class="tab-btn active" onclick="switchTab('description',this)">Description</button>
-        <button class="tab-btn" onclick="switchTab('reviews',this)">Reviews</button>
-        <button class="tab-btn" onclick="switchTab('qa',this)">Q&amp;A</button>
-        <button class="tab-btn" onclick="switchTab('related',this)">Related</button>
-      </div>
+      <div class="detail-section-header">Description</div>
       <div class="tab-content active" id="tab-description"><p id="detail-description"></p></div>
-      <div class="tab-content" id="tab-reviews">
+
+      <div class="detail-section-header">Reviews</div>
+      <div class="tab-content active" id="tab-reviews">
         <div id="reviews-list"></div>
         <div id="review-form-wrap" class="hidden">
           <h4 style="margin-bottom:12px;font-size:15px;font-weight:800">Write a Review</h4>
@@ -1518,8 +1510,9 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         </div>
         <div id="login-to-review" class="hidden" style="text-align:center;padding:20px;color:var(--gray-400)"><p>Please <a href="#" onclick="navigate('login')" style="color:var(--orange);font-weight:700">sign in</a> to write a review.</p></div>
       </div>
-      
-      <div class="tab-content" id="tab-qa">
+
+      <div class="detail-section-header">Q&amp;A</div>
+      <div class="tab-content active" id="tab-qa">
         <div id="qa-list" style="margin-bottom:16px"></div>
         <div id="qa-form-wrap">
           <h4 style="font-size:14px;font-weight:800;margin-bottom:10px">Ask a Question</h4>
@@ -1528,7 +1521,9 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         </div>
         <div id="qa-login-msg" class="hidden" style="text-align:center;padding:20px;color:var(--gray-400)"><p>Please <a href="#" onclick="navigate('login')" style="color:var(--orange);font-weight:700">sign in</a> to ask a question.</p></div>
       </div>
-      <div class="tab-content" id="tab-related">
+
+      <div class="detail-section-header">Related Products</div>
+      <div class="tab-content active" id="tab-related">
         <div class="product-grid" id="related-grid"></div>
       </div>
     </div>
@@ -3364,7 +3359,11 @@ async function loadProducts() {
     const snap = await getDocs(collection(db,'products'));
     allProducts = snap.docs.map(d => ({id:d.id,...d.data()}));
     renderHome();
-  } catch(e) { console.error(e); }
+  } catch(e) {
+    console.error('loadProducts error:', e);
+    showToast('Error loading products: ' + e.message, 'error');
+    renderHome(); // still render to show "no products" fallback instead of infinite skeleton
+  }
 }
 
 function renderHome() {
@@ -5540,12 +5539,7 @@ document.querySelectorAll('.modal-overlay').forEach(m=>{
 });
 
 // ===== TABS =====
-window.switchTab = function(tab, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  btn.classList.add('active');
-};
+// switchTab removed - all product detail sections (Description, Reviews, Q&A, Related) now display stacked
 
 // ===== TOAST =====
 window.showToast = function(message, type='success') {
