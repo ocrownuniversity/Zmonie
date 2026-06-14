@@ -1618,6 +1618,12 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
           <i class="fas fa-credit-card" style="margin-left:auto;color:#0f766e"></i>
         </div>
       </div>
+      <div class="payment-option hidden" id="pay-opay-wrap" onclick="selectPayment('opay')">
+        <div class="payment-option" id="pay-opay" style="border:none;padding:0;margin:0">
+          <input type="radio" name="payment" value="opay"> <span style="font-size:14px;font-weight:700">Pay with Opay (Bank Transfer)</span>
+          <i class="fas fa-mobile-alt" style="margin-left:auto;color:#00d4ff"></i>
+        </div>
+      </div>
       <div class="bank-info hidden" id="bank-info">
         <p style="font-weight:800;margin-bottom:8px;color:var(--orange)"><i class="fas fa-university"></i> Transfer Details</p>
         <p><strong>Bank:</strong> Opay</p>
@@ -2260,10 +2266,11 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
             <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-card" checked> Card</label>
             <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-bank" checked> Bank Account</label>
             <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-ussd" checked> USSD</label>
-            <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-transfer" checked> Bank Transfer</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-transfer" checked onchange="toggleOpayHint()"> Bank Transfer</label>
             <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-qr"> QR Code</label>
             <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-mobile_money"> Mobile Money</label>
           </div>
+          <p id="opay-hint" style="font-size:11px;color:#0f766e;margin-top:6px"><i class="fas fa-info-circle"></i> "Bank Transfer" is checked &mdash; customers will also see a "Pay with Opay (Bank Transfer)" option at checkout, generating a dedicated virtual account for transfer.</p>
         </div>
 
         <!-- Test connection result -->
@@ -3786,8 +3793,9 @@ window.selectPayment = function(type) {
   document.getElementById('pay-bank').classList.toggle('selected', type==='bank');
   document.getElementById('pay-cod').classList.toggle('selected', type==='cod');
   document.getElementById('pay-paystack-wrap').classList.toggle('selected', type==='paystack');
+  document.getElementById('pay-opay-wrap').classList.toggle('selected', type==='opay');
   document.getElementById('bank-info').classList.toggle('hidden', type!=='bank');
-  document.querySelectorAll('#pay-bank input, #pay-cod input, #pay-paystack input').forEach(inp=>{
+  document.querySelectorAll('#pay-bank input, #pay-cod input, #pay-paystack input, #pay-opay input').forEach(inp=>{
     const parentId = inp.closest('.payment-option').id;
     inp.checked = (parentId === 'pay-'+type) || (parentId === 'pay-'+type+'-wrap');
   });
@@ -4083,17 +4091,18 @@ window.placeOrder = async function() {
   if(!selectedPayment) return showToast('Please select a payment method','error');
   if(!cart.length) return showToast('Your cart is empty','error');
 
-  // If Paystack selected, charge via popup first, then continue with order placement on success
-  if(selectedPayment === 'paystack') {
+  // If Paystack or Opay selected, charge via popup first, then continue with order placement on success
+  if(selectedPayment === 'paystack' || selectedPayment === 'opay') {
     const subtotalP = cart.reduce((s,x)=>s+(x.price*x.qty),0);
     const deliveryFeeP = window._checkoutDeliveryFee !== undefined ? window._checkoutDeliveryFee : 3500;
     const couponDiscountP = window._checkoutCouponDiscount || 0;
     const loyaltyDiscountP = useLoyaltyDiscount || 0;
     const grandTotalP = Math.max(0, subtotalP - couponDiscountP - loyaltyDiscountP + deliveryFeeP);
+    const channelOverride = selectedPayment === 'opay' ? ['bank_transfer'] : null;
     payWithPaystack(grandTotalP, currentUser.email, function(reference) {
       window._paystackReference = reference;
       completeOrderPlacement();
-    });
+    }, channelOverride);
     return;
   }
 
@@ -7136,11 +7145,18 @@ async function loadGlobalPaystackConfig() {
 
 function updateCheckoutPaystackOption() {
   const wrap = document.getElementById('pay-paystack-wrap');
+  const opayWrap = document.getElementById('pay-opay-wrap');
   if(!wrap) return;
   if(_paystackConfig && _paystackConfig.enabled && _paystackConfig.publicKey) {
     wrap.classList.remove('hidden');
+    const channels = _paystackConfig.channels || [];
+    if(opayWrap) {
+      if(channels.includes('bank_transfer')) opayWrap.classList.remove('hidden');
+      else opayWrap.classList.add('hidden');
+    }
   } else {
     wrap.classList.add('hidden');
+    if(opayWrap) opayWrap.classList.add('hidden');
   }
 }
 
@@ -7161,6 +7177,7 @@ async function loadPaystackSettings() {
     document.getElementById('ch-transfer').checked = channels.includes('bank_transfer');
     document.getElementById('ch-qr').checked = channels.includes('qr');
     document.getElementById('ch-mobile_money').checked = channels.includes('mobile_money');
+    toggleOpayHint();
     updatePaystackStatusBadge(!!data.enabled);
     _paystackConfig = data;
   } catch(e) {
@@ -7181,6 +7198,16 @@ function updatePaystackStatusBadge(enabled) {
     badge.style.color = '#dc2626';
   }
 }
+
+window.toggleOpayHint = function() {
+  const hint = document.getElementById('opay-hint');
+  if(!hint) return;
+  if(document.getElementById('ch-transfer').checked) {
+    hint.style.display = '';
+  } else {
+    hint.style.display = 'none';
+  }
+};
 
 window.togglePaystackEnabled = function(checked) {
   updatePaystackStatusBadge(checked);
@@ -7270,7 +7297,7 @@ window.testPaystackKey = function() {
 };
 
 // ===== Trigger Paystack payment popup at checkout =====
-window.payWithPaystack = function(amountNaira, email, onSuccess) {
+window.payWithPaystack = function(amountNaira, email, onSuccess, channelOverride) {
   if(!_paystackConfig || !_paystackConfig.enabled || !_paystackConfig.publicKey) {
     showToast('Paystack is not configured. Please choose another payment method.','error');
     return;
@@ -7278,20 +7305,20 @@ window.payWithPaystack = function(amountNaira, email, onSuccess) {
   if(!window.PaystackPop) {
     const s = document.createElement('script');
     s.src = 'https://js.paystack.co/v1/inline.js';
-    s.onload = function() { launchPaystackPopup(amountNaira, email, onSuccess); };
+    s.onload = function() { launchPaystackPopup(amountNaira, email, onSuccess, channelOverride); };
     document.head.appendChild(s);
   } else {
-    launchPaystackPopup(amountNaira, email, onSuccess);
+    launchPaystackPopup(amountNaira, email, onSuccess, channelOverride);
   }
 };
 
-function launchPaystackPopup(amountNaira, email, onSuccess) {
+function launchPaystackPopup(amountNaira, email, onSuccess, channelOverride) {
   const handler = PaystackPop.setup({
     key: _paystackConfig.publicKey,
     email: email,
     amount: Math.round(amountNaira * 100), // kobo
     currency: _paystackConfig.currency || 'NGN',
-    channels: _paystackConfig.channels && _paystackConfig.channels.length ? _paystackConfig.channels : ['card','bank','ussd','bank_transfer'],
+    channels: channelOverride || (_paystackConfig.channels && _paystackConfig.channels.length ? _paystackConfig.channels : ['card','bank','ussd','bank_transfer']),
     ref: 'ZMN-PSK-' + Date.now(),
     callback: function(response) {
       onSuccess(response.reference);
