@@ -1098,7 +1098,14 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 .pc-wish-btn{width:32px!important;height:32px!important;font-size:15px!important;}
 .pc-atc-row{padding:0 10px 10px!important;margin-top:auto!important;}
 .pc-atc-btn{background:#f68b1e!important;font-size:13px!important;padding:11px 6px!important;border-radius:6px!important;letter-spacing:.3px!important;font-weight:800!important;}
-#flash-grid,#featured-grid,#trending-grid,#search-grid,#recently-viewed-grid,#related-grid,#also-bought-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:8px!important;}</style>
+#flash-grid,#featured-grid,#trending-grid,#search-grid,#recently-viewed-grid,#related-grid,#also-bought-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:8px!important;}
+.switch{position:relative;display:inline-block;width:48px;height:26px;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0}
+.switch .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.3s;border-radius:26px}
+.switch .slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background-color:#fff;transition:.3s;border-radius:50%}
+.switch input:checked + .slider{background-color:#0f766e}
+.switch input:checked + .slider:before{transform:translateX(22px)}
+</style>
 </head>
 <body>
 
@@ -1605,6 +1612,12 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         <input type="radio" name="payment" value="cod"> <span style="font-size:14px;font-weight:700">Pay on Delivery</span>
         <i class="fas fa-hand-holding-usd" style="margin-left:auto;color:var(--green)"></i>
       </div>
+      <div class="payment-option hidden" id="pay-paystack-wrap" onclick="selectPayment('paystack')">
+        <div class="payment-option" id="pay-paystack" style="border:none;padding:0;margin:0">
+          <input type="radio" name="payment" value="paystack"> <span style="font-size:14px;font-weight:700">Pay with Card / Bank / USSD</span>
+          <i class="fas fa-credit-card" style="margin-left:auto;color:#0f766e"></i>
+        </div>
+      </div>
       <div class="bank-info hidden" id="bank-info">
         <p style="font-weight:800;margin-bottom:8px;color:var(--orange)"><i class="fas fa-university"></i> Transfer Details</p>
         <p><strong>Bank:</strong> Opay</p>
@@ -1849,6 +1862,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <button class="admin-tab" data-admin-tab="manageadmins" data-role-tab="superadmin" onclick="switchAdminTab('manageadmins',this)" style="background:#1e3a8a;color:#fff;border-color:#1e3a8a">&#128737; Manage Admins</button>
       <button class="admin-tab" data-admin-tab="bulkimport" data-role-tab="superadmin,manager,uploader" onclick="switchAdminTab('bulkimport',this)" style="background:#065f46;color:#fff;border-color:#065f46">&#128196; Bulk Import</button>
       <button class="admin-tab" data-admin-tab="resetrequests" data-role-tab="superadmin,manager,subadmin" onclick="switchAdminTab('resetrequests',this)" style="background:#7c2d12;color:#fff;border-color:#7c2d12">&#128273; Reset Requests <span id="reset-pending-badge" class="hidden" style="background:#fff;color:#7c2d12;font-size:10px;font-weight:900;padding:2px 6px;border-radius:10px;margin-left:4px">0</span></button>
+      <button class="admin-tab" data-admin-tab="paymentsettings" data-role-tab="superadmin" onclick="switchAdminTab('paymentsettings',this)" style="background:#0f766e;color:#fff;border-color:#0f766e">&#128179; Paystack Settings</button>
     </div>
     
     <div id="admin-coupons" class="admin-tab-content hidden">
@@ -2182,6 +2196,87 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         </div>
         <div id="reset-activity-log" style="font-size:12px;max-height:240px;overflow-y:auto;background:#f8fafc;border-radius:8px;padding:10px">
           <p style="color:var(--gray-400)">No activity yet.</p>
+        </div>
+      </div>
+    </div>
+
+        <div id="admin-paymentsettings" class="admin-tab-content hidden">
+      <div class="admin-card" style="border-top:4px solid #0f766e">
+        <div class="admin-card-title" style="color:#0f766e">
+          <span>&#128179; Paystack Payment Settings</span>
+          <span id="paystack-status-badge" style="background:#fee2e2;color:#dc2626;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">DISABLED</span>
+        </div>
+        <p style="font-size:12px;color:var(--gray-500);margin-bottom:14px">Configure your Paystack API keys to accept card, bank transfer and USSD payments directly on checkout. Get your keys from your Paystack Dashboard &gt; Settings &gt; API Keys &amp; Webhooks.</p>
+
+        <!-- Enable/Disable Toggle -->
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#f0fdfa;border:1px solid #99f6e4;border-radius:8px;padding:14px;margin-bottom:16px">
+          <div>
+            <div style="font-weight:800;font-size:14px;color:#0f766e">Enable Paystack Checkout</div>
+            <div style="font-size:11px;color:#6b7280;margin-top:2px">When enabled, customers will see "Pay with Card / Bank / USSD" at checkout</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="paystack-enabled-toggle" onchange="togglePaystackEnabled(this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <!-- Mode selector -->
+        <div class="form-group">
+          <label class="form-label">Mode</label>
+          <select id="paystack-mode" class="form-input">
+            <option value="test">Test Mode (use test keys, no real money)</option>
+            <option value="live">Live Mode (real payments)</option>
+          </select>
+        </div>
+
+        <!-- Keys -->
+        <div class="form-group">
+          <label class="form-label">Public Key</label>
+          <input class="form-input" id="paystack-public-key" placeholder="pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" style="font-family:monospace;font-size:12px">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Secret Key</label>
+          <div style="display:flex;gap:8px">
+            <input class="form-input" id="paystack-secret-key" type="password" placeholder="sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" style="font-family:monospace;font-size:12px;flex:1">
+            <button class="btn-secondary" onclick="toggleSecretVisibility()" style="padding:0 14px" id="toggle-secret-btn"><i class="fas fa-eye"></i></button>
+          </div>
+          <p style="font-size:11px;color:#dc2626;margin-top:4px"><i class="fas fa-exclamation-triangle"></i> Keep your secret key private. It is stored in Firestore &mdash; only Super Admin can view/edit this section.</p>
+        </div>
+
+        <!-- Currency & Channels -->
+        <div class="form-group">
+          <label class="form-label">Currency</label>
+          <select id="paystack-currency" class="form-input">
+            <option value="NGN">NGN - Nigerian Naira</option>
+            <option value="USD">USD - US Dollar</option>
+            <option value="GHS">GHS - Ghanaian Cedi</option>
+            <option value="ZAR">ZAR - South African Rand</option>
+            <option value="KES">KES - Kenyan Shilling</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Payment Channels</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-card" checked> Card</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-bank" checked> Bank Account</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-ussd" checked> USSD</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-transfer" checked> Bank Transfer</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-qr"> QR Code</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px"><input type="checkbox" id="ch-mobile_money"> Mobile Money</label>
+          </div>
+        </div>
+
+        <!-- Test connection result -->
+        <div id="paystack-test-result" class="hidden" style="border-radius:8px;padding:10px;margin-bottom:12px;font-size:12px"></div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-primary" onclick="savePaystackSettings()" style="background:#0f766e;border-color:#0f766e"><i class="fas fa-save"></i> Save Settings</button>
+          <button class="btn-secondary" onclick="testPaystackKey()"><i class="fas fa-plug"></i> Test Public Key</button>
+        </div>
+
+        <!-- Info box -->
+        <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px;margin-top:16px;font-size:12px;color:#9a3412">
+          <strong>&#128161; How it works:</strong> When enabled, customers select "Pay with Paystack" at checkout. They're charged via Paystack's secure popup (cards, bank, USSD, transfer). On success, the order is placed automatically. Switch to <b>Live Mode</b> only after testing thoroughly with test cards.
         </div>
       </div>
     </div>
@@ -3690,9 +3785,11 @@ window.selectPayment = function(type) {
   selectedPayment = type;
   document.getElementById('pay-bank').classList.toggle('selected', type==='bank');
   document.getElementById('pay-cod').classList.toggle('selected', type==='cod');
+  document.getElementById('pay-paystack-wrap').classList.toggle('selected', type==='paystack');
   document.getElementById('bank-info').classList.toggle('hidden', type!=='bank');
-  document.querySelectorAll('#pay-bank input, #pay-cod input').forEach(inp=>{
-    inp.checked = (inp.parentElement.id === 'pay-'+type);
+  document.querySelectorAll('#pay-bank input, #pay-cod input, #pay-paystack input').forEach(inp=>{
+    const parentId = inp.closest('.payment-option').id;
+    inp.checked = (parentId === 'pay-'+type) || (parentId === 'pay-'+type+'-wrap');
   });
 };
 
@@ -3986,6 +4083,26 @@ window.placeOrder = async function() {
   if(!selectedPayment) return showToast('Please select a payment method','error');
   if(!cart.length) return showToast('Your cart is empty','error');
 
+  // If Paystack selected, charge via popup first, then continue with order placement on success
+  if(selectedPayment === 'paystack') {
+    const subtotalP = cart.reduce((s,x)=>s+(x.price*x.qty),0);
+    const deliveryFeeP = window._checkoutDeliveryFee !== undefined ? window._checkoutDeliveryFee : 3500;
+    const couponDiscountP = window._checkoutCouponDiscount || 0;
+    const loyaltyDiscountP = useLoyaltyDiscount || 0;
+    const grandTotalP = Math.max(0, subtotalP - couponDiscountP - loyaltyDiscountP + deliveryFeeP);
+    payWithPaystack(grandTotalP, currentUser.email, function(reference) {
+      window._paystackReference = reference;
+      completeOrderPlacement();
+    });
+    return;
+  }
+
+  completeOrderPlacement();
+};
+
+async function completeOrderPlacement() {
+  const dType = window._deliveryType || 'home';
+
   try {
     // Build address object depending on delivery type
     let addr = {};
@@ -4022,6 +4139,11 @@ window.placeOrder = async function() {
       phone: addr.phone || addr.buyerPhone || '',
       buyerPhone: addr.phone || ''
     };
+    if(selectedPayment === 'paystack' && window._paystackReference) {
+      orderData.paystackReference = window._paystackReference;
+      orderData.paymentStatus = 'paid';
+      window._paystackReference = null;
+    }
     const orderRef = await addDoc(collection(db,'orders'), orderData);
     lastOrderId = orderRef.id;
     // Award loyalty points (2% of order as points)
@@ -4604,7 +4726,7 @@ function applyAdminRoleTabs() {
 
 function canAccessTab(tab) {
   if(isSuperAdmin) return true;
-  if(isManager) return tab !== 'manageadmins';
+  if(isManager) return tab !== 'manageadmins' && tab !== 'paymentsettings';
   if(isUploader) return tab === 'products' || tab === 'banners' || tab === 'bulkimport';
   if(isSubAdmin) return ['orders','analytics','users','reviews','chats','resetrequests'].includes(tab);
   return false;
@@ -4628,6 +4750,7 @@ window.switchAdminTab = function(tab, btn) {
   else if(tab==='manageadmins' && isSuperAdmin) loadSubAdminList();
   else if(tab==='bulkimport') initBulkImport();
   else if(tab==='resetrequests') { loadResetRequests(); loadResetActivityLog(); }
+  else if(tab==='paymentsettings') loadPaystackSettings();
 };
 
 window.loadAdminUsers = async function() {
@@ -5431,6 +5554,7 @@ async function init() {
   renderSkeletons('featured-grid',8);
   renderSkeletons('trending-grid',8);
   loadProducts(); // non-blocking - render rest of UI immediately
+  loadGlobalPaystackConfig(); // non-blocking - check if Paystack checkout should show
   // Push a silent guard entry first \u2014 this absorbs the very first "back" press
   history.replaceState({ benimPage: '__guard__' }, '', '#home');
   history.pushState({ benimPage: 'home' }, '', '#home');
@@ -6992,6 +7116,192 @@ window.submitNewPassword = async function() {
 };
 
 window.addEventListener('hashchange', checkResetLink);
+
+// ===== PAYSTACK SETTINGS & CHECKOUT =====
+var _paystackConfig = null;
+
+async function loadGlobalPaystackConfig() {
+  try {
+    const snap = await getDoc(doc(db,'settings','paystack'));
+    if(snap.exists()) {
+      _paystackConfig = snap.data();
+    } else {
+      _paystackConfig = { enabled: false };
+    }
+  } catch(e) {
+    _paystackConfig = { enabled: false };
+  }
+  updateCheckoutPaystackOption();
+}
+
+function updateCheckoutPaystackOption() {
+  const wrap = document.getElementById('pay-paystack-wrap');
+  if(!wrap) return;
+  if(_paystackConfig && _paystackConfig.enabled && _paystackConfig.publicKey) {
+    wrap.classList.remove('hidden');
+  } else {
+    wrap.classList.add('hidden');
+  }
+}
+
+async function loadPaystackSettings() {
+  if(!isSuperAdmin) return;
+  try {
+    const snap = await getDoc(doc(db,'settings','paystack'));
+    const data = snap.exists() ? snap.data() : {};
+    document.getElementById('paystack-enabled-toggle').checked = !!data.enabled;
+    document.getElementById('paystack-mode').value = data.mode || 'test';
+    document.getElementById('paystack-public-key').value = data.publicKey || '';
+    document.getElementById('paystack-secret-key').value = data.secretKey || '';
+    document.getElementById('paystack-currency').value = data.currency || 'NGN';
+    const channels = data.channels || ['card','bank','ussd','bank_transfer'];
+    document.getElementById('ch-card').checked = channels.includes('card');
+    document.getElementById('ch-bank').checked = channels.includes('bank');
+    document.getElementById('ch-ussd').checked = channels.includes('ussd');
+    document.getElementById('ch-transfer').checked = channels.includes('bank_transfer');
+    document.getElementById('ch-qr').checked = channels.includes('qr');
+    document.getElementById('ch-mobile_money').checked = channels.includes('mobile_money');
+    updatePaystackStatusBadge(!!data.enabled);
+    _paystackConfig = data;
+  } catch(e) {
+    showToast('Error loading settings: ' + e.message, 'error');
+  }
+}
+
+function updatePaystackStatusBadge(enabled) {
+  const badge = document.getElementById('paystack-status-badge');
+  if(!badge) return;
+  if(enabled) {
+    badge.textContent = 'ENABLED';
+    badge.style.background = '#dcfce7';
+    badge.style.color = '#15803d';
+  } else {
+    badge.textContent = 'DISABLED';
+    badge.style.background = '#fee2e2';
+    badge.style.color = '#dc2626';
+  }
+}
+
+window.togglePaystackEnabled = function(checked) {
+  updatePaystackStatusBadge(checked);
+};
+
+window.toggleSecretVisibility = function() {
+  const input = document.getElementById('paystack-secret-key');
+  const btn = document.getElementById('toggle-secret-btn');
+  if(input.type === 'password') {
+    input.type = 'text';
+    btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+  } else {
+    input.type = 'password';
+    btn.innerHTML = '<i class="fas fa-eye"></i>';
+  }
+};
+
+window.savePaystackSettings = async function() {
+  if(!isSuperAdmin) return;
+  const enabled = document.getElementById('paystack-enabled-toggle').checked;
+  const mode = document.getElementById('paystack-mode').value;
+  const publicKey = document.getElementById('paystack-public-key').value.trim();
+  const secretKey = document.getElementById('paystack-secret-key').value.trim();
+  const currency = document.getElementById('paystack-currency').value;
+
+  if(enabled) {
+    if(!publicKey) return showToast('Public key is required to enable Paystack','error');
+    if(mode === 'test' && !publicKey.startsWith('pk_test_')) return showToast('Test mode requires a key starting with pk_test_','error');
+    if(mode === 'live' && !publicKey.startsWith('pk_live_')) return showToast('Live mode requires a key starting with pk_live_','error');
+  }
+
+  const channels = [];
+  if(document.getElementById('ch-card').checked) channels.push('card');
+  if(document.getElementById('ch-bank').checked) channels.push('bank');
+  if(document.getElementById('ch-ussd').checked) channels.push('ussd');
+  if(document.getElementById('ch-transfer').checked) channels.push('bank_transfer');
+  if(document.getElementById('ch-qr').checked) channels.push('qr');
+  if(document.getElementById('ch-mobile_money').checked) channels.push('mobile_money');
+
+  try {
+    await setDoc(doc(db,'settings','paystack'), {
+      enabled, mode, publicKey, secretKey, currency, channels,
+      updatedAt: Date.now(), updatedBy: currentUser.email
+    });
+    _paystackConfig = { enabled, mode, publicKey, secretKey, currency, channels };
+    updatePaystackStatusBadge(enabled);
+    updateCheckoutPaystackOption();
+    showToast('Paystack settings saved successfully!');
+  } catch(e) {
+    showToast('Error saving: ' + e.message, 'error');
+  }
+};
+
+window.testPaystackKey = function() {
+  const publicKey = document.getElementById('paystack-public-key').value.trim();
+  const resultEl = document.getElementById('paystack-test-result');
+  resultEl.classList.remove('hidden');
+  if(!publicKey) {
+    resultEl.style.background = '#fee2e2'; resultEl.style.color = '#dc2626';
+    resultEl.innerHTML = '<i class="fas fa-times-circle"></i> Please enter a public key first.';
+    return;
+  }
+  if(!publicKey.startsWith('pk_test_') && !publicKey.startsWith('pk_live_')) {
+    resultEl.style.background = '#fee2e2'; resultEl.style.color = '#dc2626';
+    resultEl.innerHTML = '<i class="fas fa-times-circle"></i> Invalid key format. Paystack public keys start with pk_test_ or pk_live_';
+    return;
+  }
+  // Load Paystack inline script to verify it's reachable
+  if(!window.PaystackPop) {
+    const s = document.createElement('script');
+    s.src = 'https://js.paystack.co/v1/inline.js';
+    s.onload = function() {
+      resultEl.style.background = '#dcfce7'; resultEl.style.color = '#15803d';
+      const modeLabel = publicKey.startsWith('pk_test_') ? 'TEST' : 'LIVE';
+      resultEl.innerHTML = '<i class="fas fa-check-circle"></i> Key format valid (' + modeLabel + ' mode). Paystack script loaded successfully.';
+    };
+    s.onerror = function() {
+      resultEl.style.background = '#fee2e2'; resultEl.style.color = '#dc2626';
+      resultEl.innerHTML = '<i class="fas fa-times-circle"></i> Could not load Paystack script. Check your internet connection.';
+    };
+    document.head.appendChild(s);
+  } else {
+    resultEl.style.background = '#dcfce7'; resultEl.style.color = '#15803d';
+    const modeLabel = publicKey.startsWith('pk_test_') ? 'TEST' : 'LIVE';
+    resultEl.innerHTML = '<i class="fas fa-check-circle"></i> Key format valid (' + modeLabel + ' mode). Paystack script already loaded.';
+  }
+};
+
+// ===== Trigger Paystack payment popup at checkout =====
+window.payWithPaystack = function(amountNaira, email, onSuccess) {
+  if(!_paystackConfig || !_paystackConfig.enabled || !_paystackConfig.publicKey) {
+    showToast('Paystack is not configured. Please choose another payment method.','error');
+    return;
+  }
+  if(!window.PaystackPop) {
+    const s = document.createElement('script');
+    s.src = 'https://js.paystack.co/v1/inline.js';
+    s.onload = function() { launchPaystackPopup(amountNaira, email, onSuccess); };
+    document.head.appendChild(s);
+  } else {
+    launchPaystackPopup(amountNaira, email, onSuccess);
+  }
+};
+
+function launchPaystackPopup(amountNaira, email, onSuccess) {
+  const handler = PaystackPop.setup({
+    key: _paystackConfig.publicKey,
+    email: email,
+    amount: Math.round(amountNaira * 100), // kobo
+    currency: _paystackConfig.currency || 'NGN',
+    channels: _paystackConfig.channels && _paystackConfig.channels.length ? _paystackConfig.channels : ['card','bank','ussd','bank_transfer'],
+    ref: 'ZMN-PSK-' + Date.now(),
+    callback: function(response) {
+      onSuccess(response.reference);
+    },
+    onClose: function() {
+      showToast('Payment window closed','info');
+    }
+  });
+  handler.openIframe();
+}
 
 
 init();
