@@ -3259,6 +3259,28 @@ async function loadUserProfile() {
 }
 
 // expose globally
+function friendlyAuthError(e) {
+  console.error('Auth error:', e);
+  let code = e && e.code ? e.code : '';
+  if(!code && e && e.message) {
+    const m = e.message.match(/\(([^)]+)\)/);
+    if(m) code = m[1];
+  }
+  code = code.replace('auth/','').replace(/-/g,' ');
+  const map = {
+    'email already in use': 'This email is already registered. Try signing in instead.',
+    'invalid email': 'Please enter a valid email address.',
+    'weak password': 'Password is too weak. Use at least 6 characters.',
+    'user not found': 'No account found with this email.',
+    'wrong password': 'Incorrect password. Please try again.',
+    'invalid credential': 'Incorrect email or password.',
+    'network request failed': 'Network error. Check your internet connection.',
+    'too many requests': 'Too many attempts. Please wait a moment and try again.',
+    'missing or insufficient permissions': 'Permission error. Please contact support.'
+  };
+  return map[code] || (code ? (code.charAt(0).toUpperCase() + code.slice(1)) : 'Something went wrong. Please try again.');
+}
+
 window.doLogin = async function() {
   const email = document.getElementById('login-email').value.trim();
   const pass = document.getElementById('login-password').value;
@@ -3268,7 +3290,7 @@ window.doLogin = async function() {
     showToast('Welcome back!');
     navigate('home');
   } catch(e) {
-    showToast(e.message.replace('Firebase:','').replace(/\(.*\)/,''),'error');
+    showToast(friendlyAuthError(e),'error');
   }
 };
 
@@ -3279,13 +3301,21 @@ window.doRegister = async function() {
   const pass = document.getElementById('reg-password').value;
   if(!name||!email||!pass) return showToast('Please fill required fields','error');
   if(pass.length<6) return showToast('Password must be at least 6 characters','error');
+  let cred;
   try {
-    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    cred = await createUserWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    showToast(friendlyAuthError(e),'error');
+    return;
+  }
+  try {
     await setDoc(doc(db,'users',cred.user.uid), { name, email, phone, createdAt: serverTimestamp() });
     showToast('Account created! Welcome to ZMONIE!');
     navigate('home');
   } catch(e) {
-    showToast(e.message.replace('Firebase:','').replace(/\(.*\)/,''),'error');
+    console.error('Profile save error:', e);
+    showToast('Account created, but profile setup had an issue. You can update your details in Profile.','error');
+    navigate('home');
   }
 };
 
