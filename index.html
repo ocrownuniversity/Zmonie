@@ -983,13 +983,16 @@ display:inline-block;background:var(--green);color:#fff;font-size:10px;font-weig
 .header-search::placeholder{color:#aaa!important;font-size:13px!important}
 .header-search-btn{background:transparent!important;color:#aaa!important;border:none!important;font-size:16px!important;padding:0!important;display:flex!important;align-items:center!important;cursor:pointer!important}
 .header-search-btn:hover{color:#f68b1e!important}
-.hero-slider{border-radius:0!important;margin:0!important;height:145px!important;position:relative;overflow:hidden;width:100%}
-@media(min-width:480px){.hero-slider{height:165px!important}
+.hero-slider{border-radius:0!important;margin:0!important;height:220px!important;position:relative;overflow:hidden;width:100%;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+@media(min-width:480px){.hero-slider{height:260px!important}
 }
-@media(min-width:768px){.hero-slider{height:210px!important}
+@media(min-width:768px){.hero-slider{height:380px!important}
 }
-.slider-prev,.slider-next{display:none!important}
-.slider-dots{bottom:8px!important}
+@media(min-width:1024px){.hero-slider{height:440px!important}
+}
+.slides-container{transition:transform .6s cubic-bezier(.65,0,.35,1)!important}
+.slider-prev,.slider-next{display:flex!important}
+.slider-dots{bottom:14px!important}
 .home-section{background:#fff!important;margin:8px 0 0!important;padding:14px 12px 16px!important}
 .home-section-title{font-size:16px!important;font-weight:800!important;color:#111!important;font-family:'Poppins',sans-serif!important;margin-bottom:4px!important}
 .home-section-header{margin-bottom:14px!important}
@@ -1218,6 +1221,8 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
     </div>
     <div id="sb-user-items" class="hidden">
       <div class="sidebar-item" onclick="navigate('orders');toggleSidebar()"><i class="fas fa-box"></i> My Orders</div>
+      <div class="sidebar-item" onclick="navigate('wallet');toggleSidebar()"><i class="fas fa-wallet"></i> My Wallet</div>
+      <div class="sidebar-item" onclick="navigate('referrals');toggleSidebar()"><i class="fas fa-gift"></i> Refer & Earn</div>
       <div class="sidebar-item" onclick="navigate('wishlist');toggleSidebar()"><i class="fas fa-heart"></i> Wishlist</div>
       <div class="sidebar-item" onclick="navigate('profile');toggleSidebar()"><i class="fas fa-user-circle"></i> Profile & Settings</div>
       <div class="sidebar-item" onclick="navigate('addresses');toggleSidebar()"><i class="fas fa-map-marker-alt"></i> Address Book</div>
@@ -1613,6 +1618,16 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         <input type="radio" name="payment" value="cod"> <span style="font-size:14px;font-weight:700">Pay on Delivery</span>
         <i class="fas fa-hand-holding-usd" style="margin-left:auto;color:var(--green)"></i>
       </div>
+      <div class="payment-option" id="pay-walletbal" onclick="selectPayment('wallet')">
+        <input type="radio" name="payment" value="wallet"> <span style="font-size:14px;font-weight:700">Pay from Wallet</span>
+        <i class="fas fa-wallet" style="margin-left:auto;color:#92400e"></i>
+      </div>
+      <div id="wallet-payment-info" class="hidden" style="background:var(--gray-50);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Main Wallet:</span><strong id="wp-main-bal">&#8358;0</strong></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Referral Balance:</span><strong id="wp-ref-bal">&#8358;0</strong></div>
+        <div style="display:flex;justify-content:space-between;color:var(--gray-500)"><span>Max from Referral per order:</span><strong id="wp-ref-max">&#8358;1,000</strong></div>
+        <p id="wp-insufficient" class="hidden" style="color:#dc2626;font-weight:700;margin-top:6px"><i class="fas fa-exclamation-circle"></i> Insufficient wallet balance for this order.</p>
+      </div>
       <div class="payment-option hidden" id="pay-paystack-wrap" onclick="selectPayment('paystack')">
         <div class="payment-option" id="pay-paystack" style="border:none;padding:0;margin:0">
           <input type="radio" name="payment" value="paystack"> <span style="font-size:14px;font-weight:700">Pay with Card / Bank / USSD</span>
@@ -1747,6 +1762,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" id="reg-email" type="email" placeholder="you@example.com"></div>
       <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" id="reg-phone" type="tel" placeholder="+234..."></div>
       <div class="form-group"><label class="form-label">Password</label><div style="position:relative"><input class="form-input" id="reg-password" type="password" placeholder="At least 6 characters" style="padding-right:42px"><button type="button" class="pw-eye-btn" onclick="togglePwVisibility('reg-password',this)" aria-label="Show password"><i class="fas fa-eye"></i></button></div></div>
+      <div class="form-group"><label class="form-label">Referral Code <span style="color:var(--gray-400);font-weight:400">(optional)</span></label><input class="form-input" id="reg-referral-code" type="text" placeholder="Enter referral code if you have one" style="text-transform:uppercase"></div>
       <button class="btn-auth" onclick="doRegister()"><i class="fas fa-user-plus"></i> Create Account</button>
       <div class="auth-switch">Already have an account? <a onclick="navigate('login')">Sign In</a></div>
     </div>
@@ -1790,6 +1806,104 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         <p style="font-size:12px;color:#166534;margin:4px 0 0">You can now sign in with your new password.</p>
       </div>
       <div class="auth-switch"><a onclick="navigate('login')"><i class="fas fa-arrow-left"></i> Back to Sign In</a></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-wallet" class="page">
+  <div class="page-header"><button class="back-btn" onclick="navigate('profile')"><i class="fas fa-arrow-left"></i></button><h2>My Wallet</h2></div>
+  <div class="wallet-wrap" style="max-width:600px;margin:0 auto;padding:16px">
+
+    <!-- Balance cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div style="background:linear-gradient(135deg,#f68b1e,#ff7a3c);border-radius:12px;padding:16px;color:#fff">
+        <div style="font-size:12px;opacity:.9;margin-bottom:4px">Main Wallet</div>
+        <div style="font-size:22px;font-weight:900" id="wallet-main-balance">&#8358;0</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:12px;padding:16px;color:#fff">
+        <div style="font-size:12px;opacity:.9;margin-bottom:4px">Referral Balance</div>
+        <div style="font-size:22px;font-weight:900" id="wallet-referral-balance">&#8358;0</div>
+        <div style="font-size:10px;opacity:.85;margin-top:4px">Max &#8358;1,000/purchase</div>
+      </div>
+    </div>
+
+    <!-- Fund wallet button -->
+    <button class="btn-primary" style="width:100%;margin-bottom:20px" onclick="openModal('modal-fund-wallet')"><i class="fas fa-plus-circle"></i> Fund Wallet</button>
+
+    <!-- Transaction history -->
+    <h3 style="font-size:15px;font-weight:800;margin-bottom:10px;color:var(--text)">Transaction History</h3>
+    <div id="wallet-transactions-list"><p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</p></div>
+  </div>
+</div>
+
+<div id="modal-fund-wallet" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header"><span class="modal-title">Fund Wallet</span><button class="modal-close" onclick="closeModal('modal-fund-wallet')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px;color:#9a3412">
+        <strong><i class="fas fa-info-circle"></i> How it works:</strong> Make a bank transfer to our account below, then submit the form with your proof. Our admin team will verify and credit your wallet within a few hours.
+      </div>
+      <div style="background:var(--gray-50);border-radius:8px;padding:12px;margin-bottom:14px">
+        <div style="font-size:11px;color:var(--gray-500);font-weight:700">BANK NAME</div>
+        <div style="font-size:14px;font-weight:800;margin-bottom:8px" id="fund-bank-name">Loading...</div>
+        <div style="font-size:11px;color:var(--gray-500);font-weight:700">ACCOUNT NUMBER</div>
+        <div style="font-size:14px;font-weight:800;margin-bottom:8px" id="fund-account-number">Loading...</div>
+        <div style="font-size:11px;color:var(--gray-500);font-weight:700">ACCOUNT NAME</div>
+        <div style="font-size:14px;font-weight:800" id="fund-account-name">Loading...</div>
+      </div>
+      <div class="form-group"><label class="form-label">Amount Transferred (&#8358;)</label><input class="form-input" id="fund-amount" type="number" placeholder="e.g. 5000"></div>
+      <div class="form-group"><label class="form-label">Payment Reference / Description <span style="color:var(--gray-400);font-weight:400">(optional)</span></label><input class="form-input" id="fund-reference" type="text" placeholder="e.g. Transfer ref or narration"></div>
+      <div class="form-group">
+        <label class="form-label">Proof of Payment (Screenshot)</label>
+        <input type="file" id="fund-proof-input" accept="image/*" class="form-input" style="padding:6px">
+        <div id="fund-proof-preview" style="margin-top:8px;display:none"><img id="fund-proof-img" style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:2px solid var(--orange)"></div>
+      </div>
+      <button class="btn-primary" style="width:100%" onclick="submitFundingRequest()"><i class="fas fa-paper-plane"></i> Submit Funding Request</button>
+    </div>
+  </div>
+</div>
+
+<div id="page-referrals" class="page">
+  <div class="page-header"><button class="back-btn" onclick="navigate('profile')"><i class="fas fa-arrow-left"></i></button><h2>Refer &amp; Earn</h2></div>
+  <div style="max-width:600px;margin:0 auto;padding:16px">
+
+    <div id="referral-disabled-msg" class="hidden" style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:14px;text-align:center;color:#991b1b;font-size:13px;margin-bottom:16px">
+      <i class="fas fa-info-circle"></i> The referral program is currently unavailable. Check back later!
+    </div>
+
+    <div id="referral-active-content">
+      <div style="background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:14px;padding:20px;color:#fff;text-align:center;margin-bottom:16px">
+        <i class="fas fa-gift" style="font-size:32px;margin-bottom:8px;display:block"></i>
+        <div style="font-size:16px;font-weight:800;margin-bottom:4px">Invite Friends, Earn Money!</div>
+        <div style="font-size:13px;opacity:.9" id="referral-bonus-text">Earn &#8358;0 for every friend who signs up using your link</div>
+      </div>
+
+      <div style="background:var(--gray-50);border-radius:10px;padding:14px;margin-bottom:16px">
+        <div style="font-size:12px;color:var(--gray-500);font-weight:700;margin-bottom:6px">YOUR REFERRAL CODE</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+          <div style="flex:1;background:#fff;border:2px dashed var(--orange);border-radius:8px;padding:10px;text-align:center;font-size:18px;font-weight:900;letter-spacing:1px;color:var(--orange)" id="my-referral-code">...</div>
+          <button class="btn-secondary" onclick="copyReferralCode()" style="padding:10px 14px"><i class="fas fa-copy"></i></button>
+        </div>
+        <div style="font-size:12px;color:var(--gray-500);font-weight:700;margin-bottom:6px">YOUR REFERRAL LINK</div>
+        <div style="display:flex;gap:8px">
+          <input class="form-input" id="my-referral-link" readonly style="font-size:12px;flex:1">
+          <button class="btn-secondary" onclick="shareReferralLink()" style="padding:10px 14px"><i class="fas fa-share-alt"></i></button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:22px;font-weight:900;color:#15803d" id="referral-total-count">0</div>
+          <div style="font-size:11px;color:#166534;font-weight:700">FRIENDS REFERRED</div>
+        </div>
+        <div style="background:#fdf4ff;border:1px solid #e9d5ff;border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:22px;font-weight:900;color:#7c3aed" id="referral-total-earned">&#8358;0</div>
+          <div style="font-size:11px;color:#6d28d9;font-weight:700">TOTAL EARNED</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:15px;font-weight:800;margin-bottom:10px;color:var(--text)">Referral History</h3>
+      <div id="referral-history-list"><p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</p></div>
     </div>
   </div>
 </div>
@@ -1870,6 +1984,8 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <button class="admin-tab" data-admin-tab="bulkimport" data-role-tab="superadmin,manager,uploader" onclick="switchAdminTab('bulkimport',this)" style="background:#065f46;color:#fff;border-color:#065f46">&#128196; Bulk Import</button>
       <button class="admin-tab" data-admin-tab="resetrequests" data-role-tab="superadmin,manager,subadmin" onclick="switchAdminTab('resetrequests',this)" style="background:#7c2d12;color:#fff;border-color:#7c2d12">&#128273; Reset Requests <span id="reset-pending-badge" class="hidden" style="background:#fff;color:#7c2d12;font-size:10px;font-weight:900;padding:2px 6px;border-radius:10px;margin-left:4px">0</span></button>
       <button class="admin-tab" data-admin-tab="paymentsettings" data-role-tab="superadmin" onclick="switchAdminTab('paymentsettings',this)" style="background:#0f766e;color:#fff;border-color:#0f766e">&#128179; Paystack Settings</button>
+      <button class="admin-tab" data-admin-tab="walletmgmt" data-role-tab="superadmin,manager" onclick="switchAdminTab('walletmgmt',this)" style="background:#92400e;color:#fff;border-color:#92400e">&#128176; Wallet &amp; Funding <span id="funding-pending-badge" class="hidden" style="background:#fff;color:#92400e;font-size:10px;font-weight:900;padding:2px 6px;border-radius:10px;margin-left:4px">0</span></button>
+      <button class="admin-tab" data-admin-tab="referralsettings" data-role-tab="superadmin" onclick="switchAdminTab('referralsettings',this)" style="background:#6d28d9;color:#fff;border-color:#6d28d9">&#127873; Referral Settings</button>
     </div>
     
     <div id="admin-coupons" class="admin-tab-content hidden">
@@ -2285,6 +2401,91 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         <!-- Info box -->
         <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px;margin-top:16px;font-size:12px;color:#9a3412">
           <strong>&#128161; How it works:</strong> When enabled, customers select "Pay with Paystack" at checkout. They're charged via Paystack's secure popup (cards, bank, USSD, transfer). On success, the order is placed automatically. Switch to <b>Live Mode</b> only after testing thoroughly with test cards.
+        </div>
+      </div>
+    </div>
+
+        <div id="admin-walletmgmt" class="admin-tab-content hidden">
+      <div class="admin-card" style="border-top:4px solid #92400e">
+        <div class="admin-card-title" style="color:#92400e"><span>&#128176; Bank Account for Wallet Funding</span></div>
+        <p style="font-size:12px;color:var(--gray-500);margin-bottom:14px">This is shown to customers when they request to fund their wallet via bank transfer.</p>
+        <div class="form-group"><label class="form-label">Bank Name</label><input class="form-input" id="fw-bank-name" placeholder="e.g. GTBank"></div>
+        <div class="form-group"><label class="form-label">Account Number</label><input class="form-input" id="fw-account-number" placeholder="e.g. 0123456789"></div>
+        <div class="form-group"><label class="form-label">Account Name</label><input class="form-input" id="fw-account-name" placeholder="e.g. ZMONIE Market Ltd"></div>
+        <button class="btn-primary" onclick="saveFundingBankDetails()" style="background:#92400e;border-color:#92400e"><i class="fas fa-save"></i> Save Bank Details</button>
+      </div>
+
+      <div class="admin-card" style="border-top:4px solid #c2410c;margin-top:12px">
+        <div class="admin-card-title" style="color:#c2410c">
+          <span>&#128179; Pending Funding Requests</span>
+          <span id="funding-stat-pending" style="background:#ffedd5;color:#c2410c;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">0 pending</span>
+        </div>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table class="admin-table" id="funding-requests-table">
+            <thead><tr><th>User</th><th>Amount</th><th>Reference</th><th>Proof</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="funding-requests-body"><tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-card" style="border-top:4px solid #1d4ed8;margin-top:12px">
+        <div class="admin-card-title" style="color:#1d4ed8"><span>&#128101; All User Wallets</span></div>
+        <div style="margin-bottom:10px"><input type="text" id="wallet-user-search" class="form-input" placeholder="Search by name or email..." oninput="renderWalletUsersList()"></div>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table class="admin-table" id="wallet-users-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Main Wallet</th><th>Referral Balance</th><th>Action</th></tr></thead>
+            <tbody id="wallet-users-body"><tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+        <div id="admin-referralsettings" class="admin-tab-content hidden">
+      <div class="admin-card" style="border-top:4px solid #6d28d9">
+        <div class="admin-card-title" style="color:#6d28d9">
+          <span>&#127873; Referral Program Settings</span>
+          <span id="referral-status-badge" style="background:#fee2e2;color:#dc2626;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">DISABLED</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#fdf4ff;border:1px solid #e9d5ff;border-radius:8px;padding:14px;margin-bottom:16px">
+          <div>
+            <div style="font-weight:800;font-size:14px;color:#6d28d9">Enable Referral Program</div>
+            <div style="font-size:11px;color:#6b7280;margin-top:2px">When enabled, users can refer friends and earn bonus money</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="referral-enabled-toggle" onchange="updateReferralStatusBadge(this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Referral Bonus Amount (&#8358;)</label>
+          <input class="form-input" id="referral-bonus-amount" type="number" placeholder="e.g. 500">
+          <p style="font-size:11px;color:var(--gray-500);margin-top:4px">This amount is credited to the referrer's Referral Balance when someone signs up using their code.</p>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Max Spend From Referral Balance Per Purchase (&#8358;)</label>
+          <input class="form-input" id="referral-max-spend" type="number" placeholder="1000" value="1000">
+          <p style="font-size:11px;color:var(--gray-500);margin-top:4px">Customers can only use up to this amount from their Referral Balance per checkout. The rest comes from their Main Wallet or other payment method.</p>
+        </div>
+        <button class="btn-primary" onclick="saveReferralSettings()" style="background:#6d28d9;border-color:#6d28d9"><i class="fas fa-save"></i> Save Settings</button>
+      </div>
+
+      <div class="admin-card" style="border-top:4px solid #6b7280;margin-top:12px">
+        <div class="admin-card-title" style="color:#374151"><span>&#128202; Referral Activity</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+          <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px;text-align:center">
+            <div id="referral-admin-total-count" style="font-size:22px;font-weight:900;color:#15803d">0</div>
+            <div style="font-size:11px;color:#166534;font-weight:700">TOTAL REFERRALS</div>
+          </div>
+          <div style="background:#fdf4ff;border:1px solid #e9d5ff;border-radius:8px;padding:12px;text-align:center">
+            <div id="referral-admin-total-paid" style="font-size:22px;font-weight:900;color:#7c3aed">&#8358;0</div>
+            <div style="font-size:11px;color:#6d28d9;font-weight:700">TOTAL BONUS PAID</div>
+          </div>
+        </div>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table class="admin-table" id="referral-activity-table">
+            <thead><tr><th>Referrer</th><th>Referred</th><th>Bonus</th><th>Date</th></tr></thead>
+            <tbody id="referral-activity-body"><tr><td colspan="4" style="text-align:center;color:var(--gray-400);padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -3281,6 +3482,484 @@ function friendlyAuthError(e) {
   return map[code] || (code ? (code.charAt(0).toUpperCase() + code.slice(1)) : 'Something went wrong. Please try again.');
 }
 
+// ===== WALLET SYSTEM =====
+window.loadWalletPage = async function() {
+  if(!currentUser) { navigate('login'); return; }
+  try {
+    const snap = await getDoc(doc(db,'users',currentUser.uid));
+    const data = snap.exists() ? snap.data() : {};
+    const mainBalance = Number(data.walletBalance || 0);
+    const referralBalance = Number(data.referralBalance || 0);
+    document.getElementById('wallet-main-balance').textContent = '\u20A6' + mainBalance.toLocaleString();
+    document.getElementById('wallet-referral-balance').textContent = '\u20A6' + referralBalance.toLocaleString();
+    window._userWalletBalance = mainBalance;
+    window._userReferralBalance = referralBalance;
+  } catch(e) {
+    console.error('Wallet load error:', e);
+  }
+  loadWalletTransactions();
+  loadFundingBankDetails();
+};
+
+async function loadFundingBankDetails() {
+  try {
+    const snap = await getDoc(doc(db,'settings','wallet_funding'));
+    const data = snap.exists() ? snap.data() : {};
+    document.getElementById('fund-bank-name').textContent = data.bankName || 'Not configured yet';
+    document.getElementById('fund-account-number').textContent = data.accountNumber || '-';
+    document.getElementById('fund-account-name').textContent = data.accountName || '-';
+  } catch(e) {
+    document.getElementById('fund-bank-name').textContent = 'Not configured yet';
+  }
+}
+
+async function loadWalletTransactions() {
+  const el = document.getElementById('wallet-transactions-list');
+  if(!el || !currentUser) return;
+  try {
+    const q1 = query(collection(db,'wallet_transactions'), where('userId','==',currentUser.uid), orderBy('createdAt','desc'), limit(50));
+    const snap = await getDocs(q1);
+    if(snap.empty) { el.innerHTML = '<p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px">No transactions yet.</p>'; return; }
+    const typeIcons = {
+      credit: '<i class="fas fa-arrow-down" style="color:#15803d"></i>',
+      debit: '<i class="fas fa-arrow-up" style="color:#dc2626"></i>',
+      referral_earning: '<i class="fas fa-gift" style="color:#7c3aed"></i>',
+      purchase: '<i class="fas fa-shopping-bag" style="color:#dc2626"></i>',
+      funding: '<i class="fas fa-university" style="color:#15803d"></i>'
+    };
+    let html = '';
+    snap.forEach(d => {
+      const t = d.data();
+      const isCredit = t.type === 'credit' || t.type === 'referral_earning' || t.type === 'funding';
+      const amountColor = isCredit ? '#15803d' : '#dc2626';
+      const amountSign = isCredit ? '+' : '-';
+      const dt = t.createdAt ? new Date(t.createdAt) : null;
+      html += '<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--gray-50);border-radius:8px;margin-bottom:8px">'
+        + '<div style="width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">' + (typeIcons[t.type]||'<i class="fas fa-circle"></i>') + '</div>'
+        + '<div style="flex:1;min-width:0">'
+        + '<div style="font-size:13px;font-weight:700;color:var(--text)">' + escWallet(t.description||t.type) + '</div>'
+        + '<div style="font-size:11px;color:var(--gray-400)">' + (dt ? dt.toLocaleDateString('en-NG') + ' ' + dt.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit'}) : '') + '</div>'
+        + '</div>'
+        + '<div style="font-weight:900;font-size:14px;color:' + amountColor + '">' + amountSign + '\u20A6' + Number(t.amount||0).toLocaleString() + '</div>'
+        + '</div>';
+    });
+    el.innerHTML = html;
+  } catch(e) {
+    console.error('Transaction load error:', e);
+    el.innerHTML = '<p style="color:#dc2626;font-size:13px;text-align:center;padding:20px">Error loading transactions</p>';
+  }
+}
+
+function escWallet(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let _fundProofDataUrl = '';
+document.addEventListener('change', function(e) {
+  if(e.target && e.target.id === 'fund-proof-input') {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      _fundProofDataUrl = ev.target.result;
+      document.getElementById('fund-proof-img').src = _fundProofDataUrl;
+      document.getElementById('fund-proof-preview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+window.submitFundingRequest = async function() {
+  if(!currentUser) return showToast('Please sign in first','error');
+  const amount = Number(document.getElementById('fund-amount').value);
+  const reference = document.getElementById('fund-reference').value.trim();
+  if(!amount || amount <= 0) return showToast('Enter a valid amount','error');
+  try {
+    await addDoc(collection(db,'wallet_funding_requests'), {
+      userId: currentUser.uid,
+      userEmail: currentUser.email,
+      userName: currentUser.displayName || currentUser.email.split('@')[0],
+      amount: amount,
+      reference: reference,
+      proofImage: _fundProofDataUrl || '',
+      status: 'pending',
+      createdAt: Date.now()
+    });
+    showToast('Funding request submitted! We will verify and credit your wallet shortly.');
+    closeModal('modal-fund-wallet');
+    document.getElementById('fund-amount').value = '';
+    document.getElementById('fund-reference').value = '';
+    document.getElementById('fund-proof-preview').style.display = 'none';
+    _fundProofDataUrl = '';
+  } catch(e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+};
+
+// ===== REFERRAL SYSTEM (user-facing) =====
+window.loadReferralsPage = async function() {
+  if(!currentUser) { navigate('login'); return; }
+  try {
+    const settingsSnap = await getDoc(doc(db,'settings','referral'));
+    const settings = settingsSnap.exists() ? settingsSnap.data() : { enabled: false, bonusAmount: 0 };
+
+    if(!settings.enabled) {
+      document.getElementById('referral-disabled-msg').classList.remove('hidden');
+      document.getElementById('referral-active-content').style.display = 'none';
+      return;
+    }
+    document.getElementById('referral-disabled-msg').classList.add('hidden');
+    document.getElementById('referral-active-content').style.display = '';
+
+    document.getElementById('referral-bonus-text').textContent = 'Earn \u20A6' + Number(settings.bonusAmount||0).toLocaleString() + ' for every friend who signs up using your link';
+
+    const userSnap = await getDoc(doc(db,'users',currentUser.uid));
+    const userData = userSnap.exists() ? userSnap.data() : {};
+    let myCode = userData.referralCode;
+    if(!myCode) {
+      myCode = generateReferralCode(currentUser.uid);
+      await updateDoc(doc(db,'users',currentUser.uid), { referralCode: myCode });
+    }
+    document.getElementById('my-referral-code').textContent = myCode;
+    const link = window.location.origin + window.location.pathname + '?ref=' + myCode;
+    document.getElementById('my-referral-link').value = link;
+    window._myReferralLink = link;
+    window._myReferralCode = myCode;
+
+    loadReferralHistory();
+  } catch(e) {
+    console.error('Referrals page error:', e);
+  }
+};
+
+async function loadReferralHistory() {
+  const el = document.getElementById('referral-history-list');
+  if(!el || !currentUser) return;
+  try {
+    const q1 = query(collection(db,'referral_activity'), where('referrerUid','==',currentUser.uid), orderBy('createdAt','desc'));
+    const snap = await getDocs(q1);
+    document.getElementById('referral-total-count').textContent = snap.size;
+    let totalEarned = 0;
+    snap.forEach(d => totalEarned += Number(d.data().bonusAmount||0));
+    document.getElementById('referral-total-earned').textContent = '\u20A6' + totalEarned.toLocaleString();
+
+    if(snap.empty) { el.innerHTML = '<p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px">No referrals yet. Share your link to start earning!</p>'; return; }
+    let html = '';
+    snap.forEach(d => {
+      const r = d.data();
+      const dt = r.createdAt ? new Date(r.createdAt) : null;
+      html += '<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--gray-50);border-radius:8px;margin-bottom:8px">'
+        + '<div style="width:36px;height:36px;border-radius:50%;background:#7c3aed;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800">' + escWallet((r.referredName||r.referredEmail||'?').charAt(0).toUpperCase()) + '</div>'
+        + '<div style="flex:1;min-width:0">'
+        + '<div style="font-size:13px;font-weight:700;color:var(--text)">' + escWallet(r.referredName||r.referredEmail||'New user') + '</div>'
+        + '<div style="font-size:11px;color:var(--gray-400)">' + (dt ? dt.toLocaleDateString('en-NG') : '') + '</div>'
+        + '</div>'
+        + '<div style="font-weight:900;font-size:13px;color:#7c3aed">+\u20A6' + Number(r.bonusAmount||0).toLocaleString() + '</div>'
+        + '</div>';
+    });
+    el.innerHTML = html;
+  } catch(e) {
+    console.error('Referral history error:', e);
+    el.innerHTML = '<p style="color:#dc2626;font-size:13px;text-align:center;padding:20px">Error loading history</p>';
+  }
+}
+
+window.copyReferralCode = function() {
+  const code = document.getElementById('my-referral-code').textContent;
+  navigator.clipboard.writeText(code).then(() => showToast('Referral code copied!')).catch(() => showToast('Could not copy','error'));
+};
+
+window.shareReferralLink = function() {
+  const link = window._myReferralLink || document.getElementById('my-referral-link').value;
+  const text = 'Join ZMONIE Market using my referral link and let\u0027s both earn rewards! ' + link;
+  if(navigator.share) {
+    navigator.share({ title: 'ZMONIE Market Referral', text: text, url: link }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(link).then(() => showToast('Referral link copied!')).catch(() => showToast('Could not copy','error'));
+  }
+};
+
+// ===== ADMIN: WALLET & FUNDING MANAGEMENT =====
+let _fundingRequests = [];
+let _walletUsers = [];
+
+window.loadWalletManagement = async function() {
+  if(!isSuperAdmin && !isManager) return;
+  await loadFundingBankDetailsAdmin();
+  await loadFundingRequestsList();
+  await loadWalletUsersList();
+};
+
+async function loadFundingBankDetailsAdmin() {
+  try {
+    const snap = await getDoc(doc(db,'settings','wallet_funding'));
+    const data = snap.exists() ? snap.data() : {};
+    document.getElementById('fw-bank-name').value = data.bankName || '';
+    document.getElementById('fw-account-number').value = data.accountNumber || '';
+    document.getElementById('fw-account-name').value = data.accountName || '';
+  } catch(e) { console.error(e); }
+}
+
+window.saveFundingBankDetails = async function() {
+  const bankName = document.getElementById('fw-bank-name').value.trim();
+  const accountNumber = document.getElementById('fw-account-number').value.trim();
+  const accountName = document.getElementById('fw-account-name').value.trim();
+  if(!bankName || !accountNumber || !accountName) return showToast('Please fill all bank details','error');
+  try {
+    await setDoc(doc(db,'settings','wallet_funding'), { bankName, accountNumber, accountName, updatedAt: Date.now() });
+    showToast('Bank details saved!');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+async function loadFundingRequestsList() {
+  const tbody = document.getElementById('funding-requests-body');
+  if(!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+  try {
+    const q1 = query(collection(db,'wallet_funding_requests'), orderBy('createdAt','desc'), limit(100));
+    const snap = await getDocs(q1);
+    _fundingRequests = [];
+    snap.forEach(d => _fundingRequests.push({ id: d.id, ...d.data() }));
+
+    const pendingCount = _fundingRequests.filter(r => r.status === 'pending').length;
+    const badge = document.getElementById('funding-stat-pending');
+    if(badge) badge.textContent = pendingCount + ' pending';
+    const navBadge = document.getElementById('funding-pending-badge');
+    if(navBadge) {
+      if(pendingCount > 0) { navBadge.textContent = pendingCount; navBadge.classList.remove('hidden'); }
+      else navBadge.classList.add('hidden');
+    }
+
+    if(!_fundingRequests.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:20px">No funding requests yet.</td></tr>';
+      return;
+    }
+
+    const statusBadge = {
+      pending: '<span style="background:#ffedd5;color:#c2410c;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">Pending</span>',
+      approved: '<span style="background:#dcfce7;color:#15803d;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">Approved</span>',
+      rejected: '<span style="background:#fee2e2;color:#dc2626;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">Rejected</span>'
+    };
+
+    let html = '';
+    _fundingRequests.forEach(r => {
+      const dt = r.createdAt ? new Date(r.createdAt) : null;
+      const proofHtml = r.proofImage ? '<a href="' + r.proofImage + '" target="_blank"><img src="' + r.proofImage + '" style="width:40px;height:40px;object-fit:cover;border-radius:6px;border:1px solid #ddd"></a>' : '<span style="color:var(--gray-400);font-size:11px">None</span>';
+      let actionHtml = '';
+      if(r.status === 'pending') {
+        actionHtml = '<button class="btn-primary" style="font-size:11px;padding:5px 10px;background:#15803d;border-color:#15803d" onclick="approveFundingRequest(\''+r.id+'\')"><i class="fas fa-check"></i></button> '
+          + '<button class="btn-danger" style="font-size:11px;padding:5px 10px" onclick="rejectFundingRequest(\''+r.id+'\')"><i class="fas fa-times"></i></button>';
+      } else {
+        actionHtml = '<span style="font-size:11px;color:var(--gray-400)">Processed</span>';
+      }
+      html += '<tr>'
+        + '<td style="font-size:12px;font-weight:700">' + escAdmin(r.userName||r.userEmail||'-') + '<br><span style="color:var(--gray-400);font-size:10px">'+escAdmin(r.userEmail||'')+'</span></td>'
+        + '<td style="font-size:13px;font-weight:800">\u20A6' + Number(r.amount||0).toLocaleString() + '</td>'
+        + '<td style="font-size:11px;color:var(--gray-500)">' + escAdmin(r.reference||'-') + '</td>'
+        + '<td>' + proofHtml + '</td>'
+        + '<td style="font-size:11px">' + (dt ? dt.toLocaleDateString('en-NG') : '-') + '</td>'
+        + '<td>' + (statusBadge[r.status]||r.status) + '</td>'
+        + '<td>' + actionHtml + '</td>'
+        + '</tr>';
+    });
+    tbody.innerHTML = html;
+  } catch(e) {
+    console.error(e);
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:20px">Error: ' + e.message + '</td></tr>';
+  }
+}
+
+function escAdmin(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+window.approveFundingRequest = async function(requestId) {
+  if(!isSuperAdmin && !isManager) return;
+  const req = _fundingRequests.find(r => r.id === requestId);
+  if(!req) return;
+  if(!confirm('Approve and credit \u20A6' + Number(req.amount).toLocaleString() + ' to ' + (req.userName||req.userEmail) + '\u0027s wallet?')) return;
+
+  try {
+    const userSnap = await getDoc(doc(db,'users',req.userId));
+    const currentBalance = userSnap.exists() ? Number(userSnap.data().walletBalance||0) : 0;
+    const newBalance = currentBalance + Number(req.amount);
+
+    await updateDoc(doc(db,'users',req.userId), { walletBalance: newBalance });
+    await updateDoc(doc(db,'wallet_funding_requests',requestId), { status: 'approved', approvedAt: Date.now(), approvedBy: currentUser.email });
+
+    await addDoc(collection(db,'wallet_transactions'), {
+      userId: req.userId,
+      type: 'funding',
+      amount: Number(req.amount),
+      description: 'Wallet funding approved (Bank Transfer)',
+      balanceAfter: newBalance,
+      balanceType: 'main',
+      status: 'completed',
+      createdAt: Date.now()
+    });
+
+    showToast('Wallet credited successfully!');
+    loadFundingRequestsList();
+  } catch(e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+};
+
+window.rejectFundingRequest = async function(requestId) {
+  if(!isSuperAdmin && !isManager) return;
+  if(!confirm('Reject this funding request?')) return;
+  try {
+    await updateDoc(doc(db,'wallet_funding_requests',requestId), { status: 'rejected', rejectedAt: Date.now(), rejectedBy: currentUser.email });
+    showToast('Request rejected');
+    loadFundingRequestsList();
+  } catch(e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+};
+
+async function loadWalletUsersList() {
+  const tbody = document.getElementById('wallet-users-body');
+  if(!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+  try {
+    const snap = await getDocs(collection(db,'users'));
+    _walletUsers = [];
+    snap.forEach(d => _walletUsers.push({ id: d.id, ...d.data() }));
+    renderWalletUsersList();
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#dc2626;padding:20px">Error: ' + e.message + '</td></tr>';
+  }
+}
+
+window.renderWalletUsersList = function() {
+  const tbody = document.getElementById('wallet-users-body');
+  if(!tbody) return;
+  const searchEl = document.getElementById('wallet-user-search');
+  const search = (searchEl ? searchEl.value : '').trim().toLowerCase();
+
+  let rows = _walletUsers.filter(u => {
+    if(!search) return true;
+    const hay = ((u.name||'')+' '+(u.email||'')).toLowerCase();
+    return hay.includes(search);
+  });
+
+  if(!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:20px">No users found.</td></tr>';
+    return;
+  }
+
+  let html = '';
+  rows.forEach(u => {
+    html += '<tr>'
+      + '<td style="font-size:12px;font-weight:700">' + escAdmin(u.name||'-') + '</td>'
+      + '<td style="font-size:12px;color:var(--gray-500)">' + escAdmin(u.email||'-') + '</td>'
+      + '<td style="font-size:13px;font-weight:800;color:#15803d">\u20A6' + Number(u.walletBalance||0).toLocaleString() + '</td>'
+      + '<td style="font-size:13px;font-weight:800;color:#7c3aed">\u20A6' + Number(u.referralBalance||0).toLocaleString() + '</td>'
+      + '<td><button class="btn-secondary" style="font-size:11px;padding:5px 10px" onclick="adjustUserWallet(\''+u.id+'\')"><i class="fas fa-edit"></i> Adjust</button></td>'
+      + '</tr>';
+  });
+  tbody.innerHTML = html;
+};
+
+window.adjustUserWallet = async function(userId) {
+  if(!isSuperAdmin && !isManager) return;
+  const user = _walletUsers.find(u => u.id === userId);
+  if(!user) return;
+  const amountStr = prompt('Enter amount to ADD to ' + (user.name||user.email) + '\u0027s main wallet (use negative number to deduct):');
+  if(!amountStr) return;
+  const amount = Number(amountStr);
+  if(isNaN(amount) || amount === 0) return showToast('Invalid amount','error');
+
+  try {
+    const currentBalance = Number(user.walletBalance||0);
+    const newBalance = Math.max(0, currentBalance + amount);
+    await updateDoc(doc(db,'users',userId), { walletBalance: newBalance });
+    await addDoc(collection(db,'wallet_transactions'), {
+      userId: userId,
+      type: amount > 0 ? 'credit' : 'debit',
+      amount: Math.abs(amount),
+      description: 'Manual adjustment by admin (' + currentUser.email + ')',
+      balanceAfter: newBalance,
+      balanceType: 'main',
+      status: 'completed',
+      createdAt: Date.now()
+    });
+    showToast('Wallet adjusted successfully!');
+    loadWalletUsersList();
+  } catch(e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+};
+
+// ===== ADMIN: REFERRAL SETTINGS =====
+window.loadReferralAdminSettings = async function() {
+  if(!isSuperAdmin) return;
+  try {
+    const snap = await getDoc(doc(db,'settings','referral'));
+    const data = snap.exists() ? snap.data() : {};
+    document.getElementById('referral-enabled-toggle').checked = !!data.enabled;
+    document.getElementById('referral-bonus-amount').value = data.bonusAmount || '';
+    document.getElementById('referral-max-spend').value = data.maxSpendPerPurchase || 1000;
+    updateReferralStatusBadge(!!data.enabled);
+  } catch(e) { console.error(e); }
+  loadReferralActivityAdmin();
+};
+
+window.updateReferralStatusBadge = function(enabled) {
+  const badge = document.getElementById('referral-status-badge');
+  if(!badge) return;
+  if(enabled) { badge.textContent = 'ENABLED'; badge.style.background = '#dcfce7'; badge.style.color = '#15803d'; }
+  else { badge.textContent = 'DISABLED'; badge.style.background = '#fee2e2'; badge.style.color = '#dc2626'; }
+};
+
+window.saveReferralSettings = async function() {
+  if(!isSuperAdmin) return;
+  const enabled = document.getElementById('referral-enabled-toggle').checked;
+  const bonusAmount = Number(document.getElementById('referral-bonus-amount').value) || 0;
+  const maxSpendPerPurchase = Number(document.getElementById('referral-max-spend').value) || 1000;
+
+  if(enabled && bonusAmount <= 0) return showToast('Set a bonus amount greater than 0 to enable referrals','error');
+
+  try {
+    await setDoc(doc(db,'settings','referral'), { enabled, bonusAmount, maxSpendPerPurchase, updatedAt: Date.now(), updatedBy: currentUser.email });
+    updateReferralStatusBadge(enabled);
+    showToast('Referral settings saved!');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+async function loadReferralActivityAdmin() {
+  const tbody = document.getElementById('referral-activity-body');
+  if(!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--gray-400);padding:20px"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+  try {
+    const q1 = query(collection(db,'referral_activity'), orderBy('createdAt','desc'), limit(100));
+    const snap = await getDocs(q1);
+    document.getElementById('referral-admin-total-count').textContent = snap.size;
+    let totalPaid = 0;
+    snap.forEach(d => totalPaid += Number(d.data().bonusAmount||0));
+    document.getElementById('referral-admin-total-paid').textContent = '\u20A6' + totalPaid.toLocaleString();
+
+    if(snap.empty) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--gray-400);padding:20px">No referral activity yet.</td></tr>'; return; }
+
+    let html = '';
+    snap.forEach(d => {
+      const r = d.data();
+      const dt = r.createdAt ? new Date(r.createdAt) : null;
+      html += '<tr>'
+        + '<td style="font-size:12px">' + escAdmin(r.referrerUid||'-').substring(0,10) + '...</td>'
+        + '<td style="font-size:12px">' + escAdmin(r.referredName||r.referredEmail||'-') + '</td>'
+        + '<td style="font-size:13px;font-weight:800;color:#7c3aed">\u20A6' + Number(r.bonusAmount||0).toLocaleString() + '</td>'
+        + '<td style="font-size:11px">' + (dt ? dt.toLocaleDateString('en-NG') : '-') + '</td>'
+        + '</tr>';
+    });
+    tbody.innerHTML = html;
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#dc2626;padding:20px">Error: ' + e.message + '</td></tr>';
+  }
+}
+
+
+
 window.doLogin = async function() {
   const email = document.getElementById('login-email').value.trim();
   const pass = document.getElementById('login-password').value;
@@ -3299,6 +3978,7 @@ window.doRegister = async function() {
   const email = document.getElementById('reg-email').value.trim();
   const phone = document.getElementById('reg-phone').value.trim();
   const pass = document.getElementById('reg-password').value;
+  const referralCodeInput = document.getElementById('reg-referral-code').value.trim().toUpperCase();
   if(!name||!email||!pass) return showToast('Please fill required fields','error');
   if(pass.length<6) return showToast('Password must be at least 6 characters','error');
   let cred;
@@ -3309,7 +3989,37 @@ window.doRegister = async function() {
     return;
   }
   try {
-    await setDoc(doc(db,'users',cred.user.uid), { name, email, phone, createdAt: serverTimestamp() });
+    const myReferralCode = generateReferralCode(cred.user.uid);
+    let referredBy = '';
+    let referrerUid = '';
+
+    // Validate referral code if provided
+    if(referralCodeInput) {
+      try {
+        const rq = query(collection(db,'users'), where('referralCode','==',referralCodeInput), limit(1));
+        const rsnap = await getDocs(rq);
+        if(!rsnap.empty) {
+          referrerUid = rsnap.docs[0].id;
+          referredBy = referralCodeInput;
+        } else {
+          showToast('Referral code not found - continuing without it','info');
+        }
+      } catch(e) { console.error('Referral lookup error:', e); }
+    }
+
+    await setDoc(doc(db,'users',cred.user.uid), {
+      name, email, phone, createdAt: serverTimestamp(),
+      referralCode: myReferralCode,
+      referredBy: referredBy,
+      walletBalance: 0,
+      referralBalance: 0
+    });
+
+    // Award referral bonus to referrer (if valid referral code was used)
+    if(referrerUid) {
+      await processReferralBonus(referrerUid, cred.user.uid, name, email);
+    }
+
     showToast('Account created! Welcome to ZMONIE!');
     navigate('home');
   } catch(e) {
@@ -3318,6 +4028,57 @@ window.doRegister = async function() {
     navigate('home');
   }
 };
+
+function generateReferralCode(uid) {
+  const base = uid.substring(0,6).toUpperCase();
+  const rand = Math.random().toString(36).substring(2,5).toUpperCase();
+  return 'ZM' + base + rand;
+}
+
+async function processReferralBonus(referrerUid, newUserUid, newUserName, newUserEmail) {
+  try {
+    const settingsSnap = await getDoc(doc(db,'settings','referral'));
+    const settings = settingsSnap.exists() ? settingsSnap.data() : { enabled: false, bonusAmount: 0 };
+    if(!settings.enabled || !settings.bonusAmount) return;
+
+    const bonusAmount = Number(settings.bonusAmount) || 0;
+    if(bonusAmount <= 0) return;
+
+    // Credit referrer's referral balance
+    const referrerSnap = await getDoc(doc(db,'users',referrerUid));
+    if(!referrerSnap.exists()) return;
+    const currentReferralBalance = Number(referrerSnap.data().referralBalance || 0);
+    const newReferralBalance = currentReferralBalance + bonusAmount;
+
+    await updateDoc(doc(db,'users',referrerUid), { referralBalance: newReferralBalance });
+
+    // Log wallet transaction
+    await addDoc(collection(db,'wallet_transactions'), {
+      userId: referrerUid,
+      type: 'referral_earning',
+      amount: bonusAmount,
+      description: 'Referral bonus for inviting ' + (newUserName||newUserEmail),
+      referredUserId: newUserUid,
+      referredUserName: newUserName,
+      balanceAfter: newReferralBalance,
+      balanceType: 'referral',
+      status: 'completed',
+      createdAt: Date.now()
+    });
+
+    // Log referral activity
+    await addDoc(collection(db,'referral_activity'), {
+      referrerUid: referrerUid,
+      referredUid: newUserUid,
+      referredName: newUserName,
+      referredEmail: newUserEmail,
+      bonusAmount: bonusAmount,
+      createdAt: Date.now()
+    });
+  } catch(e) {
+    console.error('Referral bonus processing error:', e);
+  }
+}
 
 window.loginWithGoogle = async function() {
   const provider = new GoogleAuthProvider();
@@ -3829,14 +4590,42 @@ window.selectPayment = function(type) {
   selectedPayment = type;
   document.getElementById('pay-bank').classList.toggle('selected', type==='bank');
   document.getElementById('pay-cod').classList.toggle('selected', type==='cod');
+  document.getElementById('pay-walletbal').classList.toggle('selected', type==='wallet');
   document.getElementById('pay-paystack-wrap').classList.toggle('selected', type==='paystack');
   document.getElementById('pay-opay-wrap').classList.toggle('selected', type==='opay');
   document.getElementById('bank-info').classList.toggle('hidden', type!=='bank');
-  document.querySelectorAll('#pay-bank input, #pay-cod input, #pay-paystack input, #pay-opay input').forEach(inp=>{
+  document.getElementById('wallet-payment-info').classList.toggle('hidden', type!=='wallet');
+  if(type==='wallet') loadWalletPaymentInfo();
+  document.querySelectorAll('#pay-bank input, #pay-cod input, #pay-walletbal input, #pay-paystack input, #pay-opay input').forEach(inp=>{
     const parentId = inp.closest('.payment-option').id;
-    inp.checked = (parentId === 'pay-'+type) || (parentId === 'pay-'+type+'-wrap');
+    inp.checked = (parentId === 'pay-'+type) || (parentId === 'pay-'+type+'-wrap') || (type==='wallet' && parentId==='pay-walletbal');
   });
 };
+
+async function loadWalletPaymentInfo() {
+  if(!currentUser) return;
+  try {
+    const snap = await getDoc(doc(db,'users',currentUser.uid));
+    const data = snap.exists() ? snap.data() : {};
+    const mainBal = Number(data.walletBalance||0);
+    const refBal = Number(data.referralBalance||0);
+    window._userWalletBalance = mainBal;
+    window._userReferralBalance = refBal;
+    document.getElementById('wp-main-bal').textContent = '\u20A6' + mainBal.toLocaleString();
+    document.getElementById('wp-ref-bal').textContent = '\u20A6' + refBal.toLocaleString();
+
+    const settingsSnap = await getDoc(doc(db,'settings','referral'));
+    const maxSpend = settingsSnap.exists() ? Number(settingsSnap.data().maxSpendPerPurchase||1000) : 1000;
+    window._referralMaxSpend = maxSpend;
+    document.getElementById('wp-ref-max').textContent = '\u20A6' + maxSpend.toLocaleString();
+
+    // Check sufficiency against current order total
+    const orderTotal = window._checkoutGrandTotal || 0;
+    const usableReferral = Math.min(refBal, maxSpend);
+    const totalAvailable = mainBal + usableReferral;
+    document.getElementById('wp-insufficient').classList.toggle('hidden', totalAvailable >= orderTotal);
+  } catch(e) { console.error('Wallet payment info error:', e); }
+}
 
 // ZMONIE wallet check and deduction
 async function checkZmonieWallet() {
@@ -4128,6 +4917,62 @@ window.placeOrder = async function() {
   if(!selectedPayment) return showToast('Please select a payment method','error');
   if(!cart.length) return showToast('Your cart is empty','error');
 
+  // If Wallet payment selected, validate and deduct balances first
+  if(selectedPayment === 'wallet') {
+    const subtotalW = cart.reduce((s,x)=>s+(x.price*x.qty),0);
+    const deliveryFeeW = window._checkoutDeliveryFee !== undefined ? window._checkoutDeliveryFee : 3500;
+    const couponDiscountW = window._checkoutCouponDiscount || 0;
+    const loyaltyDiscountW = useLoyaltyDiscount || 0;
+    const grandTotalW = Math.max(0, subtotalW - couponDiscountW - loyaltyDiscountW + deliveryFeeW);
+    window._checkoutGrandTotal = grandTotalW;
+
+    try {
+      const userSnap = await getDoc(doc(db,'users',currentUser.uid));
+      const userData = userSnap.exists() ? userSnap.data() : {};
+      const mainBal = Number(userData.walletBalance||0);
+      const refBal = Number(userData.referralBalance||0);
+
+      const settingsSnap = await getDoc(doc(db,'settings','referral'));
+      const maxSpend = settingsSnap.exists() ? Number(settingsSnap.data().maxSpendPerPurchase||1000) : 1000;
+
+      const usableReferral = Math.min(refBal, maxSpend, grandTotalW);
+      const remainingAfterReferral = grandTotalW - usableReferral;
+      const usableMain = Math.min(mainBal, remainingAfterReferral);
+
+      if(usableReferral + usableMain < grandTotalW) {
+        return showToast('Insufficient wallet balance. You need \u20A6' + grandTotalW.toLocaleString() + ' but only have \u20A6' + (usableReferral+usableMain).toLocaleString() + ' available (referral capped at \u20A6' + maxSpend.toLocaleString() + '/order).', 'error');
+      }
+
+      // Deduct from referral balance first, then main wallet
+      const newReferralBal = refBal - usableReferral;
+      const newMainBal = mainBal - usableMain;
+
+      await updateDoc(doc(db,'users',currentUser.uid), { walletBalance: newMainBal, referralBalance: newReferralBal });
+
+      if(usableReferral > 0) {
+        await addDoc(collection(db,'wallet_transactions'), {
+          userId: currentUser.uid, type: 'purchase', amount: usableReferral,
+          description: 'Order payment (Referral Balance)', balanceAfter: newReferralBal,
+          balanceType: 'referral', status: 'completed', createdAt: Date.now()
+        });
+      }
+      if(usableMain > 0) {
+        await addDoc(collection(db,'wallet_transactions'), {
+          userId: currentUser.uid, type: 'purchase', amount: usableMain,
+          description: 'Order payment (Main Wallet)', balanceAfter: newMainBal,
+          balanceType: 'main', status: 'completed', createdAt: Date.now()
+        });
+      }
+
+      window._walletPaymentBreakdown = { referralUsed: usableReferral, mainUsed: usableMain };
+    } catch(e) {
+      showToast('Wallet payment error: ' + e.message, 'error');
+      return;
+    }
+    completeOrderPlacement();
+    return;
+  }
+
   // If Paystack or Opay selected, charge via popup first, then continue with order placement on success
   if(selectedPayment === 'paystack' || selectedPayment === 'opay') {
     const subtotalP = cart.reduce((s,x)=>s+(x.price*x.qty),0);
@@ -4189,6 +5034,11 @@ async function completeOrderPlacement() {
       orderData.paystackReference = window._paystackReference;
       orderData.paymentStatus = 'paid';
       window._paystackReference = null;
+    }
+    if(selectedPayment === 'wallet' && window._walletPaymentBreakdown) {
+      orderData.paymentStatus = 'paid';
+      orderData.walletBreakdown = window._walletPaymentBreakdown;
+      window._walletPaymentBreakdown = null;
     }
     const orderRef = await addDoc(collection(db,'orders'), orderData);
     lastOrderId = orderRef.id;
@@ -4772,7 +5622,7 @@ function applyAdminRoleTabs() {
 
 function canAccessTab(tab) {
   if(isSuperAdmin) return true;
-  if(isManager) return tab !== 'manageadmins' && tab !== 'paymentsettings';
+  if(isManager) return tab !== 'manageadmins' && tab !== 'paymentsettings' && tab !== 'referralsettings';
   if(isUploader) return tab === 'products' || tab === 'banners' || tab === 'bulkimport';
   if(isSubAdmin) return ['orders','analytics','users','reviews','chats','resetrequests'].includes(tab);
   return false;
@@ -4797,6 +5647,8 @@ window.switchAdminTab = function(tab, btn) {
   else if(tab==='bulkimport') initBulkImport();
   else if(tab==='resetrequests') { loadResetRequests(); loadResetActivityLog(); }
   else if(tab==='paymentsettings') loadPaystackSettings();
+  else if(tab==='walletmgmt') loadWalletManagement();
+  else if(tab==='referralsettings') loadReferralAdminSettings();
 };
 
 window.loadAdminUsers = async function() {
@@ -5480,6 +6332,14 @@ window.navigate = function(page) {
     applyAdminRoleTabs();
     if(isSuperAdmin) loadSubAdminList();
   }
+  if(page==='register' && window._pendingReferralCode) {
+    setTimeout(() => {
+      const el = document.getElementById('reg-referral-code');
+      if(el && !el.value) el.value = window._pendingReferralCode;
+    }, 50);
+  }
+  if(page==='wallet') loadWalletPage();
+  if(page==='referrals') loadReferralsPage();
   _showPage(page);
   if(_navStack[_navStack.length-1] !== page) {
     _navStack.push(page);
@@ -5591,6 +6451,22 @@ window.showToast = function(message, type='success') {
 async function init() {
   // Capture the original hash BEFORE history manipulation overwrites it
   const _originalHash = location.hash.replace('#','');
+
+  // Capture referral code from URL (?ref=CODE) and pre-fill registration
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref');
+    if(refCode) {
+      window._pendingReferralCode = refCode.trim().toUpperCase();
+      try { localStorage.setItem('zmonie-referral-code', window._pendingReferralCode); } catch(e) {}
+    } else {
+      try {
+        const stored = localStorage.getItem('zmonie-referral-code');
+        if(stored) window._pendingReferralCode = stored;
+      } catch(e) {}
+    }
+  } catch(e) {}
+
   renderSlider(); // loads banners from Firestore (or defaults) and inits slider
   startCountdown();
   renderSkeletons('flash-grid',4);
