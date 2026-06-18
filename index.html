@@ -1836,7 +1836,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
   </div>
 </div>
 
-<div id="modal-fund-wallet" class="modal-overlay hidden">
+<div id="modal-fund-wallet" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-header"><span class="modal-title">Fund Wallet</span><button class="modal-close" onclick="closeModal('modal-fund-wallet')"><i class="fas fa-times"></i></button></div>
     <div class="modal-body">
@@ -3517,9 +3517,13 @@ async function loadWalletTransactions() {
   const el = document.getElementById('wallet-transactions-list');
   if(!el || !currentUser) return;
   try {
-    const q1 = query(collection(db,'wallet_transactions'), where('userId','==',currentUser.uid), orderBy('createdAt','desc'), limit(50));
+    const q1 = query(collection(db,'wallet_transactions'), where('userId','==',currentUser.uid), limit(100));
     const snap = await getDocs(q1);
     if(snap.empty) { el.innerHTML = '<p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px">No transactions yet.</p>'; return; }
+    let txns = [];
+    snap.forEach(d => txns.push({ id: d.id, ...d.data() }));
+    txns.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+    txns = txns.slice(0,50);
     const typeIcons = {
       credit: '<i class="fas fa-arrow-down" style="color:#15803d"></i>',
       debit: '<i class="fas fa-arrow-up" style="color:#dc2626"></i>',
@@ -3528,8 +3532,7 @@ async function loadWalletTransactions() {
       funding: '<i class="fas fa-university" style="color:#15803d"></i>'
     };
     let html = '';
-    snap.forEach(d => {
-      const t = d.data();
+    txns.forEach(t => {
       const isCredit = t.type === 'credit' || t.type === 'referral_earning' || t.type === 'funding';
       const amountColor = isCredit ? '#15803d' : '#dc2626';
       const amountSign = isCredit ? '+' : '-';
@@ -3636,17 +3639,20 @@ async function loadReferralHistory() {
   const el = document.getElementById('referral-history-list');
   if(!el || !currentUser) return;
   try {
-    const q1 = query(collection(db,'referral_activity'), where('referrerUid','==',currentUser.uid), orderBy('createdAt','desc'));
+    const q1 = query(collection(db,'referral_activity'), where('referrerUid','==',currentUser.uid));
     const snap = await getDocs(q1);
-    document.getElementById('referral-total-count').textContent = snap.size;
+    let activity = [];
+    snap.forEach(d => activity.push({ id: d.id, ...d.data() }));
+    activity.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+
+    document.getElementById('referral-total-count').textContent = activity.length;
     let totalEarned = 0;
-    snap.forEach(d => totalEarned += Number(d.data().bonusAmount||0));
+    activity.forEach(r => totalEarned += Number(r.bonusAmount||0));
     document.getElementById('referral-total-earned').textContent = '\u20A6' + totalEarned.toLocaleString();
 
-    if(snap.empty) { el.innerHTML = '<p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px">No referrals yet. Share your link to start earning!</p>'; return; }
+    if(!activity.length) { el.innerHTML = '<p style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px">No referrals yet. Share your link to start earning!</p>'; return; }
     let html = '';
-    snap.forEach(d => {
-      const r = d.data();
+    activity.forEach(r => {
       const dt = r.createdAt ? new Date(r.createdAt) : null;
       html += '<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--gray-50);border-radius:8px;margin-bottom:8px">'
         + '<div style="width:36px;height:36px;border-radius:50%;background:#7c3aed;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800">' + escWallet((r.referredName||r.referredEmail||'?').charAt(0).toUpperCase()) + '</div>'
