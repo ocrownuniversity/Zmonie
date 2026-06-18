@@ -3615,6 +3615,7 @@ window.loadReferralsPage = async function() {
     document.getElementById('referral-active-content').style.display = '';
 
     document.getElementById('referral-bonus-text').textContent = 'Earn \u20A6' + Number(settings.bonusAmount||0).toLocaleString() + ' for every friend who signs up using your link';
+    window._referralBonusAmount = Number(settings.bonusAmount||0);
 
     const userSnap = await getDoc(doc(db,'users',currentUser.uid));
     const userData = userSnap.exists() ? userSnap.data() : {};
@@ -3677,11 +3678,12 @@ window.copyReferralCode = function() {
 
 window.shareReferralLink = function() {
   const link = window._myReferralLink || document.getElementById('my-referral-link').value;
-  const text = 'Join ZMONIE Market using my referral link and let\u0027s both earn rewards! ' + link;
+  const bonus = window._referralBonusAmount || 200;
+  const text = 'Join ZMONIE Market and earn \u20A6' + bonus.toLocaleString() + ' for every friend you refer! Sign up using my link: ' + link;
   if(navigator.share) {
-    navigator.share({ title: 'ZMONIE Market Referral', text: text, url: link }).catch(()=>{});
+    navigator.share({ title: 'ZMONIE Market Referral', text: text }).catch(()=>{});
   } else {
-    navigator.clipboard.writeText(link).then(() => showToast('Referral link copied!')).catch(() => showToast('Could not copy','error'));
+    navigator.clipboard.writeText(text).then(() => showToast('Referral message copied!')).catch(() => showToast('Could not copy','error'));
   }
 };
 
