@@ -3084,6 +3084,49 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
   </div>
 </div>
 
+<div class="modal-overlay" id="modal-funding-detail">
+  <div class="modal-box">
+    <div class="modal-header"><span class="modal-title">Funding Request Details</span><button class="modal-close" onclick="closeModal('modal-funding-detail')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <div style="background:var(--gray-50);border-radius:8px;padding:12px">
+          <div style="font-size:11px;color:var(--gray-500);font-weight:700">USER NAME</div>
+          <div style="font-size:14px;font-weight:800" id="fd-name">-</div>
+        </div>
+        <div style="background:var(--gray-50);border-radius:8px;padding:12px">
+          <div style="font-size:11px;color:var(--gray-500);font-weight:700">EMAIL</div>
+          <div style="font-size:13px;font-weight:600;word-break:break-all" id="fd-email">-</div>
+        </div>
+        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px">
+          <div style="font-size:11px;color:#166534;font-weight:700">AMOUNT</div>
+          <div style="font-size:20px;font-weight:900;color:#15803d" id="fd-amount">-</div>
+        </div>
+        <div style="background:var(--gray-50);border-radius:8px;padding:12px">
+          <div style="font-size:11px;color:var(--gray-500);font-weight:700">DATE</div>
+          <div style="font-size:13px;font-weight:600" id="fd-date">-</div>
+        </div>
+      </div>
+      <div style="background:var(--gray-50);border-radius:8px;padding:12px;margin-bottom:14px">
+        <div style="font-size:11px;color:var(--gray-500);font-weight:700;margin-bottom:4px">PAYMENT REFERENCE / NARRATION</div>
+        <div style="font-size:13px;font-weight:600" id="fd-reference">-</div>
+      </div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:11px;color:var(--gray-500);font-weight:700;margin-bottom:8px">PROOF OF PAYMENT</div>
+        <div id="fd-proof-wrap" style="text-align:center">
+          <img id="fd-proof-img" style="max-width:100%;max-height:300px;border-radius:8px;border:2px solid var(--orange);display:none">
+          <p id="fd-proof-none" style="color:var(--gray-400);font-size:13px">No proof uploaded</p>
+        </div>
+      </div>
+      <div id="fd-status-approved" class="hidden" style="background:#dcfce7;border:1px solid #86efac;border-radius:8px;padding:10px;text-align:center;font-size:13px;font-weight:700;color:#15803d;margin-bottom:10px"><i class="fas fa-check-circle"></i> This request has already been approved</div>
+      <div id="fd-status-rejected" class="hidden" style="background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:10px;text-align:center;font-size:13px;font-weight:700;color:#dc2626;margin-bottom:10px"><i class="fas fa-times-circle"></i> This request has been rejected</div>
+      <div id="fd-action-btns" style="display:flex;gap:8px">
+        <button class="btn-primary" id="fd-approve-btn" style="flex:1;background:#15803d;border-color:#15803d" onclick="approveFundingFromModal()"><i class="fas fa-check"></i> Approve &amp; Credit Wallet</button>
+        <button class="btn-danger" id="fd-reject-btn" style="flex:1" onclick="rejectFundingFromModal()"><i class="fas fa-times"></i> Reject</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-status">
   <div class="modal">
     <div class="modal-header">
@@ -3608,13 +3651,15 @@ window.loadReferralsPage = async function() {
 
     if(!settings.enabled) {
       document.getElementById('referral-disabled-msg').classList.remove('hidden');
-      document.getElementById('referral-active-content').style.display = 'none';
-      return;
+    } else {
+      document.getElementById('referral-disabled-msg').classList.add('hidden');
     }
-    document.getElementById('referral-disabled-msg').classList.add('hidden');
+    // Always show the content - code/link visible regardless of enabled status
     document.getElementById('referral-active-content').style.display = '';
 
-    document.getElementById('referral-bonus-text').textContent = 'Earn \u20A6' + Number(settings.bonusAmount||0).toLocaleString() + ' for every friend who signs up using your link';
+    document.getElementById('referral-bonus-text').textContent = settings.enabled
+      ? 'Earn \u20A6' + Number(settings.bonusAmount||0).toLocaleString() + ' for every friend who signs up using your link'
+      : 'Referral bonuses are currently paused, but your link still works!';
     window._referralBonusAmount = Number(settings.bonusAmount||0);
 
     const userSnap = await getDoc(doc(db,'users',currentUser.uid));
@@ -3622,7 +3667,7 @@ window.loadReferralsPage = async function() {
     let myCode = userData.referralCode;
     if(!myCode) {
       myCode = generateReferralCode(currentUser.uid);
-      await updateDoc(doc(db,'users',currentUser.uid), { referralCode: myCode });
+      await setDoc(doc(db,'users',currentUser.uid), { referralCode: myCode }, { merge: true });
     }
     document.getElementById('my-referral-code').textContent = myCode;
     const link = window.location.origin + window.location.pathname + '?ref=' + myCode;
@@ -3755,9 +3800,9 @@ async function loadFundingRequestsList() {
       const proofHtml = r.proofImage ? '<a href="' + r.proofImage + '" target="_blank"><img src="' + r.proofImage + '" style="width:40px;height:40px;object-fit:cover;border-radius:6px;border:1px solid #ddd"></a>' : '<span style="color:var(--gray-400);font-size:11px">None</span>';
       let actionHtml = '';
       if(r.status === 'pending') {
-        actionHtml = '<button class="btn-primary" style="font-size:11px;padding:5px 10px;background:#15803d;border-color:#15803d" onclick="approveFundingRequest(\''+r.id+'\')"><i class="fas fa-check"></i></button> '
-          + '<button class="btn-danger" style="font-size:11px;padding:5px 10px" onclick="rejectFundingRequest(\''+r.id+'\')"><i class="fas fa-times"></i></button>';
+        actionHtml = '<button class="btn-primary" style="font-size:11px;padding:5px 10px;background:#1d4ed8;border-color:#1d4ed8;width:100%;margin-bottom:4px" onclick="viewFundingDetail(\''+r.id+'\')"><i class="fas fa-eye"></i> View &amp; Verify</button>';
       } else {
+        actionHtml = '<button class="btn-secondary" style="font-size:11px;padding:5px 10px;width:100%" onclick="viewFundingDetail(\''+r.id+'\')"><i class="fas fa-eye"></i> View</button>';
         actionHtml = '<span style="font-size:11px;color:var(--gray-400)">Processed</span>';
       }
       html += '<tr>'
@@ -3781,6 +3826,53 @@ function escAdmin(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+
+window._currentFundingId = null;
+
+window.viewFundingDetail = function(requestId) {
+  const r = _fundingRequests.find(x => x.id === requestId);
+  if(!r) return;
+  window._currentFundingId = requestId;
+
+  document.getElementById('fd-name').textContent = r.userName || r.userEmail || '-';
+  document.getElementById('fd-email').textContent = r.userEmail || '-';
+  document.getElementById('fd-amount').textContent = '\u20A6' + Number(r.amount||0).toLocaleString();
+  document.getElementById('fd-reference').textContent = r.reference || 'No reference provided';
+  const dt = r.createdAt ? new Date(r.createdAt) : null;
+  document.getElementById('fd-date').textContent = dt ? dt.toLocaleString('en-NG') : '-';
+
+  const proofImg = document.getElementById('fd-proof-img');
+  const proofNone = document.getElementById('fd-proof-none');
+  if(r.proofImage) {
+    proofImg.src = r.proofImage;
+    proofImg.style.display = 'block';
+    proofNone.style.display = 'none';
+  } else {
+    proofImg.style.display = 'none';
+    proofNone.style.display = 'block';
+  }
+
+  document.getElementById('fd-status-approved').classList.toggle('hidden', r.status !== 'approved');
+  document.getElementById('fd-status-rejected').classList.toggle('hidden', r.status !== 'rejected');
+  document.getElementById('fd-action-btns').style.display = r.status === 'pending' ? 'flex' : 'none';
+
+  openModal('modal-funding-detail');
+};
+
+window.approveFundingFromModal = async function() {
+  if(window._currentFundingId) {
+    closeModal('modal-funding-detail');
+    await approveFundingRequest(window._currentFundingId);
+  }
+};
+
+window.rejectFundingFromModal = async function() {
+  if(window._currentFundingId) {
+    closeModal('modal-funding-detail');
+    await rejectFundingRequest(window._currentFundingId);
+  }
+};
+
 window.approveFundingRequest = async function(requestId) {
   if(!isSuperAdmin && !isManager) return;
   const req = _fundingRequests.find(r => r.id === requestId);
@@ -3792,7 +3884,7 @@ window.approveFundingRequest = async function(requestId) {
     const currentBalance = userSnap.exists() ? Number(userSnap.data().walletBalance||0) : 0;
     const newBalance = currentBalance + Number(req.amount);
 
-    await updateDoc(doc(db,'users',req.userId), { walletBalance: newBalance });
+    await setDoc(doc(db,'users',req.userId), { walletBalance: newBalance }, { merge: true });
     await updateDoc(doc(db,'wallet_funding_requests',requestId), { status: 'approved', approvedAt: Date.now(), approvedBy: currentUser.email });
 
     await addDoc(collection(db,'wallet_transactions'), {
@@ -3881,7 +3973,7 @@ window.adjustUserWallet = async function(userId) {
   try {
     const currentBalance = Number(user.walletBalance||0);
     const newBalance = Math.max(0, currentBalance + amount);
-    await updateDoc(doc(db,'users',userId), { walletBalance: newBalance });
+    await setDoc(doc(db,'users',userId), { walletBalance: newBalance }, { merge: true });
     await addDoc(collection(db,'wallet_transactions'), {
       userId: userId,
       type: amount > 0 ? 'credit' : 'debit',
@@ -6460,13 +6552,15 @@ async function init() {
   // Capture the original hash BEFORE history manipulation overwrites it
   const _originalHash = location.hash.replace('#','');
 
-  // Capture referral code from URL (?ref=CODE) and pre-fill registration
+  // Capture referral code from URL (?ref=CODE) and redirect to register
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const refCode = urlParams.get('ref');
     if(refCode) {
       window._pendingReferralCode = refCode.trim().toUpperCase();
       try { localStorage.setItem('zmonie-referral-code', window._pendingReferralCode); } catch(e) {}
+      // Redirect to register page since they came via referral link
+      window._refRedirectToRegister = true;
     } else {
       try {
         const stored = localStorage.getItem('zmonie-referral-code');
@@ -6491,6 +6585,9 @@ async function init() {
   const hash = _originalHash;
   if(hash.startsWith('reset/')) {
     checkResetLink(hash);
+  } else if(window._refRedirectToRegister) {
+    // Came via referral link - send to register page
+    setTimeout(() => navigate('register'), 100);
   } else if(hash && hash !== 'home' && hash !== '__guard__' && document.getElementById('page-'+hash)) navigate(hash);
 }
 
