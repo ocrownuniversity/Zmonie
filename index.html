@@ -172,14 +172,14 @@ background:linear-gradient(90deg,#e8e8e8 25%,#f2f2f2 50%,#e8e8e8 75%);background
 100%{background-position:-200% 0}
 }
 /* Product card skeleton */
-.skel-card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid #f0f0f0}
-.skel-img{aspect-ratio:3/4;width:100%;background:linear-gradient(90deg,#ebebeb 25%,#f5f5f5 50%,#ebebeb 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;display:flex;align-items:center;justify-content:center}
-.skel-logo-wrap{width:72px;height:72px;border-radius:50%;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.10);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.skel-z{font-family:'Poppins',sans-serif;font-weight:900;font-size:30px;color:#f68b1e;line-height:1}
-.skel-line{height:11px;margin:10px 10px 0;border-radius:20px;background:linear-gradient(90deg,#e4e4e4 25%,#f0f0f0 50%,#e4e4e4 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
-.skel-line.short{width:55%;margin-top:8px}
-.skel-line.price{height:13px;width:45%;margin-top:8px}
-.skel-line.btn{height:34px;margin:10px 10px 12px;border-radius:8px}
+.skel-card{background:#f0f0f2;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);border:none}
+.skel-img{aspect-ratio:3/4;width:100%;background:#e8e8ec;display:flex;align-items:center;justify-content:center}
+.skel-logo-wrap{width:58%;aspect-ratio:1/1;border-radius:50%;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.13);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.skel-logo-svg{width:65%;height:65%}
+.skel-line{height:11px;margin:12px 14px 0;border-radius:20px;background:linear-gradient(90deg,#d8d8dc 25%,#e8e8ec 50%,#d8d8dc 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
+.skel-line.short{width:50%;margin-top:8px}
+.skel-line.price{height:13px;width:42%;margin-top:8px}
+.skel-line.btn{height:36px;margin:12px 14px 14px;border-radius:8px}
 /* List row skeleton */
 .skel-row{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border-radius:10px;margin-bottom:8px;border:1px solid #f0f0f0}
 .skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
@@ -4303,14 +4303,15 @@ function renderHome() {
 function renderSkeletons(gridId, count) {
   const grid = document.getElementById(gridId);
   if(!grid) return;
-  const card = '<div class="skel-card"><div class="skel-img"><div class="skel-logo-wrap"><span class="skel-z">Z</span></div></div><div class="skel-line skeleton"></div><div class="skel-line short skeleton"></div><div class="skel-line price skeleton"></div><div class="skel-line btn skeleton"></div></div>';
+  const svgLogo = '<svg class="skel-logo-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="zg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ffb347"/><stop offset="100%" stop-color="#f68b1e"/></linearGradient></defs><rect width="80" height="80" rx="20" fill="url(#zg)"/><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="44" fill="#fff" letter-spacing="-2">Z</text></svg>';
+  const card = '<div class="skel-card"><div class="skel-img"><div class="skel-logo-wrap">' + svgLogo + '</div></div><div class="skel-line skeleton"></div><div class="skel-line short skeleton"></div><div class="skel-line price skeleton"></div><div class="skel-line btn skeleton"></div></div>';
   grid.innerHTML = Array(count).fill(card).join('');
 }
 
 function skelRows(count) {
-  return Array(count).fill(
-    '<div class="skel-row"><div class="skel-avatar skeleton"></div><div class="skel-row-body"><div class="skel-row-line w80 skeleton"></div><div class="skel-row-line w50 skeleton"></div></div></div>'
-  ).join('');
+  const avatar = '<div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ffb347,#f68b1e);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:Arial Black,sans-serif;font-weight:900;font-size:18px;color:#fff">Z</div>';
+  const row = '<div class="skel-row">' + avatar + '<div class="skel-row-body"><div class="skel-row-line w80 skeleton"></div><div class="skel-row-line w50 skeleton"></div></div></div>';
+  return Array(count).fill(row).join('');
 }
 
 function skelTableRows(cols, count) {
