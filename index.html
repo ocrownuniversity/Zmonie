@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZMONIE - Shop Smart, Save More</title>
-<meta name="description" content="ZMONIE Market &#8212; Your trusted online shopping destination in Nigeria. Quality products, fast delivery, great prices.">
+<title>ZMARKET - Shop Smart, Save More</title>
+<meta name="description" content="ZMARKET &#8212; Your trusted online shopping destination in Nigeria. Quality products, fast delivery, great prices.">
 <meta name="theme-color" content="#DC3C0A">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ZMONIE Market">
+<meta name="apple-mobile-web-app-title" content="ZMARKET">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -1126,15 +1126,21 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 .switch input:checked + .slider:before{transform:translateX(22px)}
 .pw-eye-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray-400);font-size:16px;cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center}
 .pw-eye-btn:hover{color:var(--gray-600)}
+
+.skel-hero{position:absolute;inset:0;background:linear-gradient(90deg,#ebebeb 25%,#f5f5f5 50%,#ebebeb 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;display:flex;align-items:center;justify-content:center;z-index:1}
+.skel-hero-inner{display:flex;flex-direction:column;align-items:center;gap:14px}
+.skel-hero-circle{width:90px;height:90px;border-radius:50%;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.13);display:flex;align-items:center;justify-content:center}
+.skel-hero-logo{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#ffb347,#f68b1e);display:flex;align-items:center;justify-content:center;font-family:Arial Black,sans-serif;font-weight:900;font-size:28px;color:#fff}
+.skel-hero-name{font-family:Poppins,sans-serif;font-weight:900;font-size:18px;color:rgba(0,0,0,.18);letter-spacing:1px}
 </style>
 </head>
 <body>
 
 <div id="pwa-install-banner">
-  <img class="pwa-banner-icon" src="icon-192.png" alt="ZMONIE" style="border-radius:12px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+  <img class="pwa-banner-icon" src="icon-192.png" alt="ZMARKET" style="border-radius:12px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
   <div class="pwa-banner-icon-fallback" style="display:none;background:#000">&#128722;</div>
   <div class="pwa-banner-text">
-    <div class="pwa-banner-title">Install ZMONIE Market App</div>
+    <div class="pwa-banner-title">Install ZMARKET App</div>
     <div class="pwa-banner-sub" id="pwa-banner-sub">Free &#183; No app store needed</div>
   </div>
   <button class="pwa-install-btn" id="pwa-install-btn">&#128242; Install</button>
@@ -1144,11 +1150,11 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 <div class="modal-overlay" id="modal-ios-install">
   <div class="modal" style="max-width:360px">
     <div class="modal-header">
-      <span class="modal-title">&#128242; Install ZMONIE App</span>
+      <span class="modal-title">&#128242; Install ZMARKET App</span>
       <button class="modal-close" onclick="closeModal('modal-ios-install')"><i class="fas fa-times"></i></button>
     </div>
     <div class="modal-body" style="padding:20px">
-      <p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;line-height:1.6">Follow these 2 steps to install ZMONIE Market on your iPhone/iPad:</p>
+      <p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;line-height:1.6">Follow these 2 steps to install ZMARKET on your iPhone/iPad:</p>
       <div style="display:flex;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:flex-start;gap:12px;background:var(--gray-50);border-radius:10px;padding:12px">
           <div style="width:32px;height:32px;background:var(--orange);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex-shrink:0">1</div>
@@ -1181,8 +1187,8 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
     <button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     
     <div style="flex:1;display:flex;align-items:center">
-      <div onclick="navigate('home')" style="display:flex;align-items:center;cursor:pointer;user-select:none" title="ZMONIE - Home">
-<span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:24px;color:#f68b1e;letter-spacing:-0.5px;line-height:1">ZMONIE</span></div>
+      <div onclick="navigate('home')" style="display:flex;align-items:center;cursor:pointer;user-select:none" title="ZMARKET - Home">
+<span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:24px;color:#f68b1e;letter-spacing:-0.5px;line-height:1">ZMARKET</span></div>
     </div>
     <div class="header-icons" style="display:flex;align-items:center;gap:4px">
 
@@ -1203,7 +1209,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 <nav id="sidebar">
   <div class="sidebar-header" style="justify-content:space-between">
     <div style="display:flex;align-items:center">
-<span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:20px;color:#fff;letter-spacing:-0.5px">ZMONIE</span></div>
+<span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:20px;color:#fff;letter-spacing:-0.5px">ZMARKET</span></div>
     <div class="sidebar-avatar"><i class="fas fa-user"></i></div>
     <div class="sidebar-user-info">
       <h3 id="sb-name">Guest</h3>
@@ -1273,7 +1279,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 <!-- CALL TO ORDER bar -->
 <div id="promo-strip" style="background:#f68b1e;overflow:hidden;white-space:nowrap;font-family:'Poppins',sans-serif">
   <div style="display:inline-flex;align-items:center;gap:16px;animation:marqueeScroll 24s linear infinite;will-change:transform;padding:8px 20px">
-    <span style="font-size:12px;font-weight:900;letter-spacing:1px;color:#fff">&#128222; CALL TO ORDER: 0800-ZMONIE</span>
+    <span style="font-size:12px;font-weight:900;letter-spacing:1px;color:#fff">&#128222; CALL TO ORDER: 0800-ZMARKET</span>
     <span style="color:rgba(255,255,255,.4)">|</span>
     <span style="font-size:11px;font-weight:700;color:#fff">&#127873; Buy &amp; Get FREE Voucher</span>
     <span style="color:rgba(255,255,255,.4)">|</span>
@@ -1281,7 +1287,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
     <span style="color:rgba(255,255,255,.4)">|</span>
     <span style="font-size:11px;font-weight:700;color:#fff">Free delivery above &#8358;150,000</span>
     <span style="color:rgba(255,255,255,.4)">|</span>
-    <span style="font-size:12px;font-weight:900;letter-spacing:1px;color:#fff">&#128222; CALL TO ORDER: 0800-ZMONIE</span>
+    <span style="font-size:12px;font-weight:900;letter-spacing:1px;color:#fff">&#128222; CALL TO ORDER: 0800-ZMARKET</span>
     <span style="color:rgba(255,255,255,.4)">|</span>
     <span style="font-size:11px;font-weight:700;color:#fff">&#127873; Buy &amp; Get FREE Voucher</span>
     <span style="color:rgba(255,255,255,.4)">|</span>
@@ -1294,6 +1300,14 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 <!-- HERO SLIDER -->
 <div class="hero-slider">
   <div class="slides-container" id="slides"></div>
+  <div id="slider-skeleton" class="skel-hero">
+    <div class="skel-hero-inner">
+      <div class="skel-hero-circle">
+        <div class="skel-hero-logo">Z</div>
+      </div>
+      <div class="skel-hero-name">ZMARKET</div>
+    </div>
+  </div>
   <button class="slider-prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
   <button class="slider-next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
   <div class="slider-dots" id="slider-dots"></div>
@@ -1660,7 +1674,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <div class="bank-info hidden" id="bank-info">
         <p style="font-weight:800;margin-bottom:8px;color:var(--orange)"><i class="fas fa-university"></i> Transfer Details</p>
         <p><strong>Bank:</strong> Opay</p>
-        <p><strong>Account Name:</strong> Zmonie Service</p>
+        <p><strong>Account Name:</strong> Zmarket Service</p>
         <p><strong>Account Number:</strong> <strong style="font-size:22px;color:var(--orange);letter-spacing:3px">6559561420</strong></p>
         <p style="margin-top:10px;color:var(--red);font-size:12px"><i class="fas fa-exclamation-triangle"></i> Transfer exact amount and send payment proof to WhatsApp: <a href="https://wa.me/2348149825555" target="_blank" style="color:var(--orange);font-weight:700">+234 814 982 5555</a></p>
       </div>
@@ -1755,9 +1769,9 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 <div id="page-login" class="page">
   <div class="auth-wrap">
     <div class="auth-card">
-      <div class="auth-logo"><span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:28px;color:#f68b1e;letter-spacing:-0.5px;cursor:pointer" onclick="navigate('home')">ZMONIE</span></div>
+      <div class="auth-logo"><span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:28px;color:#f68b1e;letter-spacing:-0.5px;cursor:pointer" onclick="navigate('home')">ZMARKET</span></div>
       <h2 class="auth-title">Welcome Back!</h2>
-      <p class="auth-subtitle">Sign in to your ZMONIE account</p>
+      <p class="auth-subtitle">Sign in to your ZMARKET account</p>
       <button class="btn-google" onclick="loginWithGoogle()"><img src="https://www.google.com/favicon.ico" width="18" height="18"> Continue with Google</button>
       <div class="auth-divider">or</div>
       <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" id="login-email" type="email" placeholder="you@example.com"></div>
@@ -1772,9 +1786,9 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 <div id="page-register" class="page">
   <div class="auth-wrap">
     <div class="auth-card">
-      <div class="auth-logo"><span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:28px;color:#f68b1e;letter-spacing:-0.5px;cursor:pointer" onclick="navigate('home')">ZMONIE</span></div>
+      <div class="auth-logo"><span style="font-family:'Poppins',sans-serif;font-weight:900;font-size:28px;color:#f68b1e;letter-spacing:-0.5px;cursor:pointer" onclick="navigate('home')">ZMARKET</span></div>
       <h2 class="auth-title">Create Account</h2>
-      <p class="auth-subtitle">Join ZMONIE and start shopping</p>
+      <p class="auth-subtitle">Join ZMARKET and start shopping</p>
       <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="reg-name" type="text" placeholder="Your full name"></div>
       <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" id="reg-email" type="email" placeholder="you@example.com"></div>
       <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" id="reg-phone" type="tel" placeholder="+234..."></div>
@@ -2427,7 +2441,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         <p style="font-size:12px;color:var(--gray-500);margin-bottom:14px">This is shown to customers when they request to fund their wallet via bank transfer.</p>
         <div class="form-group"><label class="form-label">Bank Name</label><input class="form-input" id="fw-bank-name" placeholder="e.g. GTBank"></div>
         <div class="form-group"><label class="form-label">Account Number</label><input class="form-input" id="fw-account-number" placeholder="e.g. 0123456789"></div>
-        <div class="form-group"><label class="form-label">Account Name</label><input class="form-input" id="fw-account-name" placeholder="e.g. ZMONIE Market Ltd"></div>
+        <div class="form-group"><label class="form-label">Account Name</label><input class="form-input" id="fw-account-name" placeholder="e.g. ZMARKET Ltd"></div>
         <button class="btn-primary" onclick="saveFundingBankDetails()" style="background:#92400e;border-color:#92400e"><i class="fas fa-save"></i> Save Bank Details</button>
       </div>
 
@@ -2529,7 +2543,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 
     <div style="background:linear-gradient(135deg,var(--orange),var(--orange-light));border-radius:var(--radius-xl);padding:36px 24px;text-align:center;margin-bottom:28px;color:#fff">
       <div style="font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.85;margin-bottom:8px">Est. 2024 &#183; Nigeria</div>
-      <h2 style="font-size:clamp(28px,5vw,48px);font-weight:900;line-height:1.15;margin-bottom:12px;color:#fff;border:none;background:none;padding:0">ZMONIE</h2>
+      <h2 style="font-size:clamp(28px,5vw,48px);font-weight:900;line-height:1.15;margin-bottom:12px;color:#fff;border:none;background:none;padding:0">ZMARKET</h2>
       <p style="font-size:15px;opacity:.92;max-width:500px;margin:0 auto;line-height:1.65">Modern Nigerian E-Commerce &amp; Fintech Platform</p>
       <div style="display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap">
         <div style="text-align:center"><div style="font-size:22px;font-weight:900">Quality</div><div style="font-size:11px;opacity:.8;margin-top:2px">We Never Compromise</div></div>
@@ -2542,12 +2556,12 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 
     <div class="fp-section">
       <h3>Who We Are</h3>
-      <p>ZMONIE is a modern Nigerian e-commerce platform built on <strong>quality</strong>, <strong>trust</strong>, and <strong>value</strong>. We curate quality products across all categories &#8212; fashion, electronics, groceries, beauty, and more &#8212; designed to give you great value without breaking the bank.</p>
+      <p>ZMARKET is a modern Nigerian e-commerce platform built on <strong>quality</strong>, <strong>trust</strong>, and <strong>value</strong>. We curate quality products across all categories &#8212; fashion, electronics, groceries, beauty, and more &#8212; designed to give you great value without breaking the bank.</p>
     </div>
 
     <div class="fp-section">
       <h3>Our Mission</h3>
-      <p>Our mission is to connect Nigerian buyers with quality sellers, delivering a seamless shopping experience powered by seamless checkout and fast delivery. At ZMONIE, we are not just selling products &#8212; we are building a trusted e-commerce ecosystem.</p>
+      <p>Our mission is to connect Nigerian buyers with quality sellers, delivering a seamless shopping experience powered by seamless checkout and fast delivery. At ZMARKET, we are not just selling products &#8212; we are building a trusted e-commerce ecosystem.</p>
     </div>
 
     <div class="fp-section">
@@ -2578,11 +2592,11 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 
     <div class="fp-section">
       <h3>Our Brand Promise</h3>
-      <p>When you shop with ZMONIE, you get more than products. You get a platform that cares about your time, your money, and your experience. Our fast delivery and cashback rewards keep giving back to you.</p>
+      <p>When you shop with ZMARKET, you get more than products. You get a platform that cares about your time, your money, and your experience. Our fast delivery and cashback rewards keep giving back to you.</p>
     </div>
 
     <div style="background:var(--gray-800);border-radius:var(--radius-xl);padding:20px 24px;text-align:center;color:#fff;margin-top:8px">
-      <p style="font-size:15px;font-weight:700;opacity:.9;margin-bottom:12px">Ready to experience ZMONIE??</p>
+      <p style="font-size:15px;font-weight:700;opacity:.9;margin-bottom:12px">Ready to experience ZMARKET??</p>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
         <button class="btn-primary" onclick="filterByCategory('all')" style="font-size:14px"><i class="fas fa-shopping-bag"></i> Shop Now</button>
         <button onclick="navigate('contact')" style="background:transparent;border:2px solid rgba(255,255,255,.4);color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer"><i class="fas fa-headset"></i> Contact Us</button>
@@ -2604,7 +2618,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       </div>
       <div class="contact-card">
         <i class="fas fa-envelope"></i>
-        <div><h4>Email</h4><p>Send us an email<br><a href="mailto:Zmoniemarket@gmail.com">Zmoniemarket@gmail.com</a></p></div>
+        <div><h4>Email</h4><p>Send us an email<br><a href="mailto:Zmarketmarket@gmail.com">Zmarketmarket@gmail.com</a></p></div>
       </div>
       <div class="contact-card">
         <i class="fas fa-clock"></i>
@@ -2632,7 +2646,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
     <p class="subtitle">Last updated: January 2025</p>
     <div class="fp-section">
       <h3>Shipping Coverage</h3>
-      <p>ZMONIE ships to all states across Nigeria. We partner with reputable logistics companies to ensure your orders arrive safely and on time.</p>
+      <p>ZMARKET ships to all states across Nigeria. We partner with reputable logistics companies to ensure your orders arrive safely and on time.</p>
     </div>
     <div class="fp-section">
       <h3>Shipping Fees</h3>
@@ -2764,7 +2778,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <ul>
         <li>Ensure your <strong>delivery address</strong> and <strong>phone number</strong> are correct at checkout.</li>
         <li>Someone must be <strong>available to receive</strong> the package at the time of delivery.</li>
-        <li>ZMONIE is not responsible for delays caused by <strong>incorrect addresses</strong> provided at checkout.</li>
+        <li>ZMARKET is not responsible for delays caused by <strong>incorrect addresses</strong> provided at checkout.</li>
         <li>Delivery times may vary during <strong>public holidays</strong> and peak seasons.</li>
       </ul>
     </div>
@@ -2813,7 +2827,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <ul>
         <li>You may request access to, correction of, or deletion of your personal data at any time.</li>
         <li>You may opt out of marketing communications.</li>
-        <li>Contact us at Zmoniemarket@gmail.com to exercise your rights.</li>
+        <li>Contact us at Zmarketmarket@gmail.com to exercise your rights.</li>
       </ul>
     </div>
     <div class="fp-section">
@@ -2827,23 +2841,23 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
   <div class="page-header"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button><h2>Terms & Conditions</h2></div>
   <div class="footer-page-wrap">
     <h2><i class="fas fa-file-contract"></i> Terms & Conditions</h2>
-    <p class="subtitle">Last updated: January 2025. By using ZMONIE, you agree to these terms.</p>
+    <p class="subtitle">Last updated: January 2025. By using ZMARKET, you agree to these terms.</p>
     <div class="fp-section">
       <h3>1. Use of the Platform</h3>
-      <p>ZMONIE is an online retail platform. You must be at least 18 years old to create an account and make purchases. You are responsible for maintaining the confidentiality of your account credentials.</p>
+      <p>ZMARKET is an online retail platform. You must be at least 18 years old to create an account and make purchases. You are responsible for maintaining the confidentiality of your account credentials.</p>
     </div>
     <div class="fp-section">
       <h3>2. Orders & Payment</h3>
       <ul>
         <li>All prices are in Nigerian Naira (&#8358;) and include applicable taxes.</li>
-        <li>For Bank Transfer orders, payment must be made to: Opay | Zmonie Service | 6559561420. Send proof of payment via WhatsApp after transfer.</li>
+        <li>For Bank Transfer orders, payment must be made to: Opay | Zmarket Service | 6559561420. Send proof of payment via WhatsApp after transfer.</li>
         <li>Orders not paid within 24 hours (Bank Transfer) may be cancelled automatically.</li>
         <li>We reserve the right to cancel orders due to pricing errors or stock issues.</li>
       </ul>
     </div>
     <div class="fp-section">
       <h3>3. Delivery</h3>
-      <p>Delivery timelines are estimates. ZMONIE is not liable for delays caused by logistics partners, natural events, or inaccurate address information provided by the buyer.</p>
+      <p>Delivery timelines are estimates. ZMARKET is not liable for delays caused by logistics partners, natural events, or inaccurate address information provided by the buyer.</p>
     </div>
     <div class="fp-section">
       <h3>4. Returns & Refunds</h3>
@@ -2860,7 +2874,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
     </div>
     <div class="fp-section">
       <h3>6. Changes to Terms</h3>
-      <p>ZMONIE reserves the right to update these terms at any time. Continued use of the platform after changes constitutes acceptance of the new terms.</p>
+      <p>ZMARKET reserves the right to update these terms at any time. Continued use of the platform after changes constitutes acceptance of the new terms.</p>
     </div>
   </div>
 </div>
@@ -2880,7 +2894,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">What payment methods do you accept? <i class="fas fa-chevron-down"></i></div>
-      <div class="faq-a">We accept Bank Transfer and Cash on Delivery. Bank Transfer: Opay | Zmonie Service | 6559561420. For bank transfer, send your payment proof to WhatsApp after payment.</div>
+      <div class="faq-a">We accept Bank Transfer and Cash on Delivery. Bank Transfer: Opay | Zmarket Service | 6559561420. For bank transfer, send your payment proof to WhatsApp after payment.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">How do I track my order? <i class="fas fa-chevron-down"></i></div>
@@ -2918,8 +2932,8 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 <footer id="site-footer">
   <div class="footer-inner">
     <div class="footer-logo-wrap">
-      <img src="IMG-20260507-WA0041_1_.jpg" alt="ZMONIE" class="footer-logo" onclick="navigate('home')" onerror="this.style.display='none'">
-      <p class="footer-tagline">ZMONIE Market &#8212; Your trusted Nigerian shopping platform.<br>Quality products. Fast delivery. Great prices.</p>
+      <img src="IMG-20260507-WA0041_1_.jpg" alt="ZMARKET" class="footer-logo" onclick="navigate('home')" onerror="this.style.display='none'">
+      <p class="footer-tagline">ZMARKET &#8212; Your trusted Nigerian shopping platform.<br>Quality products. Fast delivery. Great prices.</p>
       <div class="footer-socials">
         <a href="https://wa.me/2348149825555" target="_blank" class="social-btn wa"><i class="fab fa-whatsapp"></i></a>
         <a href="#" class="social-btn ig"><i class="fab fa-instagram"></i></a>
@@ -2948,14 +2962,14 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <h4>Contact</h4>
       <ul class="footer-contact">
         <li><i class="fab fa-whatsapp" style="color:#25d366"></i> +234 814 982 5555</li>
-        <li><i class="fas fa-envelope" style="color:var(--orange)"></i> Zmoniemarket@gmail.com</li>
+        <li><i class="fas fa-envelope" style="color:var(--orange)"></i> Zmarketmarket@gmail.com</li>
         <li><i class="fas fa-clock" style="color:var(--orange)"></i> Mon&#8211;Sat: 8am &#8211; 8pm</li>
         <li><i class="fas fa-map-marker-alt" style="color:var(--orange)"></i> No. 1 Ibijoke Street, Oregun, Ikeja, Lagos</li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&#169; 2025 <strong style="color:rgba(255,255,255,.7)">ZMONIE MARKET</strong>. All rights reserved.</span>
+    <span>&#169; 2025 <strong style="color:rgba(255,255,255,.7)">ZMARKET MARKET</strong>. All rights reserved.</span>
     <span>Made with &#129505; in Nigeria</span>
   </div>
 </footer>
@@ -2968,7 +2982,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
   <div class="chat-header">
     <div class="chat-header-avatar"><i class="fas fa-robot"></i></div>
     <div class="chat-header-info">
-      <h4>ZMONIE Support</h4>
+      <h4>ZMARKET Support</h4>
       <span id="chat-agent-name">AI Assistant</span>
     </div>
     <div class="chat-status-dot" id="chat-status-dot"></div>
@@ -3329,9 +3343,9 @@ import { getFirestore, collection, doc, addDoc, getDoc, getDocs, setDoc, updateD
 
 const firebaseConfig = {
   apiKey: "AIzaSyAB0mf0mG-HlCmF9mAMbOQZSKC1qQXMBRw",
-  authDomain: "zmonie-dee7f.firebaseapp.com",
-  projectId: "zmonie-dee7f",
-  storageBucket: "zmonie-dee7f.firebasestorage.app",
+  authDomain: "zmarket-dee7f.firebaseapp.com",
+  projectId: "zmarket-dee7f",
+  storageBucket: "zmarket-dee7f.firebasestorage.app",
   messagingSenderId: "636908006875",
   appId: "1:636908006875:web:4de5db3e7abd98433e4bfe"
 };
@@ -3340,14 +3354,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 try { enableIndexedDbPersistence(db); } catch(e) { /* unsupported in some browsers/private mode */ }
-const ADMIN_EMAIL = 'Zmoniemarket@gmail.com';
+const ADMIN_EMAIL = 'Zmarketmarket@gmail.com';
 const ADMIN_WHATSAPP = '2348149825555';
 
 // ===== WHATSAPP NOTIFICATIONS =====
 function notifyAdminWhatsApp(orderId, buyerName, buyerEmail, itemNames, subtotal, deliveryFee, payment, address, buyerPhone, couponDiscount, couponCode, loyaltyDiscount) {
-  const payLabel = payment === 'zmonie' ? 'ZMONIE Wallet \u2705' : payment === 'cod' ? 'Cash on Delivery' : payment;
+  const payLabel = payment === 'zmarket' ? 'ZMARKET Wallet \u2705' : payment === 'cod' ? 'Cash on Delivery' : payment;
   const msg = encodeURIComponent(
-    '\uD83D\uDED2 *New Order \u2014 ZMONIE Market!*\n' +
+    '\uD83D\uDED2 *New Order \u2014 ZMARKET!*\n' +
     '\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n' +
     '\uD83D\uDCE6 *Order ID:* ' + orderId + '\n' +
     '\uD83D\uDC64 *Customer:* ' + buyerName + '\n' +
@@ -3378,15 +3392,15 @@ function notifyBuyerWhatsApp(buyerPhone, orderId, status, itemNames, buyerName, 
     confirmed: 'has been confirmed! We are preparing it',
     processing: 'is being processed and will ship soon',
     out_for_delivery: 'is out for delivery! Expect it today',
-    delivered: 'has been delivered! Thank you for shopping with ZMONIE Market \uD83C\uDF89'
+    delivered: 'has been delivered! Thank you for shopping with ZMARKET \uD83C\uDF89'
   }[status] || 'has been updated to: ' + status;
   const msg = encodeURIComponent(
     'Hello ' + buyerName + '! \uD83D\uDC4B\n\n' +
-    '\uD83D\uDED2 Your ZMONIE Market order *' + orderId + '* ' + statusMsg + '.\n\n' +
+    '\uD83D\uDED2 Your ZMARKET order *' + orderId + '* ' + statusMsg + '.\n\n' +
     '\uD83D\uDED2 Items: ' + itemNames + '\n' +
     '\uD83D\uDCB5 Total: \u20A6' + Number(total).toLocaleString() + '\n\n' +
-    'Track your order in the ZMONIE Market app.\n' +
-    '\u2014 ZMONIE Market \uD83D\uDED2'
+    'Track your order in the ZMARKET app.\n' +
+    '\u2014 ZMARKET \uD83D\uDED2'
   );
   window.open('https://wa.me/' + internationalPhone + '?text=' + msg, '_blank');
 }
@@ -3740,9 +3754,9 @@ window.copyReferralCode = function() {
 window.shareReferralLink = function() {
   const link = window._myReferralLink || document.getElementById('my-referral-link').value;
   const bonus = window._referralBonusAmount || 200;
-  const text = 'Join ZMONIE Market and earn \u20A6' + bonus.toLocaleString() + ' for every friend you refer! Sign up using my link: ' + link;
+  const text = 'Join ZMARKET and earn \u20A6' + bonus.toLocaleString() + ' for every friend you refer! Sign up using my link: ' + link;
   if(navigator.share) {
-    navigator.share({ title: 'ZMONIE Market Referral', text: text }).catch(()=>{});
+    navigator.share({ title: 'ZMARKET Referral', text: text }).catch(()=>{});
   } else {
     navigator.clipboard.writeText(text).then(() => showToast('Referral message copied!')).catch(() => showToast('Could not copy','error'));
   }
@@ -4136,7 +4150,7 @@ window.doRegister = async function() {
       await processReferralBonus(referrerUid, cred.user.uid, name, email);
     }
 
-    showToast('Account created! Welcome to ZMONIE!');
+    showToast('Account created! Welcome to ZMARKET!');
     navigate('home');
   } catch(e) {
     console.error('Profile save error:', e);
@@ -4303,13 +4317,13 @@ function renderHome() {
 function renderSkeletons(gridId, count) {
   const grid = document.getElementById(gridId);
   if(!grid) return;
-  const svgLogo = '<svg class="skel-logo-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="zg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ffb347"/><stop offset="100%" stop-color="#f68b1e"/></linearGradient></defs><rect width="80" height="80" rx="20" fill="url(#zg)"/><text x="50%" y="58%" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="44" fill="#fff" letter-spacing="-2">Z</text></svg>';
-  const card = '<div class="skel-card"><div class="skel-img"><div class="skel-logo-wrap">' + svgLogo + '</div></div><div class="skel-line skeleton"></div><div class="skel-line short skeleton"></div><div class="skel-line price skeleton"></div><div class="skel-line btn skeleton"></div></div>';
+  const logoDiv = '<div class="skel-hero-logo">Z</div>';
+  const card = '<div class="skel-card"><div class="skel-img"><div class="skel-logo-wrap">' + logoDiv + '</div></div><div class="skel-line skeleton"></div><div class="skel-line short skeleton"></div><div class="skel-line price skeleton"></div><div class="skel-line btn skeleton"></div></div>';
   grid.innerHTML = Array(count).fill(card).join('');
 }
 
 function skelRows(count) {
-  const avatar = '<div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ffb347,#f68b1e);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:Arial Black,sans-serif;font-weight:900;font-size:18px;color:#fff">Z</div>';
+  const avatar = '<div class="skel-hero-logo" style="width:44px;height:44px;border-radius:50%;font-size:18px">Z</div>';
   const row = '<div class="skel-row">' + avatar + '<div class="skel-row-body"><div class="skel-row-line w80 skeleton"></div><div class="skel-row-line w50 skeleton"></div></div></div>';
   return Array(count).fill(row).join('');
 }
@@ -4341,7 +4355,7 @@ function productCardHTML(p, isFlash=false) {
   const soldPct = Math.min(95, Math.round(soldCount/(soldCount+stock)*100));
   const isWished = wishlist.includes(p.id);
   const outOfStock = (p.stock||0) <= 0;
-  return "<div class=\"pc\" data-product-id=\""+(p.id)+"\">\n    <div class=\"pc-img-wrap\" onclick=\"openProduct('"+(p.id)+"')\">\n      <img src=\""+(img)+"\" alt=\""+(p.name||'')+"\" loading=\"lazy\" onerror=\"this.src='https://placehold.co/300x300/f5f5f5/cccccc?text=ZMONIE'\">\n      "+(hasDisc ? '<span class="pc-badge">-'+discPct+'%</span>' : '')+"\n      "+(isFlash ? '<span class="pc-flash-badge"><i class="fas fa-bolt"></i> Flash</span>' : '')+"\n      <button class=\"pc-wish-btn"+(isWished?' active':'')+"\" onclick=\"event.stopPropagation();toggleWishlist('"+(p.id)+"')\" title=\""+(isWished?'Remove from wishlist':'Add to wishlist')+"\"><i class=\"fas fa-heart\"></i></button>\n    </div>\n    <div class=\"pc-body\" onclick=\"openProduct('"+(p.id)+"')\">\n      <div class=\"pc-name\">"+(p.name||'Product')+"</div>\n      <div class=\"pc-prices\">\n        <span class=\"pc-price\">\u20A6"+(displayPrice.toLocaleString())+"</span>\n        "+(hasDisc ? '<span class="pc-old">\u20A6'+price.toLocaleString()+'</span>' : '')+"\n      </div>\n      <div class=\"pc-sold-row\">\n        <div class=\"pc-bar-bg\"><div class=\"pc-bar-fill\" style=\"width:"+(soldPct)+"%\"></div></div>\n        <span class=\"pc-sold-txt\">"+(soldCount)+" sold</span>\n      </div>\n    </div>\n    <div class=\"pc-atc-row\" onclick=\"event.stopPropagation()\">\n      "+(outOfStock
+  return "<div class=\"pc\" data-product-id=\""+(p.id)+"\">\n    <div class=\"pc-img-wrap\" onclick=\"openProduct('"+(p.id)+"')\">\n      <img src=\""+(img)+"\" alt=\""+(p.name||'')+"\" loading=\"lazy\" onerror=\"this.src='https://placehold.co/300x300/f5f5f5/cccccc?text=ZMARKET'\">\n      "+(hasDisc ? '<span class="pc-badge">-'+discPct+'%</span>' : '')+"\n      "+(isFlash ? '<span class="pc-flash-badge"><i class="fas fa-bolt"></i> Flash</span>' : '')+"\n      <button class=\"pc-wish-btn"+(isWished?' active':'')+"\" onclick=\"event.stopPropagation();toggleWishlist('"+(p.id)+"')\" title=\""+(isWished?'Remove from wishlist':'Add to wishlist')+"\"><i class=\"fas fa-heart\"></i></button>\n    </div>\n    <div class=\"pc-body\" onclick=\"openProduct('"+(p.id)+"')\">\n      <div class=\"pc-name\">"+(p.name||'Product')+"</div>\n      <div class=\"pc-prices\">\n        <span class=\"pc-price\">\u20A6"+(displayPrice.toLocaleString())+"</span>\n        "+(hasDisc ? '<span class="pc-old">\u20A6'+price.toLocaleString()+'</span>' : '')+"\n      </div>\n      <div class=\"pc-sold-row\">\n        <div class=\"pc-bar-bg\"><div class=\"pc-bar-fill\" style=\"width:"+(soldPct)+"%\"></div></div>\n        <span class=\"pc-sold-txt\">"+(soldCount)+" sold</span>\n      </div>\n    </div>\n    <div class=\"pc-atc-row\" onclick=\"event.stopPropagation()\">\n      "+(outOfStock
         ? '<button class="pc-atc-btn pc-atc-btn--disabled" disabled><i class="fas fa-times-circle"></i> Out of Stock</button>'
         : '<button class="pc-atc-btn" onclick="quickAddToCart(\''+(p.id)+'\')" ><i class="fas fa-cart-plus"></i> Add To Cart</button>'
       )+"\n    </div>\n  </div>";
@@ -4756,38 +4770,38 @@ async function loadWalletPaymentInfo() {
   } catch(e) { console.error('Wallet payment info error:', e); }
 }
 
-// ZMONIE wallet check and deduction
-async function checkZmonieWallet() {
+// ZMARKET wallet check and deduction
+async function checkZmarketWallet() {
   if(!currentUser) return;
   const email = currentUser.email;
-  const checkingEl = document.getElementById('zmonie-wallet-checking');
-  const okEl = document.getElementById('zmonie-wallet-ok');
-  const nomatchEl = document.getElementById('zmonie-wallet-nomatch');
-  const balanceDisplay = document.getElementById('zmonie-wallet-balance-display');
-  const balanceOkMsg = document.getElementById('zmonie-balance-ok-msg');
-  const balanceLowMsg = document.getElementById('zmonie-balance-low-msg');
+  const checkingEl = document.getElementById('zmarket-wallet-checking');
+  const okEl = document.getElementById('zmarket-wallet-ok');
+  const nomatchEl = document.getElementById('zmarket-wallet-nomatch');
+  const balanceDisplay = document.getElementById('zmarket-wallet-balance-display');
+  const balanceOkMsg = document.getElementById('zmarket-balance-ok-msg');
+  const balanceLowMsg = document.getElementById('zmarket-balance-low-msg');
   // Show checking state
   if(checkingEl) checkingEl.style.display='block';
   if(okEl) okEl.style.display='none';
   if(nomatchEl) nomatchEl.style.display='none';
   try {
-    // Look up the user in ZMONIE fintech users collection by matching email
-    const zmonieQuery = query(collection(db,'users'), where('email','==',email));
-    const snap = await getDocs(zmonieQuery);
+    // Look up the user in ZMARKET fintech users collection by matching email
+    const zmarketQuery = query(collection(db,'users'), where('email','==',email));
+    const snap = await getDocs(zmarketQuery);
     if(snap.empty) {
-      // No ZMONIE user found with this email
+      // No ZMARKET user found with this email
       if(checkingEl) checkingEl.style.display='none';
       if(nomatchEl) nomatchEl.style.display='block';
-      window._zmonieWalletBalance = 0;
-      window._zmonieUserId = null;
+      window._zmarketWalletBalance = 0;
+      window._zmarketUserId = null;
       return;
     }
     const userDoc = snap.docs[0];
     const userData = userDoc.data();
-    // Check wallet balance field (ZMONIE fintech stores wallet as walletBalance or balance)
+    // Check wallet balance field (ZMARKET fintech stores wallet as walletBalance or balance)
     const balance = Number(userData.walletBalance || userData.balance || userData.wallet || 0);
-    window._zmonieWalletBalance = balance;
-    window._zmonieUserId = userDoc.id;
+    window._zmarketWalletBalance = balance;
+    window._zmarketUserId = userDoc.id;
     // Get current order total
     const subtotal = cart.reduce((s,x)=>s+(x.price*x.qty),0);
     const deliveryFee = window._checkoutDeliveryFee || 0;
@@ -4800,17 +4814,17 @@ async function checkZmonieWallet() {
     const sufficient = balance >= grandTotal;
     if(balanceOkMsg) balanceOkMsg.style.display = sufficient ? 'block' : 'none';
     if(balanceLowMsg) balanceLowMsg.style.display = sufficient ? 'none' : 'block';
-    window._zmonieBalanceSufficient = sufficient;
+    window._zmarketBalanceSufficient = sufficient;
   } catch(e) {
     if(checkingEl) checkingEl.style.display='none';
     if(nomatchEl) { nomatchEl.style.display='block'; nomatchEl.innerHTML='<p style="font-size:13px;color:var(--red);font-weight:700"><i class="fas fa-exclamation-circle"></i> Error checking wallet: '+e.message+'</p>'; }
   }
 }
 
-async function deductZmonieWallet(orderId, amount) {
-  if(!currentUser || !window._zmonieUserId) return;
+async function deductZmarketWallet(orderId, amount) {
+  if(!currentUser || !window._zmarketUserId) return;
   try {
-    const userRef = doc(db,'users',window._zmonieUserId);
+    const userRef = doc(db,'users',window._zmarketUserId);
     const snap = await getDoc(userRef);
     if(!snap.exists()) return;
     const currentBalance = Number(snap.data().walletBalance || snap.data().balance || snap.data().wallet || 0);
@@ -4818,14 +4832,14 @@ async function deductZmonieWallet(orderId, amount) {
     // Determine which field the balance is stored in
     const balanceField = snap.data().walletBalance !== undefined ? 'walletBalance' : (snap.data().balance !== undefined ? 'balance' : 'wallet');
     await updateDoc(userRef, { [balanceField]: newBalance });
-    // Create a transaction record in ZMONIE fintech
+    // Create a transaction record in ZMARKET fintech
     try {
       await addDoc(collection(db,'transactions'), {
-        userId: window._zmonieUserId,
+        userId: window._zmarketUserId,
         email: currentUser.email,
         type: 'debit',
         amount: amount,
-        description: 'ZMONIE Market Purchase \u2014 Order '+orderId,
+        description: 'ZMARKET Purchase \u2014 Order '+orderId,
         reference: orderId,
         balanceBefore: currentBalance,
         balanceAfter: newBalance,
@@ -4833,108 +4847,108 @@ async function deductZmonieWallet(orderId, amount) {
         createdAt: serverTimestamp()
       });
     } catch(e) { console.warn('Transaction log failed:', e); }
-    console.log('ZMONIE wallet deducted:', amount, 'New balance:', newBalance);
+    console.log('ZMARKET wallet deducted:', amount, 'New balance:', newBalance);
   } catch(e) { console.error('Wallet deduction failed:', e); }
 }
 
 // ===== PICKUP STATIONS DATA =====
 const PICKUP_STATIONS = {
   'Oyo': [
-    { id: 'oyo1', name: 'ZMONIE Pickup \u2014 Alakia', address: 'Alakia, Ibadan, Oyo State', area: 'Alakia, Ibadan', fee: 500 },
-    { id: 'oyo2', name: 'ZMONIE Pickup \u2014 Ojoo', address: 'Ojoo Market Area, Ibadan, Oyo State', area: 'Ojoo, Ibadan', fee: 500 },
-    { id: 'oyo3', name: 'ZMONIE Pickup \u2014 Challenge', address: 'Challenge Roundabout, Ibadan, Oyo State', area: 'Challenge, Ibadan', fee: 500 },
+    { id: 'oyo1', name: 'ZMARKET Pickup \u2014 Alakia', address: 'Alakia, Ibadan, Oyo State', area: 'Alakia, Ibadan', fee: 500 },
+    { id: 'oyo2', name: 'ZMARKET Pickup \u2014 Ojoo', address: 'Ojoo Market Area, Ibadan, Oyo State', area: 'Ojoo, Ibadan', fee: 500 },
+    { id: 'oyo3', name: 'ZMARKET Pickup \u2014 Challenge', address: 'Challenge Roundabout, Ibadan, Oyo State', area: 'Challenge, Ibadan', fee: 500 },
   ],
   'Lagos': [
-    { id: 'lag1', name: 'ZMONIE Pickup \u2014 Ikeja', address: 'Computer Village Area, Ikeja, Lagos', area: 'Ikeja', fee: 500 },
-    { id: 'lag2', name: 'ZMONIE Pickup \u2014 Surulere', address: 'Adeniran Ogunsanya, Surulere, Lagos', area: 'Surulere', fee: 500 },
-    { id: 'lag3', name: 'ZMONIE Pickup \u2014 Oshodi', address: 'Oshodi Market, Oshodi, Lagos', area: 'Oshodi', fee: 500 },
-    { id: 'lag4', name: 'ZMONIE Pickup \u2014 Lekki', address: 'Lekki Phase 1, Lekki, Lagos', area: 'Lekki', fee: 500 },
+    { id: 'lag1', name: 'ZMARKET Pickup \u2014 Ikeja', address: 'Computer Village Area, Ikeja, Lagos', area: 'Ikeja', fee: 500 },
+    { id: 'lag2', name: 'ZMARKET Pickup \u2014 Surulere', address: 'Adeniran Ogunsanya, Surulere, Lagos', area: 'Surulere', fee: 500 },
+    { id: 'lag3', name: 'ZMARKET Pickup \u2014 Oshodi', address: 'Oshodi Market, Oshodi, Lagos', area: 'Oshodi', fee: 500 },
+    { id: 'lag4', name: 'ZMARKET Pickup \u2014 Lekki', address: 'Lekki Phase 1, Lekki, Lagos', area: 'Lekki', fee: 500 },
   ],
   'Abuja': [
-    { id: 'abj1', name: 'ZMONIE Pickup \u2014 Wuse II', address: 'Wuse II, Abuja FCT', area: 'Wuse II', fee: 500 },
-    { id: 'abj2', name: 'ZMONIE Pickup \u2014 Garki', address: 'Area 11, Garki, Abuja FCT', area: 'Garki', fee: 500 },
-    { id: 'abj3', name: 'ZMONIE Pickup \u2014 Kubwa', address: 'Kubwa Main Market, Kubwa, Abuja FCT', area: 'Kubwa', fee: 500 },
+    { id: 'abj1', name: 'ZMARKET Pickup \u2014 Wuse II', address: 'Wuse II, Abuja FCT', area: 'Wuse II', fee: 500 },
+    { id: 'abj2', name: 'ZMARKET Pickup \u2014 Garki', address: 'Area 11, Garki, Abuja FCT', area: 'Garki', fee: 500 },
+    { id: 'abj3', name: 'ZMARKET Pickup \u2014 Kubwa', address: 'Kubwa Main Market, Kubwa, Abuja FCT', area: 'Kubwa', fee: 500 },
   ],
   'FCT': [
-    { id: 'fct1', name: 'ZMONIE Pickup \u2014 Wuse II', address: 'Wuse II, Abuja FCT', area: 'Wuse II', fee: 500 },
-    { id: 'fct2', name: 'ZMONIE Pickup \u2014 Garki', address: 'Area 11, Garki, Abuja FCT', area: 'Garki', fee: 500 },
+    { id: 'fct1', name: 'ZMARKET Pickup \u2014 Wuse II', address: 'Wuse II, Abuja FCT', area: 'Wuse II', fee: 500 },
+    { id: 'fct2', name: 'ZMARKET Pickup \u2014 Garki', address: 'Area 11, Garki, Abuja FCT', area: 'Garki', fee: 500 },
   ],
   'Rivers': [
-    { id: 'riv1', name: 'ZMONIE Pickup \u2014 Mile 1', address: 'Mile 1 Diobu, Port Harcourt, Rivers State', area: 'Mile 1, PH', fee: 500 },
-    { id: 'riv2', name: 'ZMONIE Pickup \u2014 Rumuola', address: 'Rumuola Road, Port Harcourt, Rivers State', area: 'Rumuola, PH', fee: 500 },
-    { id: 'riv3', name: 'ZMONIE Pickup \u2014 Trans-Amadi', address: 'Trans-Amadi Industrial Layout, Port Harcourt', area: 'Trans-Amadi, PH', fee: 500 },
+    { id: 'riv1', name: 'ZMARKET Pickup \u2014 Mile 1', address: 'Mile 1 Diobu, Port Harcourt, Rivers State', area: 'Mile 1, PH', fee: 500 },
+    { id: 'riv2', name: 'ZMARKET Pickup \u2014 Rumuola', address: 'Rumuola Road, Port Harcourt, Rivers State', area: 'Rumuola, PH', fee: 500 },
+    { id: 'riv3', name: 'ZMARKET Pickup \u2014 Trans-Amadi', address: 'Trans-Amadi Industrial Layout, Port Harcourt', area: 'Trans-Amadi, PH', fee: 500 },
   ],
   'Kano': [
-    { id: 'kan1', name: 'ZMONIE Pickup \u2014 Kano City', address: 'Sabon Gari Market Area, Kano', area: 'Sabon Gari, Kano', fee: 500 },
-    { id: 'kan2', name: 'ZMONIE Pickup \u2014 Bompai', address: 'Bompai Road, Nassarawa GRA, Kano', area: 'Bompai, Kano', fee: 500 },
+    { id: 'kan1', name: 'ZMARKET Pickup \u2014 Kano City', address: 'Sabon Gari Market Area, Kano', area: 'Sabon Gari, Kano', fee: 500 },
+    { id: 'kan2', name: 'ZMARKET Pickup \u2014 Bompai', address: 'Bompai Road, Nassarawa GRA, Kano', area: 'Bompai, Kano', fee: 500 },
   ],
   'Anambra': [
-    { id: 'ana1', name: 'ZMONIE Pickup \u2014 Onitsha', address: 'Onitsha Main Market Area, Onitsha, Anambra', area: 'Onitsha', fee: 500 },
-    { id: 'ana2', name: 'ZMONIE Pickup \u2014 Awka', address: 'Awka Town, Awka, Anambra State', area: 'Awka', fee: 500 },
+    { id: 'ana1', name: 'ZMARKET Pickup \u2014 Onitsha', address: 'Onitsha Main Market Area, Onitsha, Anambra', area: 'Onitsha', fee: 500 },
+    { id: 'ana2', name: 'ZMARKET Pickup \u2014 Awka', address: 'Awka Town, Awka, Anambra State', area: 'Awka', fee: 500 },
   ],
   'Enugu': [
-    { id: 'enu1', name: 'ZMONIE Pickup \u2014 Ogbete', address: 'Ogbete Main Market, Enugu', area: 'Ogbete, Enugu', fee: 500 },
-    { id: 'enu2', name: 'ZMONIE Pickup \u2014 Independence Layout', address: 'Independence Layout, Enugu', area: 'Independence Layout', fee: 500 },
+    { id: 'enu1', name: 'ZMARKET Pickup \u2014 Ogbete', address: 'Ogbete Main Market, Enugu', area: 'Ogbete, Enugu', fee: 500 },
+    { id: 'enu2', name: 'ZMARKET Pickup \u2014 Independence Layout', address: 'Independence Layout, Enugu', area: 'Independence Layout', fee: 500 },
   ],
   'Delta': [
-    { id: 'del1', name: 'ZMONIE Pickup \u2014 Warri', address: 'PTI Road, Effurun, Warri, Delta State', area: 'Warri', fee: 500 },
-    { id: 'del2', name: 'ZMONIE Pickup \u2014 Asaba', address: 'Cable Point, Asaba, Delta State', area: 'Asaba', fee: 500 },
+    { id: 'del1', name: 'ZMARKET Pickup \u2014 Warri', address: 'PTI Road, Effurun, Warri, Delta State', area: 'Warri', fee: 500 },
+    { id: 'del2', name: 'ZMARKET Pickup \u2014 Asaba', address: 'Cable Point, Asaba, Delta State', area: 'Asaba', fee: 500 },
   ],
   'Edo': [
-    { id: 'edo1', name: 'ZMONIE Pickup \u2014 Uselu', address: 'Uselu Market, Benin City, Edo State', area: 'Uselu, Benin City', fee: 500 },
-    { id: 'edo2', name: 'ZMONIE Pickup \u2014 Ring Road', address: 'Ring Road, Benin City, Edo State', area: 'Ring Road, Benin City', fee: 500 },
+    { id: 'edo1', name: 'ZMARKET Pickup \u2014 Uselu', address: 'Uselu Market, Benin City, Edo State', area: 'Uselu, Benin City', fee: 500 },
+    { id: 'edo2', name: 'ZMARKET Pickup \u2014 Ring Road', address: 'Ring Road, Benin City, Edo State', area: 'Ring Road, Benin City', fee: 500 },
   ],
   'Osun': [
-    { id: 'osu1', name: 'ZMONIE Pickup \u2014 Osogbo', address: 'Oja Oba Market Area, Osogbo, Osun State', area: 'Osogbo', fee: 400 },
-    { id: 'osu2', name: 'ZMONIE Pickup \u2014 Ile-Ife', address: 'Mayfair Area, Ile-Ife, Osun State', area: 'Ile-Ife', fee: 400 },
+    { id: 'osu1', name: 'ZMARKET Pickup \u2014 Osogbo', address: 'Oja Oba Market Area, Osogbo, Osun State', area: 'Osogbo', fee: 400 },
+    { id: 'osu2', name: 'ZMARKET Pickup \u2014 Ile-Ife', address: 'Mayfair Area, Ile-Ife, Osun State', area: 'Ile-Ife', fee: 400 },
   ],
   'Ekiti': [
-    { id: 'eki1', name: 'ZMONIE Pickup \u2014 Ado-Ekiti', address: 'Fajuyi Road, Ado-Ekiti, Ekiti State', area: 'Ado-Ekiti', fee: 500 },
+    { id: 'eki1', name: 'ZMARKET Pickup \u2014 Ado-Ekiti', address: 'Fajuyi Road, Ado-Ekiti, Ekiti State', area: 'Ado-Ekiti', fee: 500 },
   ],
   'Ondo': [
-    { id: 'ond1', name: 'ZMONIE Pickup \u2014 Akure', address: 'Oba-Ile Road, Akure, Ondo State', area: 'Akure', fee: 500 },
-    { id: 'ond2', name: 'ZMONIE Pickup \u2014 Ondo Town', address: 'Old Garage, Ondo Town, Ondo State', area: 'Ondo Town', fee: 500 },
+    { id: 'ond1', name: 'ZMARKET Pickup \u2014 Akure', address: 'Oba-Ile Road, Akure, Ondo State', area: 'Akure', fee: 500 },
+    { id: 'ond2', name: 'ZMARKET Pickup \u2014 Ondo Town', address: 'Old Garage, Ondo Town, Ondo State', area: 'Ondo Town', fee: 500 },
   ],
   'Ogun': [
-    { id: 'ogu1', name: 'ZMONIE Pickup \u2014 Abeokuta', address: 'Kuto Market, Abeokuta, Ogun State', area: 'Abeokuta', fee: 500 },
-    { id: 'ogu2', name: 'ZMONIE Pickup \u2014 Sagamu', address: 'Sagamu Interchange, Sagamu, Ogun State', area: 'Sagamu', fee: 500 },
+    { id: 'ogu1', name: 'ZMARKET Pickup \u2014 Abeokuta', address: 'Kuto Market, Abeokuta, Ogun State', area: 'Abeokuta', fee: 500 },
+    { id: 'ogu2', name: 'ZMARKET Pickup \u2014 Sagamu', address: 'Sagamu Interchange, Sagamu, Ogun State', area: 'Sagamu', fee: 500 },
   ],
   'Kwara': [
-    { id: 'kwa1', name: 'ZMONIE Pickup \u2014 Ilorin', address: 'Challenge Area, Ilorin, Kwara State', area: 'Challenge, Ilorin', fee: 500 },
-    { id: 'kwa2', name: 'ZMONIE Pickup \u2014 Tanke', address: 'Tanke Road, Ilorin, Kwara State', area: 'Tanke, Ilorin', fee: 500 },
+    { id: 'kwa1', name: 'ZMARKET Pickup \u2014 Ilorin', address: 'Challenge Area, Ilorin, Kwara State', area: 'Challenge, Ilorin', fee: 500 },
+    { id: 'kwa2', name: 'ZMARKET Pickup \u2014 Tanke', address: 'Tanke Road, Ilorin, Kwara State', area: 'Tanke, Ilorin', fee: 500 },
   ],
   'Kaduna': [
-    { id: 'kad1', name: 'ZMONIE Pickup \u2014 Kaduna Central', address: 'Kasuwan Barci, Kaduna', area: 'Central Kaduna', fee: 500 },
-    { id: 'kad2', name: 'ZMONIE Pickup \u2014 Barnawa', address: 'Barnawa, Kaduna South, Kaduna', area: 'Barnawa', fee: 500 },
+    { id: 'kad1', name: 'ZMARKET Pickup \u2014 Kaduna Central', address: 'Kasuwan Barci, Kaduna', area: 'Central Kaduna', fee: 500 },
+    { id: 'kad2', name: 'ZMARKET Pickup \u2014 Barnawa', address: 'Barnawa, Kaduna South, Kaduna', area: 'Barnawa', fee: 500 },
   ],
   'Imo': [
-    { id: 'imo1', name: 'ZMONIE Pickup \u2014 Owerri', address: 'Relief Market Area, Owerri, Imo State', area: 'Owerri', fee: 500 },
+    { id: 'imo1', name: 'ZMARKET Pickup \u2014 Owerri', address: 'Relief Market Area, Owerri, Imo State', area: 'Owerri', fee: 500 },
   ],
   'Abia': [
-    { id: 'abi1', name: 'ZMONIE Pickup \u2014 Aba', address: 'Ariaria Market, Aba, Abia State', area: 'Ariaria, Aba', fee: 500 },
-    { id: 'abi2', name: 'ZMONIE Pickup \u2014 Umuahia', address: 'Umuahia Main Market, Umuahia, Abia State', area: 'Umuahia', fee: 500 },
+    { id: 'abi1', name: 'ZMARKET Pickup \u2014 Aba', address: 'Ariaria Market, Aba, Abia State', area: 'Ariaria, Aba', fee: 500 },
+    { id: 'abi2', name: 'ZMARKET Pickup \u2014 Umuahia', address: 'Umuahia Main Market, Umuahia, Abia State', area: 'Umuahia', fee: 500 },
   ],
   'Plateau': [
-    { id: 'pla1', name: 'ZMONIE Pickup \u2014 Jos', address: 'Terminus Market, Jos, Plateau State', area: 'Terminus, Jos', fee: 500 },
-    { id: 'pla2', name: 'ZMONIE Pickup \u2014 Bukuru', address: 'Bukuru, Jos South, Plateau State', area: 'Bukuru', fee: 500 },
+    { id: 'pla1', name: 'ZMARKET Pickup \u2014 Jos', address: 'Terminus Market, Jos, Plateau State', area: 'Terminus, Jos', fee: 500 },
+    { id: 'pla2', name: 'ZMARKET Pickup \u2014 Bukuru', address: 'Bukuru, Jos South, Plateau State', area: 'Bukuru', fee: 500 },
   ],
   'Benue': [
-    { id: 'ben1', name: 'ZMONIE Pickup \u2014 Makurdi', address: 'Modern Market, Makurdi, Benue State', area: 'Makurdi', fee: 500 },
+    { id: 'ben1', name: 'ZMARKET Pickup \u2014 Makurdi', address: 'Modern Market, Makurdi, Benue State', area: 'Makurdi', fee: 500 },
   ],
   'Kogi': [
-    { id: 'kog1', name: 'ZMONIE Pickup \u2014 Lokoja', address: 'Ganaja Market Area, Lokoja, Kogi State', area: 'Lokoja', fee: 500 },
+    { id: 'kog1', name: 'ZMARKET Pickup \u2014 Lokoja', address: 'Ganaja Market Area, Lokoja, Kogi State', area: 'Lokoja', fee: 500 },
   ],
   'Niger': [
-    { id: 'nig1', name: 'ZMONIE Pickup \u2014 Minna', address: 'Kpakungu Area, Minna, Niger State', area: 'Minna', fee: 500 },
+    { id: 'nig1', name: 'ZMARKET Pickup \u2014 Minna', address: 'Kpakungu Area, Minna, Niger State', area: 'Minna', fee: 500 },
   ],
   'Bayelsa': [
-    { id: 'bay1', name: 'ZMONIE Pickup \u2014 Yenagoa', address: 'Swali Market, Yenagoa, Bayelsa State', area: 'Yenagoa', fee: 500 },
+    { id: 'bay1', name: 'ZMARKET Pickup \u2014 Yenagoa', address: 'Swali Market, Yenagoa, Bayelsa State', area: 'Yenagoa', fee: 500 },
   ],
   'Akwa Ibom': [
-    { id: 'akw1', name: 'ZMONIE Pickup \u2014 Uyo', address: 'Itam Market, Uyo, Akwa Ibom State', area: 'Uyo', fee: 500 },
+    { id: 'akw1', name: 'ZMARKET Pickup \u2014 Uyo', address: 'Itam Market, Uyo, Akwa Ibom State', area: 'Uyo', fee: 500 },
   ],
   'Cross River': [
-    { id: 'cro1', name: 'ZMONIE Pickup \u2014 Calabar', address: 'Watt Market, Calabar, Cross River State', area: 'Calabar', fee: 500 },
+    { id: 'cro1', name: 'ZMARKET Pickup \u2014 Calabar', address: 'Watt Market, Calabar, Cross River State', area: 'Calabar', fee: 500 },
   ],
 };
 
@@ -5859,12 +5873,12 @@ function buildProductContext() {
 }
 
 function getSystemContext() {
-  return "You are ZMONIE Support Bot \u2014 friendly AI assistant for ZMONIE, a Nigerian online fashion store.\nStore: Nigeria | Address: No. 1 Ibijoke Street, Oregun, Ikeja, Lagos | WhatsApp: +234 814 982 5555 | Email: Zmoniemarket@gmail.com | Hours: Mon-Sat 8AM-8PM WAT\nPayment: 1) Bank Transfer (Opay \u2014 Zmonie Service | 6559561420) 2) Cash on Delivery\nDelivery: Free above \u20A6150,000. \u20A63,500 below. Lagos: 1-2 days. Abuja/PH: 2-3 days. Others: 3-5 days.\nCategories: Men's Fashion, Women's Fashion, Electronics, Baby Products, Home & Kitchen, Beauty, Sports, Phones, Toys, Groceries\nCurrent Products:\n"+(buildProductContext())+"\nInstructions: Answer only about ZMONIE. Be warm, brief (2-4 lines). Use simple English. If you cannot solve the issue, say so clearly and mention a human agent can help.";
+  return "You are ZMARKET Support Bot \u2014 friendly AI assistant for ZMARKET, a Nigerian online fashion store.\nStore: Nigeria | Address: No. 1 Ibijoke Street, Oregun, Ikeja, Lagos | WhatsApp: +234 814 982 5555 | Email: Zmarketmarket@gmail.com | Hours: Mon-Sat 8AM-8PM WAT\nPayment: 1) Bank Transfer (Opay \u2014 Zmarket Service | 6559561420) 2) Cash on Delivery\nDelivery: Free above \u20A6150,000. \u20A63,500 below. Lagos: 1-2 days. Abuja/PH: 2-3 days. Others: 3-5 days.\nCategories: Men's Fashion, Women's Fashion, Electronics, Baby Products, Home & Kitchen, Beauty, Sports, Phones, Toys, Groceries\nCurrent Products:\n"+(buildProductContext())+"\nInstructions: Answer only about ZMARKET. Be warm, brief (2-4 lines). Use simple English. If you cannot solve the issue, say so clearly and mention a human agent can help.";
 }
 
 function smartLocalReply(text) {
   const t = text.toLowerCase();
-  if (/^(hi|hello|hey|good morning|good evening|sup)\b/.test(t)) return "Hello! \uD83D\uDC4B Welcome to ZMONIE Market! I'm your support assistant. Ask me about products, prices, delivery, checkout, or orders!";
+  if (/^(hi|hello|hey|good morning|good evening|sup)\b/.test(t)) return "Hello! \uD83D\uDC4B Welcome to ZMARKET! I'm your support assistant. Ask me about products, prices, delivery, checkout, or orders!";
   const found = allProducts.filter(p => (p.name||'').toLowerCase().split(' ').some(w => w.length > 3 && t.includes(w)));
   if (found.length) {
     const p = found[0]; const price = Number(p.discountPrice) > 0 ? Number(p.discountPrice) : Number(p.price);
@@ -5878,7 +5892,7 @@ function smartLocalReply(text) {
   if (/pay|payment|transfer|bank|opay|wallet/.test(t)) return "\uD83D\uDCB3 Payment options:\n1. Cash on Delivery (Pay on Delivery)\n2. Cash on Delivery (Pay on Delivery)\nChoose at checkout!";
   if (/track|where is|my order|status/.test(t)) return "\uD83D\uDCE6 Track order: Menu \u2192 Track Order \u2192 enter Order ID or phone. You also get WhatsApp updates automatically!";
   if (/return|refund|exchange|wrong|damaged/.test(t)) return "\uD83D\uDE1F For returns/refunds, contact us within 24hrs of delivery via WhatsApp: +234 814 982 5555";
-  if (/contact|whatsapp|call|reach/.test(t)) return "\uD83D\uDCDE Contact: WhatsApp +234 814 982 5555 | Email: Zmoniemarket@gmail.com\nMon-Sat 8AM-8PM";
+  if (/contact|whatsapp|call|reach/.test(t)) return "\uD83D\uDCDE Contact: WhatsApp +234 814 982 5555 | Email: Zmarketmarket@gmail.com\nMon-Sat 8AM-8PM";
   if (/size|sizing|fit/.test(t)) return "\uD83D\uDCCF Sizes are shown on each product page. Not sure? Message us on WhatsApp: +234 814 982 5555";
   if (/discount|sale|promo|flash/.test(t)) return "\uD83D\uDD25 Check Flash Sales on the home page for deals! New offers added regularly \uD83D\uDC40";
   if (/categor|what.*sell|collection/.test(t)) return "\uD83D\uDED2 We sell: Men's & Women's Fashion, Electronics, Phones, Baby Products, Home & Kitchen, Beauty, Sports, Groceries & Toys!";
@@ -6128,7 +6142,7 @@ window.toggleChatbot = function() {
     if (dot) dot.style.display = 'none';
     if (!document.getElementById('chat-messages').innerHTML) {
       setChatStatus('ai');
-      addChatMsg("Hello! \uD83D\uDC4B Welcome to *ZMONIE Support*! I'm your AI assistant.\n\nAsk me about products, prices, delivery, orders \u2014 or tap a quick option below!", 'bot');
+      addChatMsg("Hello! \uD83D\uDC4B Welcome to *ZMARKET Support*! I'm your AI assistant.\n\nAsk me about products, prices, delivery, orders \u2014 or tap a quick option below!", 'bot');
     }
   }
 };
@@ -6296,6 +6310,7 @@ async function renderSlider() {
   if(!container) return;
   container.innerHTML = banners.map(function(b){var bg = b.bg||'slide-1';var bgExtra = SLIDE_BG_EXTRA[b.bg] ? ' style="'+SLIDE_BG_EXTRA[b.bg]+'"' : '';var imgHtml = b.image ? '<img class="slide-img" src="'+b.image+'" alt="'+(b.title||'').replace(/<[^>]+>/g,'')+'" onerror="this.style.display=\'none\'">' : '';var overlayHtml = b.image ? '<div class="slide-img-overlay"></div>' : '';return '<div class="slide '+bg+'"'+bgExtra+'>'+'  '+imgHtml+'  '+overlayHtml+'  <div class="slide-content">'+'    <h2>'+(b.title||'')+'</h2>'+'    <p>'+(b.subtitle||'')+'</p>'+'    <button class="slide-btn" onclick="filterByCategory(\'>'+(b.btnAction||'all')+'\')">'+(b.btnText||'Shop Now')+'</button>'+'  </div>'+'</div>';}).join('');
   currentSlide = 0;
+  var ss=document.getElementById('slider-skeleton');if(ss)ss.style.display='none';
   initSlider();
 }
 
@@ -6508,7 +6523,7 @@ window.sendContactMessage = function() {
   const msg = document.getElementById('contact-msg').value.trim();
   if(!name||!msg) return showToast('Please fill in your name and message','error');
   const wa = encodeURIComponent(
-    "Hello ZMONIE! \uD83D\uDC4B\n\nName: "+(name)+"\nContact: "+(email||'N/A')+"\n\nMessage:\n"+(msg)+""
+    "Hello ZMARKET! \uD83D\uDC4B\n\nName: "+(name)+"\nContact: "+(email||'N/A')+"\n\nMessage:\n"+(msg)+""
   );
   window.open("https://wa.me/2348149825555?text="+(wa)+"", '_blank');
   document.getElementById('contact-name').value='';
@@ -6587,12 +6602,12 @@ async function init() {
     const refCode = urlParams.get('ref');
     if(refCode) {
       window._pendingReferralCode = refCode.trim().toUpperCase();
-      try { localStorage.setItem('zmonie-referral-code', window._pendingReferralCode); } catch(e) {}
+      try { localStorage.setItem('zmarket-referral-code', window._pendingReferralCode); } catch(e) {}
       // Redirect to register page since they came via referral link
       window._refRedirectToRegister = true;
     } else {
       try {
-        const stored = localStorage.getItem('zmonie-referral-code');
+        const stored = localStorage.getItem('zmarket-referral-code');
         if(stored) window._pendingReferralCode = stored;
       } catch(e) {}
     }
@@ -6981,7 +6996,7 @@ async function loadAlsoBought(productId, category) {
 window.shareProduct = function() {
   if(!currentProduct) return;
   const url = window.location.href.split('#')[0]+'#product-'+currentProduct.id;
-  const text = 'Check out '+currentProduct.name+' on ZMONIE Market!\n\u20A6'+(currentProduct.discountPrice||currentProduct.price||0).toLocaleString()+'\n'+url;
+  const text = 'Check out '+currentProduct.name+' on ZMARKET!\n\u20A6'+(currentProduct.discountPrice||currentProduct.price||0).toLocaleString()+'\n'+url;
   if(navigator.share) {
     navigator.share({ title: currentProduct.name, text, url }).catch(()=>{});
   } else {
@@ -7026,7 +7041,7 @@ window.submitBulkOrder = function() {
   const product = document.getElementById('bulk-product-name').value;
   if(!name||!phone||!qty) return showToast('Please fill name, phone and quantity','error');
   const msg = encodeURIComponent(
-    '\uD83D\uDCE6 *Bulk/Wholesale Request \u2014 ZMONIE Market!*\n\n'+
+    '\uD83D\uDCE6 *Bulk/Wholesale Request \u2014 ZMARKET!*\n\n'+
     '\uD83D\uDED2 *Product:* '+product+'\n'+
     '\uD83D\uDC64 *Name:* '+name+'\n'+
     '\uD83D\uDCF1 *Phone:* '+phone+'\n'+
@@ -7165,7 +7180,7 @@ window.exportOrdersCSV = async function() {
     const blob = new Blob([csv], {type:'text/csv'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href=url; a.download='zmonie-orders-'+new Date().toISOString().slice(0,10)+'.csv';
+    a.href=url; a.download='zmarket-orders-'+new Date().toISOString().slice(0,10)+'.csv';
     a.click(); URL.revokeObjectURL(url);
     showToast('Orders exported to CSV \u2705','success');
   } catch(e) { showToast('Export failed: '+e.message,'error'); }
@@ -7316,7 +7331,7 @@ window.sendDailySummaryWhatsApp = async function() {
     const totalRevenue = orders.reduce((s,o)=>s+(o.total||0),0);
     const pending = orders.filter(o=>o.status==='pending').length;
     const msg = encodeURIComponent(
-      '\uD83D\uDCCA *ZMONIE Market \u2014 Daily Summary*\n'+
+      '\uD83D\uDCCA *ZMARKET \u2014 Daily Summary*\n'+
       '\uD83D\uDCC5 '+new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'\n\n'+
       '\uD83D\uDED2 *Today\'s Orders:* '+todayOrders.length+'\n'+
       '\uD83D\uDCB0 *Today\'s Revenue:* \u20A6'+todayRevenue.toLocaleString()+'\n'+
@@ -7338,12 +7353,12 @@ function notifyCustomerStatusUpdate(order) {
     confirmed: '\u2705 Your order '+order.orderId+' has been confirmed! We are preparing it for you.',
     processing: '\uD83D\uDD04 Your order '+order.orderId+' is being processed and will be shipped soon.',
     out_for_delivery: '\uD83D\uDE9A Your order '+order.orderId+' is out for delivery! Expect it today.',
-    delivered: '\uD83C\uDF89 Your order '+order.orderId+' has been delivered! Thank you for shopping with ZMONIE Market.',
+    delivered: '\uD83C\uDF89 Your order '+order.orderId+' has been delivered! Thank you for shopping with ZMARKET.',
     cancelled: '\u274C Your order '+order.orderId+' has been cancelled. Contact us if you have questions.'
   };
   const msg = statusMessages[order.status];
   if(!msg) return;
-  const fullMsg = encodeURIComponent('Hello '+((order.address&&order.address.name)||'')+'!\n\n'+msg+'\n\n\u2014 ZMONIE Market \uD83D\uDED2');
+  const fullMsg = encodeURIComponent('Hello '+((order.address&&order.address.name)||'')+'!\n\n'+msg+'\n\n\u2014 ZMARKET \uD83D\uDED2');
   window.open('https://wa.me/'+phone+'?text='+fullMsg,'_blank');
 }
 
@@ -7369,7 +7384,7 @@ const _isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
 function _showPWABanner() {
   if(_isStandalone) return;
   try {
-    const d = localStorage.getItem('zmonie-pwa-dismissed');
+    const d = localStorage.getItem('zmarket-pwa-dismissed');
     if(d && !isNaN(Number(d)) && Date.now() - Number(d) < 3*24*60*60*1000) return;
   } catch(e) {}
   const banner = document.getElementById('pwa-install-banner');
@@ -7396,7 +7411,7 @@ document.getElementById('pwa-install-btn').addEventListener('click', async () =>
     _pwaInstallEvent.prompt();
     const { outcome } = await _pwaInstallEvent.userChoice;
     if(outcome === 'accepted') {
-      showToast('ZMONIE Market installed! \uD83C\uDF89','success');
+      showToast('ZMARKET installed! \uD83C\uDF89','success');
       document.getElementById('pwa-install-banner').classList.remove('show');
     }
     _pwaInstallEvent = null;
@@ -7416,7 +7431,7 @@ window.dismissPWABanner = function() {
     banner.style.display = 'none';
     document.body.classList.remove('pwa-banner-visible');
   }
-  try { localStorage.setItem('zmonie-pwa-dismissed', Date.now().toString()); } catch(e) {}
+  try { localStorage.setItem('zmarket-pwa-dismissed', Date.now().toString()); } catch(e) {}
 };
 
 window.showIOSInstallGuide = function() {
@@ -7545,7 +7560,7 @@ window.downloadCSVTemplate = function() {
   var blob = new Blob([csv], {type:'text/csv'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'zmonie_products_template.csv';
+  a.download = 'zmarket_products_template.csv';
   a.click();
   showToast('Template downloaded!');
 };
@@ -8026,7 +8041,7 @@ window.sendResetLink = async function(requestId) {
       'This link will expire in 30 minutes and can only be used once.\n\n' +
       'If you did not request this reset, please contact support immediately.\n\n' +
       'Regards,\n' +
-      'ZMONIE Market Administration Team';
+      'ZMARKET Administration Team';
 
     // Log activity
     await addDoc(collection(db,'password_reset_activity'), {
