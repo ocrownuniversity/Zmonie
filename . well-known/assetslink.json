@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "ng.com.zmoniemarket.app",
+      "sha256_cert_fingerprints": [
+        "44:F9:19:04:F4:F7:01:C2:F0:44:70:96:A9:04:21:71:A7:0A:29:95:7D:73:9C:0F:99:2E:3D:3C:98:49:CC:5D"
+      ]
+    }
+  }
+]
