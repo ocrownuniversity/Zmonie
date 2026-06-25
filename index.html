@@ -4489,29 +4489,31 @@ window.changePassword = async function() {
 // ===== PRODUCTS =====
 async function loadProducts() {
   try {
-    const fetchPromise = getDocs(collection(db,'products'));
-    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out - check your connection')), 10000));
-    const snap = await Promise.race([fetchPromise, timeoutPromise]);
+    const snap = await getDocs(collection(db,'products'));
     allProducts = snap.docs.map(d => ({id:d.id,...d.data()}));
     renderHome();
   } catch(e) {
     console.error('loadProducts error:', e);
-    showToast('Error loading products: ' + e.message, 'error');
-    renderHome(); // still render to show "no products" fallback instead of infinite skeleton
+    // Retry once after 3 seconds in case Firebase was still initialising
+    setTimeout(async () => {
+      try {
+        const snap2 = await getDocs(collection(db,'products'));
+        allProducts = snap2.docs.map(d => ({id:d.id,...d.data()}));
+        renderHome();
+      } catch(e2) {
+        console.error('loadProducts retry failed:', e2);
+        renderHome();
+      }
+    }, 3000);
   }
 }
 
 function renderHome() {
   if(!allProducts.length) {
-    renderSkeletons('flash-grid',4);
-    renderSkeletons('featured-grid',4);
-    renderSkeletons('trending-grid',4);
-    setTimeout(()=>{
-      ['flash-grid','featured-grid','trending-grid'].forEach(id=>{
-        const el = document.getElementById(id);
-        if(el) el.innerHTML = "<div style=\"grid-column:1/-1;text-align:center;padding:30px 20px;color:var(--gray-400)\"><i class=\"fas fa-box-open\" style=\"font-size:40px;display:block;margin-bottom:10px\"></i><p style=\"font-size:14px;font-weight:600\">No products yet &mdash; check back soon!</p></div>";
-      });
-    },4000);
+    ['flash-grid','featured-grid','trending-grid'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.innerHTML = "<div style=\"grid-column:1/-1;text-align:center;padding:30px 20px;color:var(--gray-400)\"><i class=\"fas fa-box-open\" style=\"font-size:40px;display:block;margin-bottom:10px\"></i><p style=\"font-size:14px;font-weight:600\">No products yet &mdash; check back soon!</p></div>";
+    });
     return;
   }
   const flashProducts = allProducts.filter(p=>p.isFlash);
@@ -6822,7 +6824,7 @@ async function init() {
   } catch(e) {}
 
   renderSlider(); // loads banners from Firestore (or defaults) and inits slider
-  setTimeout(initPopupAds, 3000); // show popup ad 3s after page load
+  setTimeout(initPopupAds, 4000); // wait 4s for Firebase + page to settle
   startCountdown();
   renderSkeletons('flash-grid',4);
   renderSkeletons('featured-grid',8);
@@ -8642,17 +8644,18 @@ let _currentPopupCTAAction = '';
 // Called after Firebase init — load and maybe show an active popup ad
 window.initPopupAds = async function() {
   try {
-    const q = query(collection(db, 'popup_ads'), where('status','==','active'), limit(10));
-    const snap = await getDocs(q);
+    // Simple getDocs — no where/index needed, filter in JS
+    const snap = await getDocs(collection(db, 'popup_ads'));
     if(snap.empty) return;
-    // Pick one randomly from active ads
     const ads = [];
-    snap.forEach(d => ads.push({ id: d.id, ...d.data() }));
+    snap.forEach(d => { const data = d.data(); if(data.status === 'active') ads.push({ id: d.id, ...data }); });
+    if(!ads.length) return;
+    // Pick one randomly from active ads
     const ad = ads[Math.floor(Math.random() * ads.length)];
     const delaySec = parseInt(ad.delay) || 2;
     setTimeout(() => showPopupAdOnSite(ad), delaySec * 1000);
   } catch(e) {
-    console.warn('Popup ads:', e);
+    console.warn('Popup ads error:', e);
   }
 };
 
