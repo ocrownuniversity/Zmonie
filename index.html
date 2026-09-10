@@ -1320,6 +1320,66 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
 .po-admin-order-row:last-child{border:none}
 .po-admin-order-img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:#f3f4f6;flex-shrink:0}
 
+
+/* ── Image Uploader Component ─────────────────────────────────── */
+.img-upload-zone{border:2px dashed #d1d5db;border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:#fafafa;position:relative}
+.img-upload-zone:hover,.img-upload-zone.drag-over{border-color:#f68b1e;background:#fff8f0}
+.img-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.img-upload-zone-icon{font-size:28px;color:#d1d5db;margin-bottom:6px}
+.img-upload-zone-text{font-size:13px;color:#6b7280;font-weight:600}
+.img-upload-zone-sub{font-size:11px;color:#9ca3af;margin-top:2px}
+.img-preview-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.img-preview-item{position:relative;width:72px;height:72px;border-radius:8px;overflow:hidden;border:1.5px solid #e5e7eb;flex-shrink:0}
+.img-preview-item img{width:100%;height:100%;object-fit:cover;display:block}
+.img-preview-remove{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(220,38,38,.85);color:#fff;border:none;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:900;line-height:1}
+.img-preview-status{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center}
+.img-upload-progress{width:100%;height:3px;background:#e5e7eb;border-radius:2px;margin-top:6px;overflow:hidden;display:none}
+.img-upload-progress-bar{height:100%;background:#f68b1e;transition:width .3s;border-radius:2px}
+
+/* ── EasyBuy (Buy Now Pay Later) ─────────────────────────────────── */
+.eb-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#1e3a8a,#6d28d9);color:#fff;font-size:10px;font-weight:900;padding:3px 8px;border-radius:99px;letter-spacing:.2px}
+.pc-eb-badge{position:absolute;bottom:8px;left:8px;background:linear-gradient(135deg,#1e3a8a,#6d28d9);color:#fff;font-size:9px;font-weight:900;padding:3px 7px;border-radius:6px;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.pc-atc-row.eb-row{display:flex;gap:6px}
+.pc-atc-row.eb-row .pc-atc-btn{flex:1;font-size:11px;padding:8px 4px}
+.pc-eb-btn{flex:1;background:linear-gradient(135deg,#1e3a8a,#6d28d9)!important;color:#fff!important;border:none;border-radius:6px;padding:8px 4px;font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px}
+.detail-eb-actions{display:flex;gap:8px;margin-top:8px}
+.btn-eb{flex:1;background:linear-gradient(135deg,#1e3a8a,#6d28d9);color:#fff;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-eb-outline{background:none;border:2px solid #6d28d9;color:#6d28d9}
+.eb-price-box{background:linear-gradient(135deg,rgba(30,58,138,.06),rgba(109,40,217,.06));border:1px solid rgba(109,40,217,.2);border-radius:12px;padding:14px}
+.eb-price-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px;border-bottom:1px dashed rgba(109,40,217,.15)}
+.eb-price-row:last-child{border-bottom:none}
+.eb-price-row .lbl{color:var(--gray-500);font-weight:600}
+.eb-price-row .val{font-weight:800;color:var(--gray-800)}
+.eb-price-row .val.hi{color:#6d28d9;font-size:15px}
+.eb-steps{display:flex;gap:6px;margin-bottom:14px}
+.eb-step-dot{flex:1;height:4px;border-radius:2px;background:var(--gray-200)}
+.eb-step-dot.active{background:#6d28d9}
+.eb-upload-mini{border:2px dashed var(--gray-300);border-radius:10px;padding:12px;text-align:center;cursor:pointer;font-size:12px;color:var(--gray-500);position:relative;background:var(--gray-50)}
+.eb-upload-mini input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.eb-upload-mini img{max-width:100%;max-height:100px;border-radius:8px;margin-top:6px}
+.eb-status-pill{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px}
+.eb-status-pending{background:#fef3c7;color:#92400e}
+.eb-status-approved{background:#dcfce7;color:#15803d}
+.eb-status-rejected{background:#fee2e2;color:#b91c1c}
+.eb-status-info_requested{background:#dbeafe;color:#1d4ed8}
+.eb-status-active{background:#dcfce7;color:#15803d}
+.eb-status-completed{background:#e0e7ff;color:#3730a3}
+.eb-status-overdue{background:#fee2e2;color:#b91c1c}
+.eb-status-suspended{background:#f3f4f6;color:#6b7280}
+.eb-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+.eb-card-top{display:flex;gap:10px}
+.eb-card-img{width:56px;height:56px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--gray-100)}
+.eb-progress-bg{width:100%;height:6px;background:var(--gray-100);border-radius:3px;overflow:hidden;margin:8px 0}
+.eb-progress-fill{height:100%;background:linear-gradient(90deg,#1e3a8a,#6d28d9)}
+.eb-sched-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--gray-100);font-size:12px}
+.eb-sched-row:last-child{border-bottom:none}
+.eb-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px}
+.eb-tab{white-space:nowrap;padding:8px 14px;border-radius:8px;border:2px solid var(--gray-200);background:#fff;font-size:12px;font-weight:700;cursor:pointer;color:var(--gray-600)}
+.eb-tab.active{background:#6d28d9;border-color:#6d28d9;color:#fff}
+.eb-doc-thumb{width:100%;max-width:220px;border-radius:8px;border:1px solid var(--border);cursor:pointer}
+.eb-mini-stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.eb-mini-stat .num{font-size:18px;font-weight:900;color:#6d28d9}
+.eb-mini-stat .lbl{font-size:11px;color:var(--gray-500);font-weight:700;margin-top:2px}
 </style>
 </head>
 <body>
@@ -1436,6 +1496,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
     </div>
     <div id="sb-user-items" class="hidden">
       <div class="sidebar-item" onclick="navigate('orders');toggleSidebar()"><i class="fas fa-box"></i> My Orders</div>
+      <div class="sidebar-item" onclick="navigate('easybuy');toggleSidebar()"><i class="fas fa-calendar-check"></i> My EasyBuy <span style="background:linear-gradient(135deg,#1e3a8a,#6d28d9);color:#fff;font-size:9px;padding:2px 7px;border-radius:10px;margin-left:4px;font-weight:900">BNPL</span></div>
       <div class="sidebar-item" onclick="navigate('wallet');toggleSidebar()"><i class="fas fa-wallet"></i> My Wallet</div>
       <div class="sidebar-item" onclick="navigate('referrals');toggleSidebar()"><i class="fas fa-gift"></i> Refer & Earn</div>
       <div class="sidebar-item" onclick="navigate('wishlist');toggleSidebar()"><i class="fas fa-heart"></i> Wishlist</div>
@@ -1706,6 +1767,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
           <span class="detail-old-price" id="detail-old-price"></span>
           <span class="detail-discount" id="detail-discount"></span>
         </div>
+        <div id="detail-eb-badge-wrap" class="hidden" style="margin-bottom:8px"><span class="eb-badge"><i class="fas fa-calendar-check"></i> EasyBuy Available</span></div>
         <div class="detail-stock" id="detail-stock"></div>
 
         <div id="size-selector-wrap" class="hidden" style="margin-bottom:14px">
@@ -1729,6 +1791,10 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         <div class="detail-actions">
           <button class="btn-cart" id="detail-add-btn" onclick="addToCartFromDetail()"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <button class="btn-wish" id="detail-wish-btn" onclick="toggleWishlistDetail()"><i class="fas fa-heart"></i></button>
+        </div>
+        <div class="detail-eb-actions hidden" id="detail-eb-actions">
+          <button class="btn-eb" onclick="detailBuyNow()"><i class="fas fa-bolt"></i> Buy Now</button>
+          <button class="btn-eb btn-eb-outline" onclick="openEasyBuy(currentProduct&&currentProduct.id)"><i class="fas fa-calendar-check"></i> EasyBuy</button>
         </div>
         
         <button onclick="showBulkOrderModal()" style="width:100%;margin-top:8px;background:none;border:2px dashed var(--orange);color:var(--orange);border-radius:8px;padding:9px;font-size:13px;font-weight:700;cursor:pointer"><i class="fas fa-boxes"></i> Request Bulk / Wholesale Quote</button>
@@ -2108,6 +2174,24 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
   </div>
 </div>
 
+<div id="page-easybuy" class="page">
+  <div class="page-header"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button><h2>My EasyBuy</h2></div>
+  <div style="max-width:600px;margin:0 auto;padding:16px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div class="eb-mini-stat"><div class="num" id="eb-my-active">0</div><div class="lbl">ACTIVE PLANS</div></div>
+      <div class="eb-mini-stat"><div class="num" id="eb-my-outstanding">&#8358;0</div><div class="lbl">TOTAL OUTSTANDING</div></div>
+    </div>
+    <div class="eb-tabs">
+      <button class="eb-tab active" data-eb-my-tab="active" onclick="switchMyEbTab('active',this)">Active Orders</button>
+      <button class="eb-tab" data-eb-my-tab="applications" onclick="switchMyEbTab('applications',this)">Applications</button>
+      <button class="eb-tab" data-eb-my-tab="history" onclick="switchMyEbTab('history',this)">Payment History</button>
+    </div>
+    <div id="eb-my-active-wrap"><div style="text-align:center;padding:30px;color:var(--gray-400)">Loading...</div></div>
+    <div id="eb-my-applications-wrap" class="hidden"><div style="text-align:center;padding:30px;color:var(--gray-400)">Loading...</div></div>
+    <div id="eb-my-history-wrap" class="hidden"><div style="text-align:center;padding:30px;color:var(--gray-400)">Loading...</div></div>
+  </div>
+</div>
+
 <div id="page-wallet" class="page">
   <div class="page-header"><button class="back-btn" onclick="navigate('profile')"><i class="fas fa-arrow-left"></i></button><h2>My Wallet</h2></div>
   <div class="wallet-wrap" style="max-width:600px;margin:0 auto;padding:16px">
@@ -2286,6 +2370,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       <button class="admin-tab" data-admin-tab="paymentsettings" data-role-tab="superadmin" onclick="switchAdminTab('paymentsettings',this)" style="background:#0f766e;color:#fff;border-color:#0f766e">&#128179; Paystack Settings</button>
       <button class="admin-tab" data-admin-tab="walletmgmt" data-role-tab="superadmin,manager" onclick="switchAdminTab('walletmgmt',this)" style="background:#92400e;color:#fff;border-color:#92400e">&#128176; Wallet &amp; Funding <span id="funding-pending-badge" class="hidden" style="background:#fff;color:#92400e;font-size:10px;font-weight:900;padding:2px 6px;border-radius:10px;margin-left:4px">0</span></button>
       <button class="admin-tab" data-admin-tab="referralsettings" data-role-tab="superadmin" onclick="switchAdminTab('referralsettings',this)" style="background:#6d28d9;color:#fff;border-color:#6d28d9">&#127873; Referral Settings</button>
+      <button class="admin-tab" data-admin-tab="easybuy" data-role-tab="superadmin,manager,subadmin" onclick="switchAdminTab('easybuy',this)" style="background:#1e3a8a;color:#fff;border-color:#1e3a8a">&#128197; EasyBuy <span id="eb-pending-badge" class="hidden" style="background:#fff;color:#1e3a8a;font-size:10px;font-weight:900;padding:2px 6px;border-radius:10px;margin-left:4px">0</span></button>
     </div>
     
     <div id="admin-coupons" class="admin-tab-content hidden">
@@ -2850,6 +2935,62 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       </div>
     </div>
 
+        <div id="admin-easybuy" class="admin-tab-content hidden">
+      <div class="admin-card" style="border-top:4px solid #1e3a8a">
+        <div class="admin-card-title" style="color:#1e3a8a"><span>&#128197; EasyBuy (Buy Now, Pay Later) Management</span></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:14px" id="eb-report-stats">
+          <div class="eb-mini-stat"><div class="num" id="eb-stat-sales">&#8358;0</div><div class="lbl">TOTAL EASYBUY SALES</div></div>
+          <div class="eb-mini-stat"><div class="num" id="eb-stat-deposits">&#8358;0</div><div class="lbl">DEPOSITS RECEIVED</div></div>
+          <div class="eb-mini-stat"><div class="num" id="eb-stat-outstanding">&#8358;0</div><div class="lbl">OUTSTANDING BALANCE</div></div>
+          <div class="eb-mini-stat"><div class="num" id="eb-stat-overdue">0</div><div class="lbl">OVERDUE ACCOUNTS</div></div>
+          <div class="eb-mini-stat"><div class="num" id="eb-stat-completed">0</div><div class="lbl">COMPLETED</div></div>
+          <div class="eb-mini-stat"><div class="num" id="eb-stat-pending">0</div><div class="lbl">PENDING APPS</div></div>
+        </div>
+        <div class="eb-tabs">
+          <button class="eb-tab active" data-eb-tab="applications" onclick="switchEbAdminTab('applications',this)">&#128203; Applications</button>
+          <button class="eb-tab" data-eb-tab="accounts" onclick="switchEbAdminTab('accounts',this)">&#128179; Active Accounts</button>
+          <button class="eb-tab" data-eb-tab="delivery" onclick="switchEbAdminTab('delivery',this)">&#128666; Delivery</button>
+          <button class="eb-tab" data-eb-tab="reportslog" onclick="switchEbAdminTab('reportslog',this)">&#128220; Audit Log</button>
+        </div>
+
+        <div id="eb-admin-applications" class="eb-admin-section">
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+            <table class="admin-table" id="eb-applications-table">
+              <thead><tr><th>Applicant</th><th>Product</th><th>EasyBuy Price</th><th>Deposit</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+              <tbody id="eb-applications-body"><tr><td colspan="7" style="text-align:center;color:var(--gray-400)">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="eb-admin-accounts" class="eb-admin-section hidden">
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+            <table class="admin-table" id="eb-accounts-table">
+              <thead><tr><th>Customer</th><th>Product</th><th>Deposit Paid</th><th>Repaid</th><th>Balance</th><th>Next Due</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="eb-accounts-body"><tr><td colspan="8" style="text-align:center;color:var(--gray-400)">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="eb-admin-delivery" class="eb-admin-section hidden">
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+            <table class="admin-table" id="eb-delivery-table">
+              <thead><tr><th>Customer</th><th>Product</th><th>Deposit Status</th><th>Delivery Status</th><th>Action</th></tr></thead>
+              <tbody id="eb-delivery-body"><tr><td colspan="5" style="text-align:center;color:var(--gray-400)">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="eb-admin-reportslog" class="eb-admin-section hidden">
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+            <table class="admin-table" id="eb-auditlog-table">
+              <thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Reference</th><th>Details</th></tr></thead>
+              <tbody id="eb-auditlog-body"><tr><td colspan="5" style="text-align:center;color:var(--gray-400)">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
         <div id="admin-users" class="admin-tab-content hidden">
       <div class="admin-card">
         <div class="admin-card-title">
@@ -3356,10 +3497,16 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
       </div>
       <div class="form-group"><label class="form-label">Description</label><textarea class="form-input" id="p-desc" rows="3" placeholder="Product description..."></textarea></div>
       <div class="form-group">
-        <label class="form-label">Product Images <span style="color:var(--gray-400);font-weight:400;font-size:12px">(up to 3, choose from your phone)</span></label>
-        <input type="file" accept="image/*" multiple id="p-images-file" style="display:none">
-        <button type="button" class="btn-secondary" style="width:100%" onclick="document.getElementById('p-images-file').click()"><i class="fas fa-camera"></i> Choose Images</button>
-        <div id="p-images-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"></div>
+        <label class="form-label">Product Images <span style="color:#6b7280;font-weight:400;font-size:11px">(tap to select or drag &amp; drop — max 5 photos)</span></label>
+        <div class="img-upload-zone" id="prod-upload-zone" onclick="document.getElementById('prod-img-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="event.preventDefault();this.classList.remove('drag-over');handleImgDrop(event,'prod')">
+          <input type="file" id="prod-img-input" accept="image/*" multiple style="display:none" onchange="handleImgSelect(event,'prod')">
+          <div class="img-upload-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+          <div class="img-upload-zone-text">Tap to upload photos</div>
+          <div class="img-upload-zone-sub">JPG, PNG, WEBP — auto-compressed under 1MB each</div>
+        </div>
+        <div class="img-upload-progress" id="prod-upload-progress"><div class="img-upload-progress-bar" id="prod-upload-bar" style="width:0%"></div></div>
+        <div class="img-preview-grid" id="prod-img-previews"></div>
+        <input type="hidden" id="p-images">
       </div>
       <div class="form-group">
         <label class="form-label">Available Sizes <span style="color:var(--gray-400);font-weight:400;font-size:12px">(comma-separated, e.g. S, M, L, XL or 39, 40, 41)</span></label>
@@ -3376,10 +3523,163 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         </label>
         <p style="font-size:12px;color:var(--gray-400);margin-top:4px;margin-left:28px">Tick this to feature the product in the Flash Deals section.</p>
       </div>
+
+      <div class="form-group" style="background:rgba(30,58,138,.06);border-radius:8px;padding:12px;border:1px solid rgba(109,40,217,.2);margin-top:12px">
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;font-weight:700;color:#1e3a8a">
+          <input type="checkbox" id="p-eb-enabled" style="width:18px;height:18px;accent-color:#6d28d9;cursor:pointer" onchange="document.getElementById('p-eb-fields').classList.toggle('hidden',!this.checked)">
+          <span><i class="fas fa-calendar-check" style="color:#6d28d9"></i> Enable EasyBuy (Buy Now, Pay Later)</span>
+        </label>
+        <div id="p-eb-fields" class="hidden" style="margin-top:12px">
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">EasyBuy Price (&#8358;) *</label><input class="form-input" id="p-eb-price" type="number" placeholder="Installment price"></div>
+            <div class="form-group"><label class="form-label">Minimum Deposit (&#8358;) *</label><input class="form-input" id="p-eb-deposit" type="number" placeholder="e.g. 10000"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Repayment Duration *</label><input class="form-input" id="p-eb-duration" type="number" min="1" placeholder="Number of payments"></div>
+            <div class="form-group"><label class="form-label">Frequency *</label>
+              <select class="form-input" id="p-eb-frequency">
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+              </select>
+            </div>
+          </div>
+          <p style="font-size:11px;color:var(--gray-500)"><i class="fas fa-info-circle"></i> The EasyBuy price is only shown to customers after they click the EasyBuy button — never on product listings.</p>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeModal('modal-product')">Cancel</button>
       <button class="btn-primary" onclick="saveProduct()"><i class="fas fa-save"></i> Save Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ EASYBUY: Customer Application Modal ═══════ -->
+<div class="modal-overlay" id="modal-easybuy">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-calendar-check" style="color:#6d28d9"></i> EasyBuy Application</span>
+      <button class="modal-close" onclick="closeEasyBuyModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="eb-steps"><div class="eb-step-dot active" id="eb-dot-1"></div><div class="eb-step-dot" id="eb-dot-2"></div><div class="eb-step-dot" id="eb-dot-3"></div></div>
+
+      <!-- STEP 1: Price breakdown -->
+      <div id="eb-step-1">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px">
+          <img id="eb-p-img" style="width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--gray-100)">
+          <div><div id="eb-p-name" style="font-weight:800;font-size:14px"></div><div style="font-size:12px;color:var(--gray-500)">Cash Price: <span id="eb-p-cashprice"></span></div></div>
+        </div>
+        <div class="eb-price-box">
+          <div class="eb-price-row"><span class="lbl">EasyBuy Price</span><span class="val hi" id="eb-bd-price"></span></div>
+          <div class="eb-price-row"><span class="lbl">Deposit Required</span><span class="val" id="eb-bd-deposit"></span></div>
+          <div class="eb-price-row"><span class="lbl">Outstanding Balance</span><span class="val" id="eb-bd-balance"></span></div>
+          <div class="eb-price-row"><span class="lbl">Repayment Duration</span><span class="val" id="eb-bd-duration"></span></div>
+          <div class="eb-price-row"><span class="lbl">Payment Amount</span><span class="val" id="eb-bd-installment"></span></div>
+        </div>
+        <p style="font-size:11px;color:var(--gray-500);margin-top:10px"><i class="fas fa-info-circle"></i> You'll pay the deposit after your application is approved by our staff. The product is delivered only after the deposit is confirmed.</p>
+        <button class="btn-eb" style="width:100%;margin-top:14px" onclick="ebGoStep(2)">Continue to Application <i class="fas fa-arrow-right"></i></button>
+      </div>
+
+      <!-- STEP 2: Customer + Next of Kin details -->
+      <div id="eb-step-2" class="hidden">
+        <div class="form-group" style="background:var(--gray-50);border-radius:8px;padding:10px;font-weight:800;font-size:13px;color:#1e3a8a">&#128100; Your Details</div>
+        <div class="form-group"><label class="form-label">Full Name *</label><input class="form-input" id="eb-cust-name"></div>
+        <div class="form-group"><label class="form-label">Phone Number *</label><input class="form-input" id="eb-cust-phone" type="tel"></div>
+        <div class="form-group"><label class="form-label">Email Address *</label><input class="form-input" id="eb-cust-email" type="email"></div>
+        <div class="form-group"><label class="form-label">Residential Address *</label><textarea class="form-input" id="eb-cust-address" rows="2"></textarea></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Passport Photograph *</label>
+            <div class="eb-upload-mini" id="eb-cust-photo-zone" onclick="document.getElementById('eb-cust-photo-input').click()">
+              <input type="file" id="eb-cust-photo-input" accept="image/*" onchange="ebHandlePhoto(event,'custPhoto')">
+              <div id="eb-cust-photo-label"><i class="fas fa-camera"></i><br>Tap to upload</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Valid ID Upload *</label>
+            <div class="eb-upload-mini" id="eb-cust-id-zone" onclick="document.getElementById('eb-cust-id-input').click()">
+              <input type="file" id="eb-cust-id-input" accept="image/*" onchange="ebHandlePhoto(event,'custId')">
+              <div id="eb-cust-id-label"><i class="fas fa-id-card"></i><br>Tap to upload</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="background:var(--gray-50);border-radius:8px;padding:10px;font-weight:800;font-size:13px;color:#1e3a8a;margin-top:16px">&#128101; Next of Kin Details</div>
+        <div class="form-group"><label class="form-label">Full Name *</label><input class="form-input" id="eb-nok-name"></div>
+        <div class="form-group"><label class="form-label">Phone Number *</label><input class="form-input" id="eb-nok-phone" type="tel"></div>
+        <div class="form-group"><label class="form-label">Address *</label><textarea class="form-input" id="eb-nok-address" rows="2"></textarea></div>
+        <div class="form-group">
+          <label class="form-label">Passport Photograph *</label>
+          <div class="eb-upload-mini" id="eb-nok-photo-zone" onclick="document.getElementById('eb-nok-photo-input').click()">
+            <input type="file" id="eb-nok-photo-input" accept="image/*" onchange="ebHandlePhoto(event,'nokPhoto')">
+            <div id="eb-nok-photo-label"><i class="fas fa-camera"></i><br>Tap to upload</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button class="btn-secondary" style="flex:1" onclick="ebGoStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+          <button class="btn-eb" style="flex:2" onclick="submitEasyBuyApplication()"><i class="fas fa-paper-plane"></i> Submit Application</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Confirmation -->
+      <div id="eb-step-3" class="hidden" style="text-align:center;padding:20px 0">
+        <i class="fas fa-check-circle" style="font-size:52px;color:#15803d"></i>
+        <h3 style="margin-top:12px">Application Submitted!</h3>
+        <p style="font-size:13px;color:var(--gray-500);margin-top:6px">Our staff will review your EasyBuy application shortly. You can track its status on your EasyBuy dashboard.</p>
+        <button class="btn-eb" style="width:100%;margin-top:16px" onclick="closeEasyBuyModal();navigate('easybuy')">View My EasyBuy Dashboard</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ EASYBUY: Admin Application Review Modal ═══════ -->
+<div class="modal-overlay" id="modal-eb-review">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">EasyBuy Application Review</span>
+      <button class="modal-close" onclick="closeModal('modal-eb-review')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="eb-review-body"></div>
+    <div class="modal-footer" style="flex-wrap:wrap;gap:6px">
+      <button class="btn-secondary" onclick="closeModal('modal-eb-review')">Close</button>
+      <button style="background:#dbeafe;color:#1d4ed8;border:none;border-radius:6px;padding:9px 14px;font-weight:700;font-size:13px;cursor:pointer" onclick="ebRequestInfo()"><i class="fas fa-question-circle"></i> Request Info</button>
+      <button class="btn-danger" onclick="ebRejectApplication()"><i class="fas fa-times-circle"></i> Reject</button>
+      <button class="btn-success" onclick="ebApproveApplication()"><i class="fas fa-check-circle"></i> Approve</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ EASYBUY: Admin Account Management Modal ═══════ -->
+<div class="modal-overlay" id="modal-eb-account">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">EasyBuy Account</span>
+      <button class="modal-close" onclick="closeModal('modal-eb-account')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="eb-account-body"></div>
+  </div>
+</div>
+
+<!-- ═══════ EASYBUY: Customer Payment Modal ═══════ -->
+<div class="modal-overlay" id="modal-eb-pay">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Make EasyBuy Payment</span>
+      <button class="modal-close" onclick="closeModal('modal-eb-pay')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="eb-pay-account-id">
+      <div class="eb-price-box" style="margin-bottom:14px">
+        <div class="eb-price-row"><span class="lbl">Wallet Balance</span><span class="val" id="eb-pay-wallet-balance"></span></div>
+        <div class="eb-price-row"><span class="lbl">Outstanding Balance</span><span class="val" id="eb-pay-outstanding"></span></div>
+      </div>
+      <div class="form-group"><label class="form-label">Amount to Pay (&#8358;) *</label><input class="form-input" id="eb-pay-amount" type="number" placeholder="0"></div>
+      <p style="font-size:11px;color:var(--gray-500)"><i class="fas fa-info-circle"></i> Payment will be deducted from your ZMARKET Wallet balance. Fund your wallet first if needed.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modal-eb-pay')">Cancel</button>
+      <button class="btn-eb" onclick="submitEbWalletPayment()"><i class="fas fa-check"></i> Pay Now</button>
     </div>
   </div>
 </div>
@@ -3690,15 +3990,26 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         <div><label class="form-label">Est. Delivery</label><input class="form-input" id="ppm-delivery-est" placeholder="e.g. 2-3 weeks after arrival"></div>
         <div><label class="form-label">Quantity Limit (0=unlimited)</label><input class="form-input" id="ppm-qty-limit" type="number" min="0" value="0"></div>
       </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><label class="form-label">Shipping Cost (&#8358;)</label><input class="form-input" id="ppm-shipping" type="number" min="0" value="0" placeholder="0 = free shipping"></div>
+        <div><label class="form-label">Shipping Note</label><input class="form-input" id="ppm-shipping-note" placeholder="e.g. Free delivery in Lagos"></div>
+      </div>
       <div><label class="form-label">Category</label>
         <select class="form-input" id="ppm-category">
           <option>Electronics</option><option>Phones</option><option>Power Bank</option><option>Wristwatch</option><option>Phone Battery</option><option>Fashion</option><option>Men's Fashion</option><option>Women's Fashion</option><option>Baby Products</option><option>Home &amp; Kitchen</option><option>Beauty</option><option>Sports</option><option>Groceries</option><option>Toys</option><option>Other</option>
         </select>
       </div>
-      <div><label class="form-label">Product Images <span style="color:var(--gray-400);font-weight:400;font-size:12px">(up to 3, choose from your phone)</span></label>
-        <input type="file" accept="image/*" multiple id="ppm-images-file" style="display:none">
-        <button type="button" class="btn-secondary" style="width:100%" onclick="document.getElementById('ppm-images-file').click()"><i class="fas fa-camera"></i> Choose Images</button>
-        <div id="ppm-images-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"></div>
+      <div>
+        <label class="form-label">Product Images <span style="color:#6b7280;font-weight:400;font-size:11px">(tap to select — max 5 photos)</span></label>
+        <div class="img-upload-zone" onclick="document.getElementById('po-img-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="event.preventDefault();this.classList.remove('drag-over');handleImgDrop(event,'po')">
+          <input type="file" id="po-img-input" accept="image/*" multiple style="display:none" onchange="handleImgSelect(event,'po')">
+          <div class="img-upload-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+          <div class="img-upload-zone-text">Tap to upload photos</div>
+          <div class="img-upload-zone-sub">JPG, PNG, WEBP — auto-compressed under 1MB each</div>
+        </div>
+        <div class="img-upload-progress" id="po-upload-progress"><div class="img-upload-progress-bar" id="po-upload-bar" style="width:0%"></div></div>
+        <div class="img-preview-grid" id="po-img-previews"></div>
+        <input type="hidden" id="ppm-images">
       </div>
       <div><label class="form-label">Specifications (Key: Value, one per line)</label><textarea class="form-input" id="ppm-specs" rows="4" placeholder="Color: Space Black&#10;Storage: 256GB" style="resize:vertical"></textarea></div>
       <div><label class="form-label">Allow Customer Cancellation?</label>
@@ -3885,76 +4196,6 @@ const db = getFirestore(app);
 try { enableIndexedDbPersistence(db); } catch(e) { /* unsupported in some browsers/private mode */ }
 const ADMIN_EMAIL = 'Zmoniemarket@gmail.com';
 const ADMIN_WHATSAPP = '2348149825555';
-
-// ===== DIRECT IMAGE UPLOAD (no Firebase Storage — images compressed & stored as base64 in Firestore) =====
-const MAX_IMAGES_PER_ITEM = 3;
-let pImagesData = [];   // holds base64 images for the product being added/edited
-let ppmImagesData = []; // holds base64 images for the preorder product being added/edited
-
-function compressImageFile(file, maxDim = 700, quality = 0.6) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onload = () => {
-        let w = img.width, h = img.height;
-        if (w > maxDim || h > maxDim) {
-          if (w >= h) { h = Math.round(h * maxDim / w); w = maxDim; }
-          else { w = Math.round(w * maxDim / h); h = maxDim; }
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', quality));
-      };
-      img.onerror = () => reject(new Error('Could not read image'));
-      img.src = e.target.result;
-    };
-    reader.onerror = () => reject(new Error('Could not read file'));
-    reader.readAsDataURL(file);
-  });
-}
-
-function renderImagePreviews(containerId, arr, removeFnName) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = arr.map((src, i) => `
-    <div style="position:relative;width:60px;height:60px">
-      <img src="${src}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid var(--gray-200)">
-      <button type="button" onclick="${removeFnName}(${i})" style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#ef4444;color:#fff;border:none;font-size:12px;cursor:pointer;line-height:1;padding:0">&times;</button>
-    </div>
-  `).join('');
-}
-
-window.removePImage = function(i) {
-  pImagesData.splice(i, 1);
-  renderImagePreviews('p-images-preview', pImagesData, 'removePImage');
-};
-window.removePpmImage = function(i) {
-  ppmImagesData.splice(i, 1);
-  renderImagePreviews('ppm-images-preview', ppmImagesData, 'removePpmImage');
-};
-
-async function handleImageFileSelect(fileInputId, dataArrGetSet, previewId, removeFnName) {
-  const input = document.getElementById(fileInputId);
-  if (!input) return;
-  input.addEventListener('change', async function() {
-    const arr = dataArrGetSet();
-    const remainingSlots = MAX_IMAGES_PER_ITEM - arr.length;
-    if (remainingSlots <= 0) { showToast(`Max ${MAX_IMAGES_PER_ITEM} images allowed`, 'error'); this.value = ''; return; }
-    const files = Array.from(this.files).slice(0, remainingSlots);
-    for (const file of files) {
-      try {
-        const dataUrl = await compressImageFile(file);
-        arr.push(dataUrl);
-      } catch (e) { showToast('Could not process an image', 'error'); }
-    }
-    renderImagePreviews(previewId, arr, removeFnName);
-    this.value = '';
-  });
-}
-handleImageFileSelect('p-images-file', () => pImagesData, 'p-images-preview', 'removePImage');
-handleImageFileSelect('ppm-images-file', () => ppmImagesData, 'ppm-images-preview', 'removePpmImage');
 
 // ===== WHATSAPP NOTIFICATIONS =====
 function notifyAdminWhatsApp(orderId, buyerName, buyerEmail, itemNames, subtotal, deliveryFee, payment, address, buyerPhone, couponDiscount, couponCode, loyaltyDiscount) {
@@ -4887,24 +5128,31 @@ window.changePassword = async function() {
 const _CACHE_KEY = 'zmarket_products_cache';
 const _CACHE_TTL = 10 * 60 * 1000; // 10 minutes
 
-async function loadProducts() {
+async function loadProducts(force = false) {
   // ── Step 1: Show from cache IMMEDIATELY if available ──────────────────
+  let cacheIsFresh = false;
   try {
     const raw = localStorage.getItem(_CACHE_KEY);
     if (raw) {
       const cached = JSON.parse(raw);
       const age = Date.now() - (cached.ts || 0);
-      if (Array.isArray(cached.data) && cached.data.length > 0 && age < _CACHE_TTL) {
+      if (Array.isArray(cached.data) && cached.data.length > 0) {
         allProducts = cached.data;
         renderHome();
         console.log('[ZMARKET] Products loaded from cache:', allProducts.length);
+        if (age < _CACHE_TTL) cacheIsFresh = true;
       }
     }
   } catch(cacheErr) {
     console.warn('[ZMARKET] Cache read failed:', cacheErr);
   }
 
-  // ── Step 2: Always fetch fresh from Firestore ──────────────────────────
+  // ── Step 2: Only hit Firestore if cache is stale/missing, or a fresh read was explicitly requested ──
+  if (cacheIsFresh && !force) {
+    console.log('[ZMARKET] Cache still fresh (<10min) — skipping Firestore read to save quota.');
+    return;
+  }
+
   let attempts = 0;
   const maxAttempts = 3;
 
@@ -5003,9 +5251,12 @@ function productCardHTML(p, isFlash=false) {
   const soldPct = Math.min(95, Math.round(soldCount/(soldCount+stock)*100));
   const isWished = wishlist.includes(p.id);
   const outOfStock = (p.stock||0) <= 0;
-  return "<div class=\"pc\" data-product-id=\""+(p.id)+"\">\n    <div class=\"pc-img-wrap\" onclick=\"openProduct('"+(p.id)+"')\">\n      <img src=\""+(img)+"\" alt=\""+(p.name||'')+"\" loading=\"lazy\" onerror=\"this.src='https://placehold.co/300x300/f5f5f5/cccccc?text=ZMARKET'\">\n      "+(hasDisc ? '<span class="pc-badge">-'+discPct+'%</span>' : '')+"\n      "+(isFlash ? '<span class="pc-flash-badge"><i class="fas fa-bolt"></i> Flash</span>' : '')+"\n      <button class=\"pc-wish-btn"+(isWished?' active':'')+"\" onclick=\"event.stopPropagation();toggleWishlist('"+(p.id)+"')\" title=\""+(isWished?'Remove from wishlist':'Add to wishlist')+"\"><i class=\"fas fa-heart\"></i></button>\n    </div>\n    <div class=\"pc-body\" onclick=\"openProduct('"+(p.id)+"')\">\n      <div class=\"pc-name\">"+(p.name||'Product')+"</div>\n      <div class=\"pc-prices\">\n        <span class=\"pc-price\">\u20A6"+(displayPrice.toLocaleString())+"</span>\n        "+(hasDisc ? '<span class="pc-old">\u20A6'+price.toLocaleString()+'</span>' : '')+"\n      </div>\n      <div class=\"pc-sold-row\">\n        <div class=\"pc-bar-bg\"><div class=\"pc-bar-fill\" style=\"width:"+(soldPct)+"%\"></div></div>\n        <span class=\"pc-sold-txt\">"+(soldCount)+" sold</span>\n      </div>\n    </div>\n    <div class=\"pc-atc-row\" onclick=\"event.stopPropagation()\">\n      "+(outOfStock
+  const ebOn = !!p.easybuyEnabled && Number(p.easybuyPrice)>0;
+  return "<div class=\"pc\" data-product-id=\""+(p.id)+"\">\n    <div class=\"pc-img-wrap\" onclick=\"openProduct('"+(p.id)+"')\">\n      <img src=\""+(img)+"\" alt=\""+(p.name||'')+"\" loading=\"lazy\" onerror=\"this.src='https://placehold.co/300x300/f5f5f5/cccccc?text=ZMARKET'\">\n      "+(hasDisc ? '<span class="pc-badge">-'+discPct+'%</span>' : '')+"\n      "+(isFlash ? '<span class="pc-flash-badge"><i class="fas fa-bolt"></i> Flash</span>' : '')+"\n      "+(ebOn ? '<span class="pc-eb-badge"><i class="fas fa-calendar-check"></i> EasyBuy Available</span>' : '')+"\n      <button class=\"pc-wish-btn"+(isWished?' active':'')+"\" onclick=\"event.stopPropagation();toggleWishlist('"+(p.id)+"')\" title=\""+(isWished?'Remove from wishlist':'Add to wishlist')+"\"><i class=\"fas fa-heart\"></i></button>\n    </div>\n    <div class=\"pc-body\" onclick=\"openProduct('"+(p.id)+"')\">\n      <div class=\"pc-name\">"+(p.name||'Product')+"</div>\n      <div class=\"pc-prices\">\n        <span class=\"pc-price\">\u20A6"+(displayPrice.toLocaleString())+"</span>\n        "+(hasDisc ? '<span class="pc-old">\u20A6'+price.toLocaleString()+'</span>' : '')+"\n      </div>\n      <div class=\"pc-sold-row\">\n        <div class=\"pc-bar-bg\"><div class=\"pc-bar-fill\" style=\"width:"+(soldPct)+"%\"></div></div>\n        <span class=\"pc-sold-txt\">"+(soldCount)+" sold</span>\n      </div>\n    </div>\n    <div class=\"pc-atc-row"+(ebOn?' eb-row':'')+"\" onclick=\"event.stopPropagation()\">\n      "+(outOfStock
         ? '<button class="pc-atc-btn pc-atc-btn--disabled" disabled><i class="fas fa-times-circle"></i> Out of Stock</button>'
-        : '<button class="pc-atc-btn" onclick="quickAddToCart(\''+(p.id)+'\')" ><i class="fas fa-cart-plus"></i> Add To Cart</button>'
+        : (ebOn
+          ? '<button class="pc-atc-btn" onclick="cardBuyNow(\''+(p.id)+'\')"><i class="fas fa-bolt"></i> Buy Now</button><button class="pc-eb-btn" onclick="openEasyBuy(\''+(p.id)+'\')"><i class="fas fa-calendar-check"></i> EasyBuy</button>'
+          : '<button class="pc-atc-btn" onclick="quickAddToCart(\''+(p.id)+'\')" ><i class="fas fa-cart-plus"></i> Add To Cart</button>')
       )+"\n    </div>\n  </div>";
 }
 
@@ -5035,6 +5286,9 @@ window.openProduct = function(id) {
   document.getElementById('detail-old-price').innerHTML = hasDisc ? '\u20A6'+price.toLocaleString() : '';
   document.getElementById('detail-discount').textContent = hasDisc ? "-"+(discPct)+"%" : '';
   document.getElementById('detail-discount').classList.toggle('hidden', !hasDisc);
+  const ebOnDetail = !!p.easybuyEnabled && Number(p.easybuyPrice)>0;
+  document.getElementById('detail-eb-badge-wrap').classList.toggle('hidden', !ebOnDetail);
+  document.getElementById('detail-eb-actions').classList.toggle('hidden', !ebOnDetail);
   document.getElementById('detail-stars').innerHTML = starsHTML(p.rating||0);
   document.getElementById('detail-review-count').textContent = "("+(p.reviewCount||0)+" reviews)";
   const stockEl = document.getElementById('detail-stock');
@@ -5220,6 +5474,13 @@ window.addToCartFromDetail = function() {
   saveCart();
   updateCartBadge();
   showToast(""+(p.name)+""+(variantLabel?' ('+variantLabel+')':'')+" added to cart!");
+};
+
+window.detailBuyNow = function() {
+  if(!currentUser) { showToast('Please sign in to buy','info'); navigate('login'); return; }
+  if(!currentProduct) return;
+  addToCartFromDetail();
+  goToCheckout();
 };
 
 // Size & Colour selection
@@ -6135,10 +6396,12 @@ window.deleteAddress = async function(id) {
 window.showAddProductModal = function() {
   document.getElementById('product-modal-title').textContent = 'Add Product';
   document.getElementById('edit-product-id').value = '';
-  ['p-name','p-price','p-discount','p-stock','p-desc','p-sizes','p-colours'].forEach(id=>{ document.getElementById(id).value=''; });
+  clearUploader('prod');
+  ['p-name','p-price','p-discount','p-stock','p-desc','p-sizes','p-colours','p-eb-price','p-eb-deposit','p-eb-duration'].forEach(id=>{ document.getElementById(id).value=''; });
   document.getElementById('p-flash').checked = false;
-  pImagesData = [];
-  renderImagePreviews('p-images-preview', pImagesData, 'removePImage');
+  document.getElementById('p-eb-enabled').checked = false;
+  document.getElementById('p-eb-fields').classList.add('hidden');
+  document.getElementById('p-eb-frequency').value = 'monthly';
   openModal('modal-product');
 };
 
@@ -6148,16 +6411,23 @@ window.editProduct = function(id) {
   document.getElementById('product-modal-title').textContent = 'Edit Product';
   document.getElementById('edit-product-id').value = id;
   document.getElementById('p-name').value = p.name||'';
+  // Populate image uploader with existing images
+  initUploaderWithUrls('prod', p.images||[]);
   document.getElementById('p-price').value = p.price||'';
   document.getElementById('p-discount').value = p.discountPrice||'';
   document.getElementById('p-category').value = p.category||'Electronics';
   document.getElementById('p-stock').value = p.stock||'';
   document.getElementById('p-desc').value = p.description||'';
-  pImagesData = (p.images||[]).slice();
-  renderImagePreviews('p-images-preview', pImagesData, 'removePImage');
+  document.getElementById('p-images').value = (p.images||[]).join('\n');
   document.getElementById('p-sizes').value = (p.sizes||[]).join(', ');
   document.getElementById('p-colours').value = (p.colours||[]).join(', ');
   document.getElementById('p-flash').checked = !!p.isFlash;
+  document.getElementById('p-eb-enabled').checked = !!p.easybuyEnabled;
+  document.getElementById('p-eb-fields').classList.toggle('hidden', !p.easybuyEnabled);
+  document.getElementById('p-eb-price').value = p.easybuyPrice||'';
+  document.getElementById('p-eb-deposit').value = p.easybuyDeposit||'';
+  document.getElementById('p-eb-duration').value = p.easybuyDuration||'';
+  document.getElementById('p-eb-frequency').value = p.easybuyFrequency||'monthly';
   openModal('modal-product');
 };
 
@@ -6170,15 +6440,24 @@ window.saveProduct = async function() {
   const category = document.getElementById('p-category').value;
   const stock = Number(document.getElementById('p-stock').value)||0;
   const description = document.getElementById('p-desc').value.trim();
-  const images = pImagesData.slice();
+  // Images are uploaded already — read from uploader state
+  const images = [...(_uploadedUrls['prod'] || [])];
   const sizesRaw = document.getElementById('p-sizes').value.trim();
   const sizes = sizesRaw ? sizesRaw.split(',').map(x=>x.trim()).filter(Boolean) : [];
   const coloursRaw = document.getElementById('p-colours').value.trim();
   const colours = coloursRaw ? coloursRaw.split(',').map(x=>x.trim()).filter(Boolean) : [];
   const isFlash = document.getElementById('p-flash').checked;
+  const easybuyEnabled = document.getElementById('p-eb-enabled').checked;
+  const easybuyPrice = Number(document.getElementById('p-eb-price').value)||0;
+  const easybuyDeposit = Number(document.getElementById('p-eb-deposit').value)||0;
+  const easybuyDuration = Number(document.getElementById('p-eb-duration').value)||0;
+  const easybuyFrequency = document.getElementById('p-eb-frequency').value||'monthly';
   if(!name||!price) return showToast('Name and price are required','error');
+  if(easybuyEnabled && (!easybuyPrice || !easybuyDeposit || !easybuyDuration)) {
+    return showToast('Please fill in all EasyBuy fields (price, deposit, duration)','error');
+  }
   try {
-    const data = { name, price, discountPrice, category, stock, description, images, sizes, colours, isFlash, updatedAt: serverTimestamp() };
+    const data = { name, price, discountPrice, category, stock, description, images, sizes, colours, isFlash, easybuyEnabled, easybuyPrice, easybuyDeposit, easybuyDuration, easybuyFrequency, updatedAt: serverTimestamp() };
     if(editId) {
       await updateDoc(doc(db,'products',editId), data);
       showToast('Product updated!');
@@ -6189,7 +6468,7 @@ window.saveProduct = async function() {
       showToast('Product added!');
     }
     closeModal('modal-product');
-    await loadProducts();
+    await loadProducts(true);
     loadAdminProducts();
   } catch(e) { showToast('Failed to save product','error'); }
 };
@@ -6197,7 +6476,7 @@ window.saveProduct = async function() {
 window.deleteProduct = async function(id) {
   if(!isAdmin||!confirm('Delete this product?')) return;
   await deleteDoc(doc(db,'products',id));
-  await loadProducts();
+  await loadProducts(true);
   loadAdminProducts();
   showToast('Product deleted');
 };
@@ -6417,7 +6696,7 @@ function canAccessTab(tab) {
   if(isSuperAdmin) return true;
   if(isManager) return tab !== 'manageadmins' && tab !== 'paymentsettings' && tab !== 'referralsettings';
   if(isUploader) return tab === 'products' || tab === 'banners' || tab === 'bulkimport';
-  if(isSubAdmin) return ['orders','analytics','users','reviews','chats','resetrequests'].includes(tab);
+  if(isSubAdmin) return ['orders','analytics','users','reviews','chats','resetrequests','easybuy'].includes(tab);
   return false;
 }
 
@@ -6444,6 +6723,7 @@ window.switchAdminTab = function(tab, btn) {
   else if(tab==='referralsettings') loadReferralAdminSettings();
   else if(tab==='popupads') loadAdminPopupAds();
   else if(tab==='preorders') { loadPoAdminStats(); loadPoAdminProducts(); loadPoAdminOrders(); }
+  else if(tab==='easybuy') loadEasyBuyAdmin();
 };
 
 window.loadAdminUsers = async function() {
@@ -7114,6 +7394,8 @@ function _showPage(page) {
   if(page==='search') { if(!allProducts.length) loadProducts(); applyFilters(); }
   if(page==='admin') { loadAdminProducts(); loadAdminStats(); }
   if(page==='preorder') { loadPoProducts(); updatePoHeroStats(); if(typeof currentUser !== 'undefined' && currentUser) loadMyPreorders(); }
+  if(page==='easybuy') { loadMyEasyBuy(); }
+  if(page==='admin') { if(document.querySelector('.admin-tab.active')?.dataset.adminTab==='easybuy') loadEasyBuyAdmin(); }
 }
 
 window.navigate = function(page) {
@@ -8424,7 +8706,7 @@ window.importAllValid = async function() {
   document.getElementById('bulk-report-wrap').style.display = '';
 
   _bulkImporting = false;
-  await loadProducts();
+  await loadProducts(true);
   loadAdminProducts();
   showToast('Import complete: ' + successCount + ' added, ' + updateCount + ' updated, ' + failCount + ' failed');
 };
@@ -9229,6 +9511,7 @@ window.openPoDetail = function(id) {
       <div class="po-detail-name">${p.name||'Product'}</div>
       <div class="po-detail-price">&#8358;${price.toLocaleString()}</div>
       ${depositPct > 0 ? `<div class="po-detail-deposit-info">Pay &#8358;${depositAmt.toLocaleString()} deposit (${depositPct}%) to reserve &mdash; balance on arrival</div>` : `<div class="po-detail-deposit-info">Full payment required to confirm preorder</div>`}
+      ${p.shippingCost > 0 ? `<div style="font-size:12px;color:#6b7280;margin-bottom:8px;text-align:center">&#128666; Shipping: <strong style="color:#111">&#8358;${Number(p.shippingCost).toLocaleString()}</strong>${p.shippingNote ? ' &nbsp;&bull;&nbsp; ' + p.shippingNote : ''}</div>` : `<div style="font-size:12px;color:#16a34a;font-weight:700;margin-bottom:8px;text-align:center">&#10003; Free Shipping${p.shippingNote ? ' &mdash; ' + p.shippingNote : ''}</div>`}
       <div class="po-info-grid">
         <div class="po-info-box"><div class="po-info-box-label">Arrival Date</div><div class="po-info-box-val">${formatPoDate(p.arrivalDate)}</div></div>
         <div class="po-info-box"><div class="po-info-box-label">Days Until Arrival</div><div class="po-info-box-val">${days !== null ? (days > 0 ? days+'d' : 'Today!') : 'TBD'}</div></div>
@@ -9318,13 +9601,18 @@ window.updatePoOrderSummary = function() {
 
   const amountToPay = (currentPoPaymentOpt === 'deposit' && depositPct > 0) ? depositAmt : total;
   const summaryEl = document.getElementById('pom-order-summary');
+  const shippingCost = Number(currentPoProduct.shippingCost)||0;
+  const grandTotal = amountToPay + shippingCost;
+  window._currentPoGrandTotal = grandTotal;
   if (summaryEl) {
     summaryEl.innerHTML = `
       <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#6b7280">Unit Price</span><span style="font-weight:700">&#8358;${price.toLocaleString()}</span></div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#6b7280">Quantity</span><span style="font-weight:700">${qty}</span></div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#6b7280">Total Value</span><span style="font-weight:700">&#8358;${total.toLocaleString()}</span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#6b7280">Subtotal</span><span style="font-weight:700">&#8358;${total.toLocaleString()}</span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#6b7280">Shipping</span><span style="font-weight:700;${shippingCost===0?'color:#16a34a':''}">&#8358;${shippingCost.toLocaleString()}${shippingCost===0?' (Free)':''}</span></div>
+      ${currentPoProduct.shippingNote?`<div style="font-size:11px;color:#6b7280;margin-bottom:4px">${currentPoProduct.shippingNote}</div>`:''}
       <div style="border-top:1.5px solid #e5e7eb;margin:8px 0"></div>
-      <div style="display:flex;justify-content:space-between"><span style="font-weight:800;color:#111">Amount to Pay Now</span><span style="font-weight:900;color:#1e3a8a;font-size:16px">&#8358;${amountToPay.toLocaleString()}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="font-weight:800;color:#111">Amount to Pay Now</span><span style="font-weight:900;color:#1e3a8a;font-size:16px">&#8358;${grandTotal.toLocaleString()}</span></div>
       ${depositPct>0&&currentPoPaymentOpt==='deposit'?`<div style="font-size:11px;color:#6d28d9;margin-top:4px">Balance of &#8358;${(total-depositAmt).toLocaleString()} due on arrival</div>`:''}`;
   }
   const priceDisp = document.getElementById('pom-price-display');
@@ -9356,7 +9644,8 @@ window.submitPreorder = async function() {
   const amountToPay = (currentPoPaymentOpt==='deposit' && depositPct>0) ? depositAmt : totalAmt;
 
   // Pay via Paystack
-  payWithPaystack(amountToPay, currentUser.email, async function(reference) {
+  const _payAmount = window._currentPoGrandTotal || amountToPay;
+  payWithPaystack(_payAmount, currentUser.email, async function(reference) {
     try {
       const orderId = 'PO-' + Date.now().toString(36).toUpperCase();
       const orderData = {
@@ -9568,8 +9857,7 @@ window.openPoProductModal = async function(id) {
   ['ppm-name','ppm-desc','ppm-delivery-est'].forEach(x => document.getElementById(x).value = '');
   ['ppm-price','ppm-deposit-pct','ppm-qty-limit'].forEach(x => document.getElementById(x).value = '0');
   ['ppm-arrival','ppm-close-date'].forEach(x => document.getElementById(x).value = '');
-  ppmImagesData = [];
-  renderImagePreviews('ppm-images-preview', ppmImagesData, 'removePpmImage');
+  clearUploader('po');
   document.getElementById('ppm-specs').value = '';
   document.getElementById('ppm-allow-cancel').value = 'yes';
   document.querySelector('input[name="ppm-status"][value="active"]').checked = true;
@@ -9588,14 +9876,15 @@ window.openPoProductModal = async function(id) {
         document.getElementById('ppm-delivery-est').value = d.deliveryEst||'';
         document.getElementById('ppm-qty-limit').value = d.qtyLimit||0;
         document.getElementById('ppm-category').value = d.category||'Electronics';
-        ppmImagesData = (d.images||[]).slice();
-        renderImagePreviews('ppm-images-preview', ppmImagesData, 'removePpmImage');
+        initUploaderWithUrls('po', d.images||[]);
         document.getElementById('ppm-allow-cancel').value = d.allowCancel||'yes';
         // Specs: object to lines
         if (d.specs && typeof d.specs === 'object') {
           document.getElementById('ppm-specs').value = Object.entries(d.specs).map(([k,v])=>`${k}: ${v}`).join('\n');
         }
         if (d.status === 'inactive') document.querySelector('input[name="ppm-status"][value="inactive"]').checked = true;
+        if(document.getElementById('ppm-shipping')) document.getElementById('ppm-shipping').value = d.shippingCost||0;
+        if(document.getElementById('ppm-shipping-note')) document.getElementById('ppm-shipping-note').value = d.shippingNote||'';
       }
     } catch(e) { showToast('Error loading product: '+e.message,'error'); }
   }
@@ -9607,7 +9896,8 @@ window.savePoProduct = async function() {
   const name = document.getElementById('ppm-name').value.trim();
   if (!name) return showToast('Product name is required','error');
 
-  const images = ppmImagesData.slice();
+  // Images are uploaded — read from uploader state
+  const images = [...(_uploadedUrls['po'] || [])];
 
   // Parse specs
   const specsRaw = document.getElementById('ppm-specs').value.trim();
@@ -9630,6 +9920,8 @@ window.savePoProduct = async function() {
     closeDate: document.getElementById('ppm-close-date').value,
     deliveryEst: document.getElementById('ppm-delivery-est').value.trim(),
     qtyLimit: parseInt(document.getElementById('ppm-qty-limit').value)||0,
+    shippingCost: parseFloat(document.getElementById('ppm-shipping')?.value)||0,
+    shippingNote: document.getElementById('ppm-shipping-note')?.value.trim()||'',
     category: document.getElementById('ppm-category').value,
     images,
     specs,
@@ -9697,7 +9989,7 @@ window.convertPoToInventory = async function(poProductId) {
 
     showToast(`✓ Added ${stockQty} units to inventory!`,'success');
     loadPoAdminProducts();
-    loadProducts(); // refresh main product list
+    loadProducts(true); // refresh main product list (force fresh read)
   } catch(e) { showToast('Conversion failed: '+e.message,'error'); }
 };
 
@@ -9859,6 +10151,145 @@ window.exportPoOrders = async function() {
 
 // switchAdminTab preorder hook is in the main function
 
+
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// IMAGE UPLOAD SYSTEM — compress to Base64, store in Firestore directly
+// No Firebase Storage needed.
+// ═══════════════════════════════════════════════════════════════════════
+
+const _uploadedUrls = { prod: [], po: [] };
+
+// ── Compress image file → Base64 JPEG string under targetKB ──────────
+async function compressImage(file, targetKB = 180) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let { width, height } = img;
+        // Scale down large images — max 800px on longest side
+        const MAX_DIM = 800;
+        if (width > MAX_DIM || height > MAX_DIM) {
+          const ratio = Math.min(MAX_DIM / width, MAX_DIM / height);
+          width  = Math.round(width  * ratio);
+          height = Math.round(height * ratio);
+        }
+        canvas.width  = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+
+        // Reduce quality until Base64 size is under targetKB
+        let quality = 0.80;
+        const tryCompress = () => {
+          const b64 = canvas.toDataURL('image/jpeg', quality);
+          // Base64 size in KB
+          const sizeKB = Math.round((b64.length * 3) / 4 / 1024);
+          if (sizeKB <= targetKB || quality <= 0.20) {
+            resolve(b64);
+          } else {
+            quality = Math.max(0.15, quality - 0.10);
+            tryCompress();
+          }
+        };
+        tryCompress();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── Sync hidden input value ────────────────────────────────────────────
+function syncHiddenInput(ctx) {
+  const id = ctx === 'prod' ? 'p-images' : 'ppm-images';
+  const el = document.getElementById(id);
+  if (el) el.value = _uploadedUrls[ctx].join('\n');
+}
+
+// ── Render thumbnail previews ──────────────────────────────────────────
+function renderPreviews(ctx) {
+  const gridId = ctx === 'prod' ? 'prod-img-previews' : 'po-img-previews';
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  grid.innerHTML = _uploadedUrls[ctx].map((url, i) => `
+    <div class="img-preview-item">
+      <img src="${url}" onerror="this.style.opacity='.3'">
+      <button class="img-preview-remove" onclick="removeUploadedImg('${ctx}',${i})" title="Remove">&#10005;</button>
+    </div>`).join('');
+}
+
+window.removeUploadedImg = function(ctx, idx) {
+  _uploadedUrls[ctx].splice(idx, 1);
+  syncHiddenInput(ctx);
+  renderPreviews(ctx);
+};
+
+// ── Handle file input change ───────────────────────────────────────────
+window.handleImgSelect = async function(event, ctx) {
+  const files = Array.from(event.target.files);
+  if (!files.length) return;
+  await processImgFiles(files, ctx);
+  event.target.value = '';
+};
+
+// ── Handle drag-and-drop ───────────────────────────────────────────────
+window.handleImgDrop = async function(event, ctx) {
+  const files = Array.from(event.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+  if (!files.length) return;
+  await processImgFiles(files, ctx);
+};
+
+// ── Core: compress files → Base64 → store in _uploadedUrls ────────────
+async function processImgFiles(files, ctx) {
+  const MAX_PHOTOS = 5;
+  const remaining = MAX_PHOTOS - _uploadedUrls[ctx].length;
+  if (remaining <= 0) { showToast('Maximum 5 photos allowed', 'error'); return; }
+  const toProcess = files.slice(0, remaining);
+  if (files.length > remaining) showToast(`Only ${remaining} more photo(s) allowed`, 'info');
+
+  const progressWrap = document.getElementById(ctx === 'prod' ? 'prod-upload-progress' : 'po-upload-progress');
+  const progressBar  = document.getElementById(ctx === 'prod' ? 'prod-upload-bar'      : 'po-upload-bar');
+  if (progressWrap) progressWrap.style.display = 'block';
+  if (progressBar)  progressBar.style.width = '5%';
+
+  let done = 0;
+  for (const file of toProcess) {
+    try {
+      if (progressBar) progressBar.style.width = Math.round(10 + (done / toProcess.length) * 80) + '%';
+      const b64 = await compressImage(file, 180); // 180KB max per image
+      _uploadedUrls[ctx].push(b64);
+      done++;
+      if (progressBar) progressBar.style.width = Math.round((done / toProcess.length) * 100) + '%';
+      renderPreviews(ctx);
+      syncHiddenInput(ctx);
+      showToast(`Photo ${done}/${toProcess.length} ready ✓`, 'success');
+    } catch (err) {
+      showToast('Could not process photo: ' + (err.message || err), 'error');
+    }
+  }
+  setTimeout(() => { if (progressWrap) progressWrap.style.display = 'none'; }, 1000);
+}
+
+// ── Pre-fill uploader when editing existing product ────────────────────
+function initUploaderWithUrls(ctx, urls) {
+  _uploadedUrls[ctx] = Array.isArray(urls) ? [...urls] : [];
+  syncHiddenInput(ctx);
+  renderPreviews(ctx);
+}
+
+// ── Clear uploader (on modal open for new product) ─────────────────────
+function clearUploader(ctx) {
+  _uploadedUrls[ctx] = [];
+  syncHiddenInput(ctx);
+  renderPreviews(ctx);
+  const pw = document.getElementById(ctx === 'prod' ? 'prod-upload-progress' : 'po-upload-progress');
+  if (pw) pw.style.display = 'none';
+}
 
 
 init();
@@ -10079,6 +10510,698 @@ window.previewPopupAd = async function(docId) {
   } catch(e){ showToast('Preview failed: '+e.message,'error'); }
 };
 
+
+
+// ════════════════════════════════════════════════════════════════════
+// EASYBUY (Buy Now, Pay Later) MODULE
+// ════════════════════════════════════════════════════════════════════
+
+// ── Helpers ─────────────────────────────────────────────────────────
+function ebEsc(str) { return String(str==null?'':str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function ebGenTxnId() { return 'EB-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase(); }
+function ebMoney(n) { return '\u20A6' + (Number(n)||0).toLocaleString(); }
+function ebFmtDate(ts) { if(!ts) return '\u2014'; const d = typeof ts==='number' ? new Date(ts) : (ts.toDate ? ts.toDate() : new Date(ts)); return d.toLocaleDateString('en-NG',{day:'numeric',month:'short',year:'numeric'}); }
+
+async function ebLog(action, ref, details) {
+  try {
+    await addDoc(collection(db,'easybuy_audit_logs'), {
+      action, ref: ref||'', details: details||'',
+      actor: (currentUser && currentUser.email) || 'system',
+      createdAt: Date.now()
+    });
+  } catch(e) { console.warn('EasyBuy audit log failed:', e); }
+}
+
+function ebCalcBreakdown(p) {
+  const ebPrice = Number(p.easybuyPrice)||0;
+  const deposit = Number(p.easybuyDeposit)||0;
+  const duration = Number(p.easybuyDuration)||1;
+  const frequency = p.easybuyFrequency||'monthly';
+  const balance = Math.max(0, ebPrice - deposit);
+  const installment = duration>0 ? Math.ceil(balance/duration) : balance;
+  return { ebPrice, deposit, balance, duration, frequency, installment };
+}
+
+function ebGenerateSchedule(startMs, duration, frequency, installment, balance) {
+  const schedule = [];
+  let remaining = balance;
+  for(let i=1;i<=duration;i++) {
+    const due = new Date(startMs);
+    if(frequency==='weekly') due.setDate(due.getDate() + 7*i);
+    else due.setMonth(due.getMonth() + i);
+    const amt = i===duration ? remaining : Math.min(installment, remaining);
+    remaining = Math.max(0, remaining - amt);
+    schedule.push({ seq:i, dueDate: due.getTime(), amount: amt, status:'pending', paidAt:null, paidAmount:0 });
+  }
+  return schedule;
+}
+
+function ebNotifyAdminWA(title, lines) {
+  try {
+    const msg = encodeURIComponent('\uD83D\uDCC5 *' + title + ' \u2014 ZMARKET EasyBuy*\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n' + lines.join('\n') + '\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\uD83D\uDC49 Go to Admin Panel \u2192 EasyBuy to review.');
+    window.open('https://wa.me/' + ADMIN_WHATSAPP + '?text=' + msg, '_blank');
+  } catch(e) { console.warn('EasyBuy admin notify failed', e); }
+}
+
+function ebNotifyCustomerWA(phone, title, lines) {
+  if(!phone) return;
+  try {
+    const cleanPhone = String(phone).replace(/[^0-9]/g,'');
+    const intlPhone = cleanPhone.startsWith('0') ? '234'+cleanPhone.slice(1) : cleanPhone;
+    if(!intlPhone) return;
+    const msg = encodeURIComponent('\uD83D\uDCC5 *' + title + ' \u2014 ZMARKET EasyBuy*\n\n' + lines.join('\n') + '\n\n\u2014 ZMARKET \uD83D\uDED2');
+    window.open('https://wa.me/' + intlPhone + '?text=' + msg, '_blank');
+  } catch(e) { console.warn('EasyBuy customer notify failed', e); }
+}
+
+async function ebGetWalletBalance(uid) {
+  const snap = await getDoc(doc(db,'users',uid));
+  if(!snap.exists()) return 0;
+  return Number(snap.data().walletBalance||0);
+}
+
+async function ebDebitWallet(uid, amount, description) {
+  const userRef = doc(db,'users',uid);
+  const snap = await getDoc(userRef);
+  const currentBalance = snap.exists() ? Number(snap.data().walletBalance||0) : 0;
+  if(currentBalance < amount) throw new Error('Insufficient wallet balance. Please fund your wallet.');
+  const newBalance = currentBalance - amount;
+  await updateDoc(userRef, { walletBalance: newBalance });
+  await addDoc(collection(db,'wallet_transactions'), {
+    userId: uid, type:'debit', amount, description,
+    balanceAfter: newBalance, balanceType:'main', status:'completed', createdAt: Date.now()
+  });
+  return newBalance;
+}
+
+// ── CUSTOMER: Application flow ─────────────────────────────────────
+window._ebPhotos = { custPhoto:'', custId:'', nokPhoto:'' };
+
+window.openEasyBuy = function(productId) {
+  if(!currentUser) { showToast('Please sign in to use EasyBuy','info'); navigate('login'); return; }
+  const p = allProducts.find(x=>x.id===productId);
+  if(!p || !p.easybuyEnabled) { showToast('EasyBuy is not available for this product','error'); return; }
+  window._ebProduct = p;
+  const bd = ebCalcBreakdown(p);
+  window._ebBreakdown = bd;
+  document.getElementById('eb-p-img').src = (p.images&&p.images[0])||'https://placehold.co/100x100/f3f4f6/9ca3af?text=P';
+  document.getElementById('eb-p-name').textContent = p.name||'';
+  document.getElementById('eb-p-cashprice').textContent = ebMoney(p.price);
+  document.getElementById('eb-bd-price').textContent = ebMoney(bd.ebPrice);
+  document.getElementById('eb-bd-deposit').textContent = ebMoney(bd.deposit);
+  document.getElementById('eb-bd-balance').textContent = ebMoney(bd.balance);
+  document.getElementById('eb-bd-duration').textContent = bd.duration + ' ' + (bd.frequency==='weekly'?'weeks':'months');
+  document.getElementById('eb-bd-installment').textContent = ebMoney(bd.installment) + ' / ' + (bd.frequency==='weekly'?'week':'month');
+  // Reset form
+  window._ebPhotos = { custPhoto:'', custId:'', nokPhoto:'' };
+  ['eb-cust-name','eb-cust-phone','eb-cust-email','eb-cust-address','eb-nok-name','eb-nok-phone','eb-nok-address'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('eb-cust-photo-label').innerHTML = '<i class="fas fa-camera"></i><br>Tap to upload';
+  document.getElementById('eb-cust-id-label').innerHTML = '<i class="fas fa-id-card"></i><br>Tap to upload';
+  document.getElementById('eb-nok-photo-label').innerHTML = '<i class="fas fa-camera"></i><br>Tap to upload';
+  if(currentUser.displayName) document.getElementById('eb-cust-name').value = currentUser.displayName;
+  if(currentUser.email) document.getElementById('eb-cust-email').value = currentUser.email;
+  ebGoStep(1);
+  openModal('modal-easybuy');
+};
+
+window.closeEasyBuyModal = function() { closeModal('modal-easybuy'); };
+
+window.ebGoStep = function(n) {
+  [1,2,3].forEach(i=>{
+    document.getElementById('eb-step-'+i).classList.toggle('hidden', i!==n);
+    document.getElementById('eb-dot-'+i).classList.toggle('active', i<=n);
+  });
+};
+
+window.ebHandlePhoto = async function(event, field) {
+  const file = event.target.files[0];
+  if(!file) return;
+  try {
+    const b64 = await compressImage(file, 150);
+    window._ebPhotos[field] = b64;
+    const labelId = field==='custPhoto' ? 'eb-cust-photo-label' : field==='custId' ? 'eb-cust-id-label' : 'eb-nok-photo-label';
+    document.getElementById(labelId).innerHTML = '<img src="'+b64+'"><div style="margin-top:4px;color:var(--green)"><i class="fas fa-check-circle"></i> Uploaded</div>';
+  } catch(e) { showToast('Could not process photo: '+(e.message||e), 'error'); }
+};
+
+window.submitEasyBuyApplication = async function() {
+  if(!currentUser) return;
+  const p = window._ebProduct;
+  if(!p) return;
+  const bd = window._ebBreakdown;
+  const custName = document.getElementById('eb-cust-name').value.trim();
+  const custPhone = document.getElementById('eb-cust-phone').value.trim();
+  const custEmail = document.getElementById('eb-cust-email').value.trim();
+  const custAddress = document.getElementById('eb-cust-address').value.trim();
+  const nokName = document.getElementById('eb-nok-name').value.trim();
+  const nokPhone = document.getElementById('eb-nok-phone').value.trim();
+  const nokAddress = document.getElementById('eb-nok-address').value.trim();
+
+  if(!custName||!custPhone||!custEmail||!custAddress) return showToast('Please fill in all your details','error');
+  if(!window._ebPhotos.custPhoto) return showToast('Please upload your passport photograph','error');
+  if(!window._ebPhotos.custId) return showToast('Please upload a valid ID','error');
+  if(!nokName||!nokPhone||!nokAddress) return showToast('Please fill in Next of Kin details','error');
+  if(!window._ebPhotos.nokPhoto) return showToast('Please upload Next of Kin passport photograph','error');
+
+  try {
+    const appData = {
+      userId: currentUser.uid,
+      productId: p.id,
+      productName: p.name||'',
+      productImage: (p.images&&p.images[0])||'',
+      cashPrice: Number(p.price)||0,
+      easybuyPrice: bd.ebPrice,
+      deposit: bd.deposit,
+      balance: bd.balance,
+      duration: bd.duration,
+      frequency: bd.frequency,
+      installmentAmount: bd.installment,
+      customer: { fullName: custName, phone: custPhone, email: custEmail, address: custAddress, passportPhoto: window._ebPhotos.custPhoto, idDocument: window._ebPhotos.custId },
+      nextOfKin: { fullName: nokName, phone: nokPhone, address: nokAddress, passportPhoto: window._ebPhotos.nokPhoto },
+      status: 'pending',
+      staffNote: '',
+      depositPaid: false,
+      accountId: '',
+      createdAt: Date.now()
+    };
+    const ref = await addDoc(collection(db,'easybuy_applications'), appData);
+    await ebLog('application_submitted', ref.id, custName + ' applied for ' + p.name);
+    ebNotifyAdminWA('New EasyBuy Application', [
+      '\uD83D\uDC64 *Applicant:* ' + custName,
+      '\uD83D\uDCF1 *Phone:* ' + custPhone,
+      '\uD83D\uDED2 *Product:* ' + p.name,
+      '\uD83D\uDCB0 *EasyBuy Price:* ' + ebMoney(bd.ebPrice),
+      '\uD83D\uDCB5 *Deposit:* ' + ebMoney(bd.deposit)
+    ]);
+    ebGoStep(3);
+    showToast('EasyBuy application submitted!','success');
+  } catch(e) { showToast('Failed to submit application: '+e.message,'error'); }
+};
+
+// ── CUSTOMER: My EasyBuy dashboard ─────────────────────────────────
+window._ebMyApplications = [];
+window._ebMyAccounts = [];
+window._ebMyPayments = [];
+
+window.loadMyEasyBuy = async function() {
+  if(!currentUser) {
+    document.getElementById('eb-my-active-wrap').innerHTML = '<div style="text-align:center;padding:30px;color:var(--gray-400)">Please sign in to view your EasyBuy orders.</div>';
+    return;
+  }
+  try {
+    const [appsSnap, accSnap, paySnap] = await Promise.all([
+      getDocs(query(collection(db,'easybuy_applications'), where('userId','==',currentUser.uid))),
+      getDocs(query(collection(db,'easybuy_accounts'), where('userId','==',currentUser.uid))),
+      getDocs(query(collection(db,'easybuy_payments'), where('userId','==',currentUser.uid)))
+    ]);
+    window._ebMyApplications = appsSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    window._ebMyAccounts = accSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    window._ebMyPayments = paySnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+
+    const activeAccounts = window._ebMyAccounts.filter(a=>a.status==='active'||a.status==='overdue');
+    const totalOutstanding = window._ebMyAccounts.reduce((s,a)=>s+(Number(a.remainingBalance)||0),0);
+    document.getElementById('eb-my-active').textContent = activeAccounts.length;
+    document.getElementById('eb-my-outstanding').textContent = ebMoney(totalOutstanding);
+
+    ebRenderMyActive();
+    ebRenderMyApplications();
+    ebRenderMyHistory();
+  } catch(e) {
+    document.getElementById('eb-my-active-wrap').innerHTML = '<div style="text-align:center;padding:30px;color:var(--red)">Error loading EasyBuy data: '+e.message+'</div>';
+  }
+};
+
+window.switchMyEbTab = function(tab, btn) {
+  document.querySelectorAll('[data-eb-my-tab]').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  ['active','applications','history'].forEach(t=>{
+    document.getElementById('eb-my-'+t+'-wrap').classList.toggle('hidden', t!==tab);
+  });
+};
+
+function ebRenderMyActive() {
+  const wrap = document.getElementById('eb-my-active-wrap');
+  const accounts = window._ebMyAccounts;
+  if(!accounts.length) { wrap.innerHTML = '<div style="text-align:center;padding:30px;color:var(--gray-400)"><i class="fas fa-calendar-check" style="font-size:32px;display:block;margin-bottom:8px"></i>No active EasyBuy orders yet.</div>'; return; }
+  wrap.innerHTML = accounts.map(a=>{
+    const pct = a.easybuyPrice>0 ? Math.min(100, Math.round(((a.depositPaid||0)+(a.amountRepaid||0))/a.easybuyPrice*100)) : 0;
+    const nextDue = (a.schedule||[]).find(s=>s.status==='pending');
+    return '<div class="eb-card">'
+      + '<div class="eb-card-top">'
+      + '<img class="eb-card-img" src="'+((a.productImage)||'https://placehold.co/60x60/f3f4f6/9ca3af?text=P')+'">'
+      + '<div style="flex:1"><div style="font-weight:800;font-size:14px">'+ebEsc(a.productName)+'</div>'
+      + '<span class="eb-status-pill eb-status-'+(a.status||'active')+'">'+(a.status||'active').toUpperCase()+'</span> '
+      + '<span class="eb-status-pill" style="background:var(--gray-100);color:var(--gray-600)">'+((a.deliveryStatus||'pending').replace(/_/g,' ').toUpperCase())+'</span>'
+      + '</div></div>'
+      + '<div class="eb-progress-bg"><div class="eb-progress-fill" style="width:'+pct+'%"></div></div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;color:var(--gray-600);margin-bottom:8px">'
+      + '<div>Deposit Paid: <b>'+ebMoney(a.depositPaid)+'</b></div>'
+      + '<div>Repaid: <b>'+ebMoney(a.amountRepaid)+'</b></div>'
+      + '<div>Outstanding: <b style="color:#b91c1c">'+ebMoney(a.remainingBalance)+'</b></div>'
+      + '<div>Next Due: <b>'+(nextDue?ebFmtDate(nextDue.dueDate):'\u2014')+'</b></div>'
+      + '</div>'
+      + (a.remainingBalance>0 ? '<button class="btn-eb" style="width:100%" onclick="openEbPayModal(\''+a.id+'\')"><i class="fas fa-money-bill-wave"></i> Make Payment</button>' : '<div style="text-align:center;color:var(--green);font-weight:800;font-size:12px"><i class="fas fa-check-circle"></i> Fully Repaid</div>')
+      + '<button style="width:100%;margin-top:6px;background:none;border:1px solid var(--gray-200);border-radius:6px;padding:7px;font-size:12px;font-weight:700;cursor:pointer;color:var(--gray-600)" onclick="ebToggleSchedule(\''+a.id+'\')"><i class="fas fa-list"></i> View Repayment Schedule</button>'
+      + '<div id="eb-sched-'+a.id+'" class="hidden" style="margin-top:8px">'
+      + (a.schedule||[]).map(s=>'<div class="eb-sched-row"><span>#'+s.seq+' \u2014 '+ebFmtDate(s.dueDate)+'</span><span>'+ebMoney(s.amount)+'</span><span class="eb-status-pill eb-status-'+(s.status==='paid'?'completed':'pending')+'">'+(s.status||'pending').toUpperCase()+'</span></div>').join('')
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+window.ebToggleSchedule = function(accId) {
+  const el = document.getElementById('eb-sched-'+accId);
+  if(el) el.classList.toggle('hidden');
+};
+
+function ebRenderMyApplications() {
+  const wrap = document.getElementById('eb-my-applications-wrap');
+  const apps = window._ebMyApplications;
+  if(!apps.length) { wrap.innerHTML = '<div style="text-align:center;padding:30px;color:var(--gray-400)">No EasyBuy applications yet.</div>'; return; }
+  wrap.innerHTML = apps.map(a=>{
+    let actionBtn = '';
+    if(a.status==='approved' && !a.depositPaid) {
+      actionBtn = '<button class="btn-eb" style="width:100%;margin-top:8px" onclick="openEbDepositPay(\''+a.id+'\')"><i class="fas fa-wallet"></i> Pay Deposit ('+ebMoney(a.deposit)+')</button>';
+    }
+    return '<div class="eb-card">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'
+      + '<div><div style="font-weight:800;font-size:14px">'+ebEsc(a.productName)+'</div><div style="font-size:11px;color:var(--gray-400)">'+ebFmtDate(a.createdAt)+'</div></div>'
+      + '<span class="eb-status-pill eb-status-'+a.status+'">'+a.status.replace(/_/g,' ').toUpperCase()+'</span>'
+      + '</div>'
+      + '<div style="font-size:12px;color:var(--gray-600);margin-top:6px">EasyBuy Price: <b>'+ebMoney(a.easybuyPrice)+'</b> \u00B7 Deposit: <b>'+ebMoney(a.deposit)+'</b></div>'
+      + (a.status==='rejected' && a.staffNote ? '<div style="font-size:12px;color:#b91c1c;margin-top:6px"><i class="fas fa-info-circle"></i> '+ebEsc(a.staffNote)+'</div>' : '')
+      + (a.status==='info_requested' && a.staffNote ? '<div style="font-size:12px;color:#1d4ed8;margin-top:6px"><i class="fas fa-info-circle"></i> Staff requested: '+ebEsc(a.staffNote)+'</div>' : '')
+      + actionBtn
+      + '</div>';
+  }).join('');
+}
+
+function ebRenderMyHistory() {
+  const wrap = document.getElementById('eb-my-history-wrap');
+  const pays = window._ebMyPayments;
+  if(!pays.length) { wrap.innerHTML = '<div style="text-align:center;padding:30px;color:var(--gray-400)">No payments recorded yet.</div>'; return; }
+  wrap.innerHTML = '<div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Method</th><th>Txn ID</th></tr></thead><tbody>'
+    + pays.map(p=>'<tr><td>'+ebFmtDate(p.createdAt)+'</td><td>'+(p.type||'')+'</td><td>'+ebMoney(p.amount)+'</td><td>'+(p.method||'')+'</td><td style="font-size:11px">'+(p.txnId||'')+'</td></tr>').join('')
+    + '</tbody></table></div>';
+}
+
+// ── CUSTOMER: Payment (deposit or installment) via wallet ──────────
+window.openEbPayModal = async function(accountId) {
+  const acc = window._ebMyAccounts.find(a=>a.id===accountId);
+  if(!acc) return;
+  window._ebPayMode = 'installment';
+  window._ebPayRefId = accountId;
+  document.getElementById('eb-pay-account-id').value = accountId;
+  document.getElementById('eb-pay-amount').value = Math.min(acc.remainingBalance, acc.installmentAmount||acc.remainingBalance);
+  document.getElementById('eb-pay-amount').readOnly = false;
+  document.getElementById('eb-pay-outstanding').textContent = ebMoney(acc.remainingBalance);
+  try { document.getElementById('eb-pay-wallet-balance').textContent = ebMoney(await ebGetWalletBalance(currentUser.uid)); } catch(e){ document.getElementById('eb-pay-wallet-balance').textContent = '\u2014'; }
+  openModal('modal-eb-pay');
+};
+
+window.openEbDepositPay = async function(applicationId) {
+  const app = window._ebMyApplications.find(a=>a.id===applicationId);
+  if(!app) return;
+  window._ebPayMode = 'deposit';
+  window._ebPayRefId = applicationId;
+  document.getElementById('eb-pay-account-id').value = applicationId;
+  document.getElementById('eb-pay-amount').value = app.deposit;
+  document.getElementById('eb-pay-amount').readOnly = true;
+  document.getElementById('eb-pay-outstanding').textContent = ebMoney(app.deposit);
+  try { document.getElementById('eb-pay-wallet-balance').textContent = ebMoney(await ebGetWalletBalance(currentUser.uid)); } catch(e){ document.getElementById('eb-pay-wallet-balance').textContent = '\u2014'; }
+  openModal('modal-eb-pay');
+};
+
+window.submitEbWalletPayment = async function() {
+  if(!currentUser) return;
+  const amount = Number(document.getElementById('eb-pay-amount').value)||0;
+  if(amount<=0) return showToast('Enter a valid amount','error');
+  const mode = window._ebPayMode;
+  const refId = window._ebPayRefId;
+  try {
+    if(mode==='deposit') {
+      const appRef = doc(db,'easybuy_applications',refId);
+      const appSnap = await getDoc(appRef);
+      if(!appSnap.exists()) return showToast('Application not found','error');
+      const app = appSnap.data();
+      if(app.depositPaid) return showToast('Deposit already paid for this application','info');
+      if(amount < app.deposit) return showToast('Amount must be at least the required deposit ('+ebMoney(app.deposit)+')','error');
+      await ebDebitWallet(currentUser.uid, amount, 'EasyBuy deposit \u2014 '+app.productName);
+      const txnId = ebGenTxnId();
+      const startMs = Date.now();
+      const schedule = ebGenerateSchedule(startMs, app.duration, app.frequency, app.installmentAmount, app.balance);
+      const accData = {
+        applicationId: refId, userId: currentUser.uid,
+        userName: (app.customer&&app.customer.fullName)||currentUser.displayName||'',
+        userPhone: (app.customer&&app.customer.phone)||'',
+        productId: app.productId, productName: app.productName, productImage: app.productImage,
+        cashPrice: app.cashPrice, easybuyPrice: app.easybuyPrice, deposit: app.deposit,
+        depositPaid: amount, remainingBalance: app.balance, amountRepaid: 0,
+        installmentAmount: app.installmentAmount, duration: app.duration, frequency: app.frequency,
+        schedule, status:'active', deliveryStatus:'pending', transactionId: txnId, createdAt: Date.now()
+      };
+      const accRef = await addDoc(collection(db,'easybuy_accounts'), accData);
+      await updateDoc(appRef, { depositPaid: true, accountId: accRef.id });
+      await addDoc(collection(db,'easybuy_payments'), { accountId: accRef.id, applicationId: refId, userId: currentUser.uid, type:'deposit', amount, method:'wallet', txnId, createdAt: Date.now() });
+      await ebLog('deposit_paid', accRef.id, ebMoney(amount)+' deposit paid by '+currentUser.email);
+      ebNotifyAdminWA('EasyBuy Deposit Received', ['\uD83D\uDC64 *Customer:* '+accData.userName, '\uD83D\uDED2 *Product:* '+accData.productName, '\uD83D\uDCB0 *Deposit:* '+ebMoney(amount)]);
+      showToast('Deposit paid! Your EasyBuy account is now active.','success');
+    } else {
+      const accRef = doc(db,'easybuy_accounts',refId);
+      const accSnap = await getDoc(accRef);
+      if(!accSnap.exists()) return showToast('Account not found','error');
+      const acc = accSnap.data();
+      const payAmount = Math.min(amount, acc.remainingBalance);
+      await ebDebitWallet(currentUser.uid, payAmount, 'EasyBuy repayment \u2014 '+acc.productName);
+      const newRepaid = (acc.amountRepaid||0) + payAmount;
+      const newBalance = Math.max(0, (acc.remainingBalance||0) - payAmount);
+      // mark schedule entries paid in order
+      let remaining = payAmount;
+      const schedule = (acc.schedule||[]).map(s=>{
+        if(remaining<=0 || s.status==='paid') return s;
+        if(remaining >= s.amount) { remaining -= s.amount; return {...s, status:'paid', paidAt: Date.now(), paidAmount: s.amount}; }
+        else { const partial = remaining; remaining = 0; return {...s, paidAmount: (s.paidAmount||0)+partial}; }
+      });
+      const newStatus = newBalance<=0 ? 'completed' : (acc.status==='overdue' ? 'active' : acc.status);
+      const txnId = ebGenTxnId();
+      await updateDoc(accRef, { amountRepaid: newRepaid, remainingBalance: newBalance, schedule, status: newStatus });
+      await addDoc(collection(db,'easybuy_payments'), { accountId: refId, applicationId: acc.applicationId||'', userId: currentUser.uid, type:'installment', amount: payAmount, method:'wallet', txnId, createdAt: Date.now() });
+      await ebLog('installment_paid', refId, ebMoney(payAmount)+' repayment by '+currentUser.email);
+      ebNotifyAdminWA('EasyBuy Repayment Received', ['\uD83D\uDC64 *Customer:* '+(acc.userName||currentUser.email), '\uD83D\uDED2 *Product:* '+acc.productName, '\uD83D\uDCB0 *Amount:* '+ebMoney(payAmount), '\uD83D\uDCCA *Balance Left:* '+ebMoney(newBalance)]);
+      showToast(newBalance<=0 ? 'Final payment complete! EasyBuy order fully repaid \uD83C\uDF89' : 'Payment successful!','success');
+    }
+    closeModal('modal-eb-pay');
+    loadMyEasyBuy();
+  } catch(e) { showToast('Payment failed: '+e.message,'error'); }
+};
+
+// ── ADMIN: EasyBuy management ───────────────────────────────────────
+window._ebAdminApplications = [];
+window._ebAdminAccounts = [];
+
+window.loadEasyBuyAdmin = async function() {
+  if(!isAdmin) return;
+  document.getElementById('eb-applications-body').innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-400)">Loading...</td></tr>';
+  document.getElementById('eb-accounts-body').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--gray-400)">Loading...</td></tr>';
+  try {
+    const [appsSnap, accSnap, logSnap] = await Promise.all([
+      getDocs(collection(db,'easybuy_applications')),
+      getDocs(collection(db,'easybuy_accounts')),
+      getDocs(query(collection(db,'easybuy_audit_logs'), orderBy('createdAt','desc'), limit(100)))
+    ]);
+    window._ebAdminApplications = appsSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    window._ebAdminAccounts = accSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    window._ebAdminLogs = logSnap.docs.map(d=>({id:d.id,...d.data()}));
+
+    // Stats
+    const now = Date.now();
+    const totalSales = window._ebAdminAccounts.reduce((s,a)=>s+(Number(a.easybuyPrice)||0),0);
+    const totalDeposits = window._ebAdminAccounts.reduce((s,a)=>s+(Number(a.depositPaid)||0),0);
+    const totalOutstanding = window._ebAdminAccounts.reduce((s,a)=>s+(Number(a.remainingBalance)||0),0);
+    const overdueCount = window._ebAdminAccounts.filter(a=>a.status!=='completed' && a.status!=='suspended' && (a.schedule||[]).some(s=>s.status==='pending' && s.dueDate<now)).length;
+    const completedCount = window._ebAdminAccounts.filter(a=>a.status==='completed').length;
+    const pendingCount = window._ebAdminApplications.filter(a=>a.status==='pending').length;
+    document.getElementById('eb-stat-sales').textContent = ebMoney(totalSales);
+    document.getElementById('eb-stat-deposits').textContent = ebMoney(totalDeposits);
+    document.getElementById('eb-stat-outstanding').textContent = ebMoney(totalOutstanding);
+    document.getElementById('eb-stat-overdue').textContent = overdueCount;
+    document.getElementById('eb-stat-completed').textContent = completedCount;
+    document.getElementById('eb-stat-pending').textContent = pendingCount;
+    const badge = document.getElementById('eb-pending-badge');
+    if(pendingCount>0) { badge.textContent = pendingCount; badge.classList.remove('hidden'); } else badge.classList.add('hidden');
+
+    ebRenderAdminApplications();
+    ebRenderAdminAccounts(now);
+    ebRenderAdminDelivery();
+    ebRenderAdminAuditLog();
+  } catch(e) {
+    document.getElementById('eb-applications-body').innerHTML = '<tr><td colspan="7" style="color:var(--red);text-align:center">Error: '+e.message+'</td></tr>';
+  }
+};
+
+window.switchEbAdminTab = function(tab, btn) {
+  document.querySelectorAll('[data-eb-tab]').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  ['applications','accounts','delivery','reportslog'].forEach(t=>{
+    document.getElementById('eb-admin-'+t).classList.toggle('hidden', t!==tab);
+  });
+};
+
+function ebRenderAdminApplications() {
+  const tbody = document.getElementById('eb-applications-body');
+  const apps = window._ebAdminApplications;
+  if(!apps.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-400)">No applications yet.</td></tr>'; return; }
+  tbody.innerHTML = apps.map(a=>'<tr>'
+    + '<td><div style="font-weight:700">'+ebEsc(a.customer&&a.customer.fullName)+'</div><div style="font-size:11px;color:var(--gray-400)">'+ebEsc(a.customer&&a.customer.phone)+'</div></td>'
+    + '<td>'+ebEsc(a.productName)+'</td>'
+    + '<td>'+ebMoney(a.easybuyPrice)+'</td>'
+    + '<td>'+ebMoney(a.deposit)+'</td>'
+    + '<td><span class="eb-status-pill eb-status-'+a.status+'">'+a.status.replace(/_/g,' ').toUpperCase()+'</span></td>'
+    + '<td style="font-size:11px">'+ebFmtDate(a.createdAt)+'</td>'
+    + '<td><button class="btn-primary" style="padding:5px 10px;font-size:11px" onclick="ebViewApplication(\''+a.id+'\')"><i class="fas fa-eye"></i> View</button></td>'
+    + '</tr>').join('');
+}
+
+function ebRenderAdminAccounts(now) {
+  const tbody = document.getElementById('eb-accounts-body');
+  const accounts = window._ebAdminAccounts;
+  if(!accounts.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--gray-400)">No active EasyBuy accounts yet.</td></tr>'; return; }
+  tbody.innerHTML = accounts.map(a=>{
+    const isOverdue = a.status!=='completed' && a.status!=='suspended' && (a.schedule||[]).some(s=>s.status==='pending' && s.dueDate<now);
+    const statusShow = isOverdue ? 'overdue' : a.status;
+    const nextDue = (a.schedule||[]).find(s=>s.status==='pending');
+    return '<tr>'
+      + '<td><div style="font-weight:700">'+ebEsc(a.userName)+'</div><div style="font-size:11px;color:var(--gray-400)">'+ebEsc(a.userPhone)+'</div></td>'
+      + '<td>'+ebEsc(a.productName)+'</td>'
+      + '<td>'+ebMoney(a.depositPaid)+'</td>'
+      + '<td>'+ebMoney(a.amountRepaid)+'</td>'
+      + '<td style="font-weight:800;color:'+(a.remainingBalance>0?'#b91c1c':'#15803d')+'">'+ebMoney(a.remainingBalance)+'</td>'
+      + '<td style="font-size:11px">'+(nextDue?ebFmtDate(nextDue.dueDate):'\u2014')+'</td>'
+      + '<td><span class="eb-status-pill eb-status-'+statusShow+'">'+statusShow.toUpperCase()+'</span></td>'
+      + '<td><button class="btn-primary" style="padding:5px 10px;font-size:11px" onclick="ebOpenAccountModal(\''+a.id+'\')"><i class="fas fa-cog"></i> Manage</button></td>'
+      + '</tr>';
+  }).join('');
+}
+
+function ebRenderAdminDelivery() {
+  const tbody = document.getElementById('eb-delivery-body');
+  const accounts = window._ebAdminAccounts;
+  if(!accounts.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray-400)">No EasyBuy orders yet.</td></tr>'; return; }
+  tbody.innerHTML = accounts.map(a=>'<tr>'
+    + '<td><div style="font-weight:700">'+ebEsc(a.userName)+'</div></td>'
+    + '<td>'+ebEsc(a.productName)+'</td>'
+    + '<td><span class="eb-status-pill '+(a.depositPaid>0?'eb-status-approved':'eb-status-pending')+'">'+(a.depositPaid>0?'DEPOSIT PAID':'NO DEPOSIT')+'</span></td>'
+    + '<td><span class="eb-status-pill" style="background:var(--gray-100);color:var(--gray-700)">'+((a.deliveryStatus||'pending').replace(/_/g,' ').toUpperCase())+'</span></td>'
+    + '<td style="display:flex;gap:4px;flex-wrap:wrap">'
+    + '<button style="background:#1e3a8a;color:#fff;border:none;border-radius:5px;padding:4px 8px;font-size:10px;font-weight:700;cursor:pointer" onclick="ebMarkDelivery(\''+a.id+'\',\'delivered\')">Delivered</button>'
+    + '<button style="background:#f59e0b;color:#fff;border:none;border-radius:5px;padding:4px 8px;font-size:10px;font-weight:700;cursor:pointer" onclick="ebMarkDelivery(\''+a.id+'\',\'pending\')">Pending</button>'
+    + '<button style="background:#6b7280;color:#fff;border:none;border-radius:5px;padding:4px 8px;font-size:10px;font-weight:700;cursor:pointer" onclick="ebMarkDelivery(\''+a.id+'\',\'returned\')">Returned</button>'
+    + '<button style="background:#ef4444;color:#fff;border:none;border-radius:5px;padding:4px 8px;font-size:10px;font-weight:700;cursor:pointer" onclick="ebMarkDelivery(\''+a.id+'\',\'cancelled\')">Cancelled</button>'
+    + '</td></tr>').join('');
+}
+
+function ebRenderAdminAuditLog() {
+  const tbody = document.getElementById('eb-auditlog-body');
+  const logs = window._ebAdminLogs||[];
+  if(!logs.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray-400)">No activity logged yet.</td></tr>'; return; }
+  tbody.innerHTML = logs.map(l=>'<tr>'
+    + '<td style="font-size:11px">'+ebFmtDate(l.createdAt)+'</td>'
+    + '<td style="font-size:11px">'+ebEsc(l.actor)+'</td>'
+    + '<td style="font-size:11px">'+ebEsc(l.action)+'</td>'
+    + '<td style="font-size:10px">'+ebEsc((l.ref||'').slice(0,10))+'</td>'
+    + '<td style="font-size:11px">'+ebEsc(l.details)+'</td>'
+    + '</tr>').join('');
+}
+
+// ── ADMIN: Application review (approve / reject / request info) ────
+window._ebCurrentReviewId = '';
+
+window.ebViewApplication = function(appId) {
+  const a = window._ebAdminApplications.find(x=>x.id===appId);
+  if(!a) return;
+  window._ebCurrentReviewId = appId;
+  const c = a.customer||{}, k = a.nextOfKin||{};
+  document.getElementById('eb-review-body').innerHTML =
+    '<div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;background:var(--gray-50);border-radius:8px;padding:10px">'
+    + '<img src="'+(a.productImage||'https://placehold.co/60x60')+'" style="width:50px;height:50px;border-radius:8px;object-fit:cover">'
+    + '<div><div style="font-weight:800">'+ebEsc(a.productName)+'</div><div style="font-size:12px;color:var(--gray-500)">EasyBuy: '+ebMoney(a.easybuyPrice)+' \u00B7 Deposit: '+ebMoney(a.deposit)+' \u00B7 '+a.duration+' '+a.frequency+' payments</div></div>'
+    + '</div>'
+    + '<div style="font-weight:800;font-size:13px;color:#1e3a8a;margin-bottom:6px"><i class="fas fa-user"></i> Customer Details</div>'
+    + '<div style="font-size:13px;line-height:1.9;margin-bottom:10px">'
+    + '<b>Name:</b> '+ebEsc(c.fullName)+'<br><b>Phone:</b> '+ebEsc(c.phone)+'<br><b>Email:</b> '+ebEsc(c.email)+'<br><b>Address:</b> '+ebEsc(c.address)
+    + '</div>'
+    + '<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">'
+    + (c.passportPhoto?'<div><div style="font-size:11px;color:var(--gray-500);margin-bottom:4px">Passport Photo</div><img class="eb-doc-thumb" src="'+c.passportPhoto+'" onclick="window.open(this.src)"></div>':'')
+    + (c.idDocument?'<div><div style="font-size:11px;color:var(--gray-500);margin-bottom:4px">Valid ID</div><img class="eb-doc-thumb" src="'+c.idDocument+'" onclick="window.open(this.src)"></div>':'')
+    + '</div>'
+    + '<div style="font-weight:800;font-size:13px;color:#1e3a8a;margin-bottom:6px"><i class="fas fa-users"></i> Next of Kin</div>'
+    + '<div style="font-size:13px;line-height:1.9;margin-bottom:10px">'
+    + '<b>Name:</b> '+ebEsc(k.fullName)+'<br><b>Phone:</b> '+ebEsc(k.phone)+'<br><b>Address:</b> '+ebEsc(k.address)
+    + '</div>'
+    + (k.passportPhoto?'<img class="eb-doc-thumb" src="'+k.passportPhoto+'" onclick="window.open(this.src)">':'')
+    + (a.staffNote ? '<div style="margin-top:14px;background:#fef3c7;border-radius:8px;padding:10px;font-size:12px"><b>Staff Note:</b> '+ebEsc(a.staffNote)+'</div>' : '');
+  openModal('modal-eb-review');
+};
+
+window.ebApproveApplication = async function() {
+  const appId = window._ebCurrentReviewId;
+  const a = window._ebAdminApplications.find(x=>x.id===appId);
+  if(!a) return;
+  try {
+    await updateDoc(doc(db,'easybuy_applications',appId), { status:'approved', reviewedAt: Date.now(), reviewedBy: currentUser.email });
+    await ebLog('application_approved', appId, 'Approved by '+currentUser.email);
+    ebNotifyCustomerWA(a.customer&&a.customer.phone, 'EasyBuy Application Approved', [
+      'Hello '+(a.customer&&a.customer.fullName)+'! Your EasyBuy application for *'+a.productName+'* has been approved.',
+      'Please pay your deposit of '+ebMoney(a.deposit)+' on your EasyBuy Dashboard to activate your order.'
+    ]);
+    showToast('Application approved!','success');
+    closeModal('modal-eb-review');
+    loadEasyBuyAdmin();
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+};
+
+window.ebRejectApplication = async function() {
+  const appId = window._ebCurrentReviewId;
+  const a = window._ebAdminApplications.find(x=>x.id===appId);
+  if(!a) return;
+  const reason = prompt('Reason for rejection (shown to customer):');
+  if(reason===null) return;
+  try {
+    await updateDoc(doc(db,'easybuy_applications',appId), { status:'rejected', staffNote: reason, reviewedAt: Date.now(), reviewedBy: currentUser.email });
+    await ebLog('application_rejected', appId, 'Rejected by '+currentUser.email+': '+reason);
+    ebNotifyCustomerWA(a.customer&&a.customer.phone, 'EasyBuy Application Update', [
+      'Hello '+(a.customer&&a.customer.fullName)+', unfortunately your EasyBuy application for *'+a.productName+'* was not approved.',
+      'Reason: '+reason
+    ]);
+    showToast('Application rejected','info');
+    closeModal('modal-eb-review');
+    loadEasyBuyAdmin();
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+};
+
+window.ebRequestInfo = async function() {
+  const appId = window._ebCurrentReviewId;
+  const a = window._ebAdminApplications.find(x=>x.id===appId);
+  if(!a) return;
+  const msg = prompt('What additional information do you need from the customer?');
+  if(!msg) return;
+  try {
+    await updateDoc(doc(db,'easybuy_applications',appId), { status:'info_requested', staffNote: msg, reviewedAt: Date.now(), reviewedBy: currentUser.email });
+    await ebLog('application_info_requested', appId, msg);
+    ebNotifyCustomerWA(a.customer&&a.customer.phone, 'EasyBuy \u2014 More Info Needed', [
+      'Hello '+(a.customer&&a.customer.fullName)+', we need more information for your EasyBuy application for *'+a.productName+'*:',
+      msg
+    ]);
+    showToast('Customer notified','success');
+    closeModal('modal-eb-review');
+    loadEasyBuyAdmin();
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+};
+
+// ── ADMIN: Account management (schedule edit, offline payment, suspend, delivery) ──
+window.ebOpenAccountModal = function(accountId) {
+  const a = window._ebAdminAccounts.find(x=>x.id===accountId);
+  if(!a) return;
+  const body = document.getElementById('eb-account-body');
+  body.innerHTML = '<div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;background:var(--gray-50);border-radius:8px;padding:10px">'
+    + '<img src="'+(a.productImage||'https://placehold.co/60x60')+'" style="width:50px;height:50px;border-radius:8px;object-fit:cover">'
+    + '<div><div style="font-weight:800">'+ebEsc(a.productName)+'</div><div style="font-size:12px;color:var(--gray-500)">'+ebEsc(a.userName)+' \u00B7 '+ebEsc(a.userPhone)+'</div><div style="font-size:11px;color:var(--gray-400)">Txn: '+ebEsc(a.transactionId)+'</div></div>'
+    + '</div>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">'
+    + '<div class="eb-mini-stat"><div class="num">'+ebMoney(a.depositPaid)+'</div><div class="lbl">DEPOSIT PAID</div></div>'
+    + '<div class="eb-mini-stat"><div class="num">'+ebMoney(a.amountRepaid)+'</div><div class="lbl">AMOUNT REPAID</div></div>'
+    + '<div class="eb-mini-stat"><div class="num">'+ebMoney(a.remainingBalance)+'</div><div class="lbl">OUTSTANDING</div></div>'
+    + '<div class="eb-mini-stat"><div class="num">'+(a.status||'').toUpperCase()+'</div><div class="lbl">STATUS</div></div>'
+    + '</div>'
+    + '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">'
+    + '<button class="btn-eb" style="flex:1;min-width:140px" onclick="ebRecordOfflinePayment(\''+a.id+'\')"><i class="fas fa-cash-register"></i> Record Offline Payment</button>'
+    + (a.status==='suspended'
+        ? '<button style="background:#15803d;color:#fff;border:none;border-radius:6px;padding:10px;font-weight:700;cursor:pointer;flex:1;min-width:120px" onclick="ebSetAccountStatus(\''+a.id+'\',\'active\')"><i class="fas fa-play-circle"></i> Reactivate</button>'
+        : '<button style="background:#ef4444;color:#fff;border:none;border-radius:6px;padding:10px;font-weight:700;cursor:pointer;flex:1;min-width:120px" onclick="ebSetAccountStatus(\''+a.id+'\',\'suspended\')"><i class="fas fa-ban"></i> Suspend Customer</button>')
+    + '</div>'
+    + '<div style="font-weight:800;font-size:13px;margin-bottom:8px">Repayment Schedule</div>'
+    + '<div id="eb-modal-schedule">'
+    + (a.schedule||[]).map((s,i)=>'<div class="eb-sched-row"><span>#'+s.seq+' \u2014 <input type="date" style="border:1px solid var(--gray-200);border-radius:4px;font-size:11px;padding:2px" value="'+new Date(s.dueDate).toISOString().slice(0,10)+'" onchange="ebEditScheduleDate(\''+a.id+'\','+i+',this.value)"></span><span><input type="number" style="width:80px;border:1px solid var(--gray-200);border-radius:4px;font-size:11px;padding:2px" value="'+s.amount+'" onchange="ebEditScheduleAmount(\''+a.id+'\','+i+',this.value)"></span><span class="eb-status-pill eb-status-'+(s.status==='paid'?'completed':'pending')+'">'+(s.status||'pending').toUpperCase()+'</span></div>').join('')
+    + '</div>';
+};
+
+window.ebSetAccountStatus = async function(accountId, status) {
+  if(status==='suspended' && !confirm('Suspend this customer account? They will be blocked from further installment purchases until reactivated.')) return;
+  try {
+    await updateDoc(doc(db,'easybuy_accounts',accountId), { status });
+    await ebLog('account_'+status, accountId, 'Set to '+status+' by '+currentUser.email);
+    showToast('Account status updated','success');
+    closeModal('modal-eb-account');
+    loadEasyBuyAdmin();
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+};
+
+window.ebEditScheduleDate = async function(accountId, idx, dateVal) {
+  const a = window._ebAdminAccounts.find(x=>x.id===accountId);
+  if(!a) return;
+  const schedule = [...(a.schedule||[])];
+  schedule[idx] = { ...schedule[idx], dueDate: new Date(dateVal).getTime() };
+  try {
+    await updateDoc(doc(db,'easybuy_accounts',accountId), { schedule });
+    a.schedule = schedule;
+    await ebLog('schedule_edited', accountId, 'Due date for #'+(idx+1)+' changed by '+currentUser.email);
+    showToast('Schedule updated','success');
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+};
+
+window.ebEditScheduleAmount = async function(accountId, idx, amtVal) {
+  const a = window._ebAdminAccounts.find(x=>x.id===accountId);
+  if(!a) return;
+  const schedule = [...(a.schedule||[])];
+  schedule[idx] = { ...schedule[idx], amount: Number(amtVal)||0 };
+  try {
+    await updateDoc(doc(db,'easybuy_accounts',accountId), { schedule });
+    a.schedule = schedule;
+    await ebLog('schedule_edited', accountId, 'Amount for #'+(idx+1)+' changed by '+currentUser.email);
+    showToast('Schedule updated','success');
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+};
+
+window.ebRecordOfflinePayment = async function(accountId) {
+  const a = window._ebAdminAccounts.find(x=>x.id===accountId);
+  if(!a) return;
+  const amtStr = prompt('Enter amount received offline (max '+ebMoney(a.remainingBalance)+'):');
+  if(!amtStr) return;
+  const amount = Math.min(Number(amtStr)||0, a.remainingBalance);
+  if(amount<=0) return showToast('Invalid amount','error');
+  const note = prompt('Note (optional, e.g. bank transfer ref):') || '';
+  try {
+    const newRepaid = (a.amountRepaid||0) + amount;
+    const newBalance = Math.max(0, (a.remainingBalance||0) - amount);
+    let remaining = amount;
+    const schedule = (a.schedule||[]).map(s=>{
+      if(remaining<=0 || s.status==='paid') return s;
+      if(remaining >= s.amount) { remaining -= s.amount; return {...s, status:'paid', paidAt: Date.now(), paidAmount: s.amount}; }
+      else { const partial = remaining; remaining = 0; return {...s, paidAmount: (s.paidAmount||0)+partial}; }
+    });
+    const newStatus = newBalance<=0 ? 'completed' : (a.status==='overdue' ? 'active' : a.status);
+    const txnId = ebGenTxnId();
+    await updateDoc(doc(db,'easybuy_accounts',accountId), { amountRepaid: newRepaid, remainingBalance: newBalance, schedule, status: newStatus });
+    await addDoc(collection(db,'easybuy_payments'), { accountId, applicationId: a.applicationId||'', userId: a.userId, type:'installment', amount, method:'offline', note, txnId, recordedBy: currentUser.email, createdAt: Date.now() });
+    await ebLog('offline_payment_recorded', accountId, ebMoney(amount)+' recorded by '+currentUser.email+(note?' \u2014 '+note:''));
+    ebNotifyCustomerWA(a.userPhone, 'EasyBuy Payment Received', ['We have recorded your offline payment of '+ebMoney(amount)+' for *'+a.productName+'*.', 'Remaining balance: '+ebMoney(newBalance)]);
+    showToast('Offline payment recorded','success');
+    closeModal('modal-eb-account');
+    loadEasyBuyAdmin();
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+};
+
+window.ebMarkDelivery = async function(accountId, status) {
+  const a = window._ebAdminAccounts.find(x=>x.id===accountId);
+  if(!a) return;
+  if(status==='delivered' && (a.depositPaid||0)<=0) return showToast('Cannot mark delivered \u2014 deposit not yet paid','error');
+  try {
+    await updateDoc(doc(db,'easybuy_accounts',accountId), { deliveryStatus: status });
+    await ebLog('delivery_status_'+status, accountId, 'Set to '+status+' by '+currentUser.email);
+    showToast('Delivery status updated to '+status,'success');
+    loadEasyBuyAdmin();
+  } catch(e) { showToast('Failed: '+e.message,'error'); }
+};
 
 </script>
 
