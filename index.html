@@ -1794,7 +1794,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         </div>
         <div class="detail-eb-actions hidden" id="detail-eb-actions">
           <button class="btn-eb" onclick="detailBuyNow()"><i class="fas fa-bolt"></i> Buy Now</button>
-          <button class="btn-eb btn-eb-outline" onclick="openEasyBuy(currentProduct&&currentProduct.id)"><i class="fas fa-calendar-check"></i> EasyBuy</button>
+          <button class="btn-eb btn-eb-outline" onclick="detailOpenEasyBuy()"><i class="fas fa-calendar-check"></i> EasyBuy</button>
         </div>
         
         <button onclick="showBulkOrderModal()" style="width:100%;margin-top:8px;background:none;border:2px dashed var(--orange);color:var(--orange);border-radius:8px;padding:9px;font-size:13px;font-weight:700;cursor:pointer"><i class="fas fa-boxes"></i> Request Bulk / Wholesale Quote</button>
@@ -2963,6 +2963,10 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
         </div>
 
         <div id="eb-admin-accounts" class="eb-admin-section hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+            <div style="font-size:12px;color:var(--gray-500)"><i class="fas fa-info-circle"></i> Auto-collects any due/overdue installment from a customer's wallet if their balance can cover it.</div>
+            <button id="eb-bulk-collect-btn" onclick="ebBulkCollectRepayments()" style="background:linear-gradient(135deg,#1e3a8a,#6d28d9);color:#fff;border:none;border-radius:8px;padding:10px 16px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap"><i class="fas fa-bolt"></i> Collect All Due Repayments</button>
+          </div>
           <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
             <table class="admin-table" id="eb-accounts-table">
               <thead><tr><th>Customer</th><th>Product</th><th>Deposit Paid</th><th>Repaid</th><th>Balance</th><th>Next Due</th><th>Status</th><th>Action</th></tr></thead>
@@ -3540,6 +3544,7 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
               <select class="form-input" id="p-eb-frequency">
                 <option value="monthly">Monthly</option>
                 <option value="weekly">Weekly</option>
+                <option value="daily">Daily</option>
               </select>
             </div>
           </div>
@@ -5481,6 +5486,11 @@ window.detailBuyNow = function() {
   if(!currentProduct) return;
   addToCartFromDetail();
   goToCheckout();
+};
+
+window.detailOpenEasyBuy = function() {
+  if(!currentProduct) { showToast('Please wait for the product to load','info'); return; }
+  openEasyBuy(currentProduct.id);
 };
 
 // Size & Colour selection
@@ -10547,7 +10557,8 @@ function ebGenerateSchedule(startMs, duration, frequency, installment, balance) 
   let remaining = balance;
   for(let i=1;i<=duration;i++) {
     const due = new Date(startMs);
-    if(frequency==='weekly') due.setDate(due.getDate() + 7*i);
+    if(frequency==='daily') due.setDate(due.getDate() + i);
+    else if(frequency==='weekly') due.setDate(due.getDate() + 7*i);
     else due.setMonth(due.getMonth() + i);
     const amt = i===duration ? remaining : Math.min(installment, remaining);
     remaining = Math.max(0, remaining - amt);
@@ -10610,8 +10621,8 @@ window.openEasyBuy = function(productId) {
   document.getElementById('eb-bd-price').textContent = ebMoney(bd.ebPrice);
   document.getElementById('eb-bd-deposit').textContent = ebMoney(bd.deposit);
   document.getElementById('eb-bd-balance').textContent = ebMoney(bd.balance);
-  document.getElementById('eb-bd-duration').textContent = bd.duration + ' ' + (bd.frequency==='weekly'?'weeks':'months');
-  document.getElementById('eb-bd-installment').textContent = ebMoney(bd.installment) + ' / ' + (bd.frequency==='weekly'?'week':'month');
+  document.getElementById('eb-bd-duration').textContent = bd.duration + ' ' + (bd.frequency==='daily'?'days':bd.frequency==='weekly'?'weeks':'months');
+  document.getElementById('eb-bd-installment').textContent = ebMoney(bd.installment) + ' / ' + (bd.frequency==='daily'?'day':bd.frequency==='weekly'?'week':'month');
   // Reset form
   window._ebPhotos = { custPhoto:'', custId:'', nokPhoto:'' };
   ['eb-cust-name','eb-cust-phone','eb-cust-email','eb-cust-address','eb-nok-name','eb-nok-phone','eb-nok-address'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
@@ -11114,6 +11125,7 @@ window.ebOpenAccountModal = function(accountId) {
     + '<div class="eb-mini-stat"><div class="num">'+(a.status||'').toUpperCase()+'</div><div class="lbl">STATUS</div></div>'
     + '</div>'
     + '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">'
+    + '<button style="background:#15803d;color:#fff;border:none;border-radius:6px;padding:10px;font-weight:700;cursor:pointer;flex:1;min-width:140px" onclick="ebCollectNow(\''+a.id+'\')"><i class="fas fa-bolt"></i> Collect from Wallet Now</button>'
     + '<button class="btn-eb" style="flex:1;min-width:140px" onclick="ebRecordOfflinePayment(\''+a.id+'\')"><i class="fas fa-cash-register"></i> Record Offline Payment</button>'
     + (a.status==='suspended'
         ? '<button style="background:#15803d;color:#fff;border:none;border-radius:6px;padding:10px;font-weight:700;cursor:pointer;flex:1;min-width:120px" onclick="ebSetAccountStatus(\''+a.id+'\',\'active\')"><i class="fas fa-play-circle"></i> Reactivate</button>'
@@ -11189,6 +11201,99 @@ window.ebRecordOfflinePayment = async function(accountId) {
     closeModal('modal-eb-account');
     loadEasyBuyAdmin();
   } catch(e) { showToast('Failed: '+e.message,'error'); }
+};
+
+// ── ADMIN: Auto-collect due repayments straight from customer wallets ──────
+// Computes the total of all pending schedule installments that are due (or overdue)
+// as of `now`, capped at the account's remaining balance.
+function ebAmountDueForAccount(account, now) {
+  const due = (account.schedule||[]).filter(s => s.status==='pending' && s.dueDate <= now);
+  const sum = due.reduce((total,s) => total + Math.max(0, (s.amount||0) - (s.paidAmount||0)), 0);
+  return Math.min(sum, account.remainingBalance||0);
+}
+
+// Attempts to auto-collect the due amount for a single account from the customer's wallet.
+// Returns { collected: boolean, amount, reason } — never throws (caller loops over many accounts).
+async function ebCollectFromWalletCore(account) {
+  const now = Date.now();
+  const amountDue = ebAmountDueForAccount(account, now);
+  if(amountDue <= 0) return { collected:false, amount:0, reason:'nothing-due' };
+  try {
+    const walletBalance = await ebGetWalletBalance(account.userId);
+    if(walletBalance < amountDue) return { collected:false, amount:amountDue, reason:'insufficient-funds', walletBalance };
+
+    await ebDebitWallet(account.userId, amountDue, 'EasyBuy auto-repayment \u2014 '+account.productName);
+    const newRepaid = (account.amountRepaid||0) + amountDue;
+    const newBalance = Math.max(0, (account.remainingBalance||0) - amountDue);
+    let remaining = amountDue;
+    const schedule = (account.schedule||[]).map(s=>{
+      if(remaining<=0 || s.status==='paid') return s;
+      const owed = Math.max(0, (s.amount||0) - (s.paidAmount||0));
+      if(owed<=0) return s;
+      if(remaining >= owed) { remaining -= owed; return {...s, status:'paid', paidAt: Date.now(), paidAmount: (s.amount||0)}; }
+      else { const partial = remaining; remaining = 0; return {...s, paidAmount: (s.paidAmount||0)+partial}; }
+    });
+    const newStatus = newBalance<=0 ? 'completed' : (account.status==='overdue' ? 'active' : account.status);
+    const txnId = ebGenTxnId();
+    await updateDoc(doc(db,'easybuy_accounts',account.id), { amountRepaid: newRepaid, remainingBalance: newBalance, schedule, status: newStatus });
+    await addDoc(collection(db,'easybuy_payments'), { accountId: account.id, applicationId: account.applicationId||'', userId: account.userId, type:'installment', amount: amountDue, method:'auto-wallet', txnId, recordedBy: (currentUser&&currentUser.email)||'system', createdAt: Date.now() });
+    await ebLog('auto_repayment_collected', account.id, ebMoney(amountDue)+' auto-collected from wallet'+(currentUser?' by '+currentUser.email:''));
+    ebNotifyCustomerWA(account.userPhone, 'EasyBuy Auto-Repayment Collected', ['We automatically collected '+ebMoney(amountDue)+' from your wallet for *'+account.productName+'* since your installment was due.', 'Remaining balance: '+ebMoney(newBalance)]);
+    return { collected:true, amount:amountDue };
+  } catch(e) {
+    return { collected:false, amount:amountDue, reason:'error', error: e.message };
+  }
+}
+
+// Single-account "Collect Now" button in the account management modal.
+window.ebCollectNow = async function(accountId) {
+  const a = window._ebAdminAccounts.find(x=>x.id===accountId);
+  if(!a) return;
+  const now = Date.now();
+  const amountDue = ebAmountDueForAccount(a, now);
+  if(amountDue<=0) return showToast('No installment is due yet for this account','info');
+  if(!confirm('Collect '+ebMoney(amountDue)+' from this customer\'s wallet now?')) return;
+  showToast('Collecting...','info');
+  const result = await ebCollectFromWalletCore(a);
+  if(result.collected) {
+    showToast('Collected '+ebMoney(result.amount)+' from wallet!','success');
+    closeModal('modal-eb-account');
+    loadEasyBuyAdmin();
+  } else if(result.reason==='insufficient-funds') {
+    showToast('Customer\'s wallet balance ('+ebMoney(result.walletBalance)+') is not enough to cover the '+ebMoney(result.amount)+' due','error');
+  } else {
+    showToast('Could not collect: '+(result.error||result.reason),'error');
+  }
+};
+
+// Bulk "Collect All Due Repayments" button — scans every active/overdue account,
+// and for each one that has a due/overdue installment AND enough wallet balance,
+// deducts it automatically. Skips (leaves untouched) anything short on funds.
+window.ebBulkCollectRepayments = async function() {
+  if(!isAdmin) return;
+  const now = Date.now();
+  const candidates = window._ebAdminAccounts.filter(a =>
+    (a.status==='active' || a.status==='overdue') &&
+    (a.remainingBalance||0) > 0 &&
+    ebAmountDueForAccount(a, now) > 0
+  );
+  if(!candidates.length) { showToast('No accounts currently have a due repayment','info'); return; }
+  if(!confirm('Check '+candidates.length+' account(s) with a due/overdue repayment and auto-collect from their wallets wherever funds allow?')) return;
+
+  const btn = document.getElementById('eb-bulk-collect-btn');
+  if(btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Collecting...'; }
+
+  let collectedCount = 0, collectedTotal = 0, skippedCount = 0;
+  for(const a of candidates) {
+    const result = await ebCollectFromWalletCore(a);
+    if(result.collected) { collectedCount++; collectedTotal += result.amount; }
+    else skippedCount++;
+  }
+
+  if(btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-bolt"></i> Collect All Due Repayments'; }
+
+  showToast(collectedCount+' collected ('+ebMoney(collectedTotal)+'), '+skippedCount+' skipped (insufficient funds or error)', collectedCount>0?'success':'info');
+  loadEasyBuyAdmin();
 };
 
 window.ebMarkDelivery = async function(accountId, status) {
