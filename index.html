@@ -3583,7 +3583,11 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
           <div class="eb-price-row"><span class="lbl">Payment Amount</span><span class="val" id="eb-bd-installment"></span></div>
         </div>
         <p style="font-size:11px;color:var(--gray-500);margin-top:10px"><i class="fas fa-info-circle"></i> You'll pay the deposit after your application is approved by our staff. The product is delivered only after the deposit is confirmed.</p>
-        <button class="btn-eb" style="width:100%;margin-top:14px" onclick="ebGoStep(2)">Continue to Application <i class="fas fa-arrow-right"></i></button>
+        <div id="eb-quickapply-banner" class="hidden" style="background:#dcfce7;border:1px solid #86efac;border-radius:8px;padding:10px;margin-top:12px;font-size:12px;color:#15803d">
+          <i class="fas fa-check-circle"></i> We already have your details from a previous EasyBuy application &mdash; no need to fill the form again.
+          <button class="btn-eb" style="width:100%;margin-top:8px" onclick="ebQuickApply()"><i class="fas fa-bolt"></i> Apply with My Saved Details</button>
+        </div>
+        <button class="btn-eb" style="width:100%;margin-top:10px" onclick="ebGoStep(2)">Continue to Application <i class="fas fa-arrow-right"></i></button>
       </div>
 
       <!-- STEP 2: Customer + Next of Kin details -->
@@ -3676,11 +3680,11 @@ input:focus,textarea:focus,select:focus{border-color:#f68b1e !important;box-shad
     <div class="modal-body">
       <input type="hidden" id="eb-pay-account-id">
       <div class="eb-price-box" style="margin-bottom:14px">
-        <div class="eb-price-row"><span class="lbl">Wallet Balance</span><span class="val" id="eb-pay-wallet-balance"></span></div>
+        <div class="eb-price-row"><span class="lbl">Available Balance</span><span class="val" id="eb-pay-wallet-balance"></span></div>
         <div class="eb-price-row"><span class="lbl">Outstanding Balance</span><span class="val" id="eb-pay-outstanding"></span></div>
       </div>
       <div class="form-group"><label class="form-label">Amount to Pay (&#8358;) *</label><input class="form-input" id="eb-pay-amount" type="number" placeholder="0"></div>
-      <p style="font-size:11px;color:var(--gray-500)"><i class="fas fa-info-circle"></i> Payment will be deducted from your ZMARKET Wallet balance. Fund your wallet first if needed.</p>
+      <p style="font-size:11px;color:var(--gray-500)"><i class="fas fa-info-circle"></i> Payment is taken from your Referral Balance first (up to the per-purchase limit), then your Main Wallet. Fund your wallet first if needed.</p>
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeModal('modal-eb-pay')">Cancel</button>
@@ -10585,24 +10589,65 @@ function ebNotifyCustomerWA(phone, title, lines) {
   } catch(e) { console.warn('EasyBuy customer notify failed', e); }
 }
 
-async function ebGetWalletBalance(uid) {
-  const snap = await getDoc(doc(db,'users',uid));
-  if(!snap.exists()) return 0;
-  return Number(snap.data().walletBalance||0);
+async function ebGetReferralCap() {
+  try {
+    const snap = await getDoc(doc(db,'settings','referral'));
+    return snap.exists() ? Number(snap.data().maxSpendPerPurchase||1000) : 1000;
+  } catch(e) { return 1000; }
 }
 
+// Returns the customer's total spendable balance for EasyBuy payments:
+// main wallet + as much referral balance as the per-purchase cap allows.
+async function ebGetSpendableBalance(uid) {
+  const snap = await getDoc(doc(db,'users',uid));
+  const data = snap.exists() ? snap.data() : {};
+  const mainBal = Number(data.walletBalance||0);
+  const refBal = Number(data.referralBalance||0);
+  const cap = await ebGetReferralCap();
+  const usableReferral = Math.min(refBal, cap);
+  return { mainBal, refBal, cap, usableReferral, total: mainBal + usableReferral };
+}
+
+async function ebGetWalletBalance(uid) {
+  const spendable = await ebGetSpendableBalance(uid);
+  return spendable.total;
+}
+
+// Debits `amount` from the user, drawing from Referral Balance first (up to the
+// per-purchase cap) then Main Wallet for the rest — same order checkout uses.
 async function ebDebitWallet(uid, amount, description) {
   const userRef = doc(db,'users',uid);
   const snap = await getDoc(userRef);
-  const currentBalance = snap.exists() ? Number(snap.data().walletBalance||0) : 0;
-  if(currentBalance < amount) throw new Error('Insufficient wallet balance. Please fund your wallet.');
-  const newBalance = currentBalance - amount;
-  await updateDoc(userRef, { walletBalance: newBalance });
-  await addDoc(collection(db,'wallet_transactions'), {
-    userId: uid, type:'debit', amount, description,
-    balanceAfter: newBalance, balanceType:'main', status:'completed', createdAt: Date.now()
-  });
-  return newBalance;
+  const data = snap.exists() ? snap.data() : {};
+  const mainBal = Number(data.walletBalance||0);
+  const refBal = Number(data.referralBalance||0);
+  const cap = await ebGetReferralCap();
+
+  const usableReferral = Math.min(refBal, cap, amount);
+  const remainingAfterReferral = amount - usableReferral;
+  const usableMain = Math.min(mainBal, remainingAfterReferral);
+
+  if(usableReferral + usableMain < amount) {
+    throw new Error('Insufficient balance. You need \u20A6' + amount.toLocaleString() + ' but only have \u20A6' + (usableReferral+usableMain).toLocaleString() + ' available (referral capped at \u20A6' + cap.toLocaleString() + '/payment). Please fund your wallet.');
+  }
+
+  const newMainBal = mainBal - usableMain;
+  const newReferralBal = refBal - usableReferral;
+  await updateDoc(userRef, { walletBalance: newMainBal, referralBalance: newReferralBal });
+
+  if(usableReferral > 0) {
+    await addDoc(collection(db,'wallet_transactions'), {
+      userId: uid, type:'debit', amount: usableReferral, description: description + ' (Referral Balance)',
+      balanceAfter: newReferralBal, balanceType:'referral', status:'completed', createdAt: Date.now()
+    });
+  }
+  if(usableMain > 0) {
+    await addDoc(collection(db,'wallet_transactions'), {
+      userId: uid, type:'debit', amount: usableMain, description: description + ' (Main Wallet)',
+      balanceAfter: newMainBal, balanceType:'main', status:'completed', createdAt: Date.now()
+    });
+  }
+  return newMainBal;
 }
 
 // ── CUSTOMER: Application flow ─────────────────────────────────────
@@ -10625,6 +10670,8 @@ window.openEasyBuy = function(productId) {
   document.getElementById('eb-bd-installment').textContent = ebMoney(bd.installment) + ' / ' + (bd.frequency==='daily'?'day':bd.frequency==='weekly'?'week':'month');
   // Reset form
   window._ebPhotos = { custPhoto:'', custId:'', nokPhoto:'' };
+  window._ebSavedDetails = null;
+  document.getElementById('eb-quickapply-banner').classList.add('hidden');
   ['eb-cust-name','eb-cust-phone','eb-cust-email','eb-cust-address','eb-nok-name','eb-nok-phone','eb-nok-address'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   document.getElementById('eb-cust-photo-label').innerHTML = '<i class="fas fa-camera"></i><br>Tap to upload';
   document.getElementById('eb-cust-id-label').innerHTML = '<i class="fas fa-id-card"></i><br>Tap to upload';
@@ -10633,6 +10680,54 @@ window.openEasyBuy = function(productId) {
   if(currentUser.email) document.getElementById('eb-cust-email').value = currentUser.email;
   ebGoStep(1);
   openModal('modal-easybuy');
+  ebLoadSavedApplicantDetails();
+};
+
+// Looks up the customer's most recent EasyBuy application and, if it has full
+// customer + next-of-kin details, pre-fills the form so repeat applicants
+// don't have to retype everything or re-upload photos/ID.
+window.ebLoadSavedApplicantDetails = async function() {
+  if(!currentUser) return;
+  try {
+    // Only offer quick-apply if the customer has at least one APPROVED application.
+    // (No orderBy here on purpose — combining it with two equality filters would
+    // require a new Firestore composite index. We sort the small result client-side instead.)
+    const snap = await getDocs(query(collection(db,'easybuy_applications'), where('userId','==',currentUser.uid), where('status','==','approved')));
+    if(snap.empty) return;
+    const approved = snap.docs.map(d=>d.data()).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    const prev = approved[0];
+    const c = prev.customer||{}, k = prev.nextOfKin||{};
+    if(!c.fullName || !k.fullName) return; // incomplete old record, don't offer it
+
+    window._ebSavedDetails = { customer: c, nextOfKin: k };
+
+    // Prefill step-2 fields
+    document.getElementById('eb-cust-name').value = c.fullName||'';
+    document.getElementById('eb-cust-phone').value = c.phone||'';
+    document.getElementById('eb-cust-email').value = c.email||currentUser.email||'';
+    document.getElementById('eb-cust-address').value = c.address||'';
+    document.getElementById('eb-nok-name').value = k.fullName||'';
+    document.getElementById('eb-nok-phone').value = k.phone||'';
+    document.getElementById('eb-nok-address').value = k.address||'';
+
+    window._ebPhotos.custPhoto = c.passportPhoto||'';
+    window._ebPhotos.custId = c.idDocument||'';
+    window._ebPhotos.nokPhoto = k.passportPhoto||'';
+    if(c.passportPhoto) document.getElementById('eb-cust-photo-label').innerHTML = '<img src="'+c.passportPhoto+'"><div style="margin-top:4px;color:var(--green)"><i class="fas fa-check-circle"></i> Using saved photo</div>';
+    if(c.idDocument) document.getElementById('eb-cust-id-label').innerHTML = '<img src="'+c.idDocument+'"><div style="margin-top:4px;color:var(--green)"><i class="fas fa-check-circle"></i> Using saved ID</div>';
+    if(k.passportPhoto) document.getElementById('eb-nok-photo-label').innerHTML = '<img src="'+k.passportPhoto+'"><div style="margin-top:4px;color:var(--green)"><i class="fas fa-check-circle"></i> Using saved photo</div>';
+
+    // Only show the quick-apply shortcut if the modal is still open on the same product
+    if(document.getElementById('modal-easybuy').classList.contains('open')) {
+      document.getElementById('eb-quickapply-banner').classList.remove('hidden');
+    }
+  } catch(e) { console.warn('Could not load saved EasyBuy details:', e); }
+};
+
+// One-tap re-application using previously submitted details (fields are already
+// prefilled by ebLoadSavedApplicantDetails, so this just submits straight away).
+window.ebQuickApply = function() {
+  submitEasyBuyApplication();
 };
 
 window.closeEasyBuyModal = function() { closeModal('modal-easybuy'); };
